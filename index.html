@@ -3,115 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FTHLABZ - Digital Miras</title>
+    <title>FthLabz - Dijital Miras</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* TEMA: DERİN SİYAH & LÜKS GOLD */
-        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .container { width: 90%; max-width: 450px; padding-bottom: 80px; }
+        /* --- GENEL AYARLAR (SİYAH & GOLD) --- */
+        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        .container { max-width: 480px; margin: 0 auto; padding: 20px; min-height: 100vh; box-sizing: border-box; }
         
         /* HEADER */
-        .header { text-align: center; margin-top: 40px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 20px; }
-        .header h1 { color: #D4AF37; margin: 0; font-family: 'Playfair Display', serif; font-size: 28px; letter-spacing: 2px; text-transform: uppercase; }
-        .header p { color: #666; font-size: 11px; letter-spacing: 4px; margin-top: 5px; text-transform: uppercase; }
+        .header { text-align: center; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid #222; }
+        .header h1 { color: #D4AF37; margin: 0; font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 2px; }
+        .header p { color: #666; font-size: 10px; letter-spacing: 3px; margin-top: 5px; text-transform: uppercase; }
 
-        /* --- MÜŞTERİ PANELİ (KURULUM) --- */
+        /* --- OLUŞTURUCU MODU (MÜŞTERİ) --- */
         #creator-mode { display: block; }
         
-        /* Bilgilendirme Kutusu */
-        .guide-box { background: #111; border: 1px solid #333; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
-        .guide-title { color: #D4AF37; font-weight: bold; font-size: 14px; margin-bottom: 10px; display: block; text-transform: uppercase; }
-        .guide-step { font-size: 12px; color: #ccc; margin-bottom: 8px; display: flex; gap: 10px; line-height: 1.4; }
+        .guide-box { background: #111; border: 1px solid #333; border-radius: 12px; padding: 20px; margin-bottom: 30px; }
+        .guide-title { color: #D4AF37; font-weight: bold; font-size: 14px; text-transform: uppercase; margin-bottom: 15px; display: block; border-bottom: 1px solid #222; padding-bottom: 10px; }
+        .guide-step { font-size: 12px; color: #ccc; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
         .guide-step i { color: #D4AF37; margin-top: 3px; }
+        .important { color: #ff4444; font-weight: bold; }
 
         .input-group { margin-bottom: 20px; }
-        .input-label { color: #eee; font-size: 12px; font-weight: 600; margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
-        .input-label i { color: #D4AF37; margin-right: 5px; }
+        .input-label { color: #eee; font-size: 12px; font-weight: 600; margin-bottom: 8px; display: block; text-transform: uppercase; }
+        .input-label i { color: #D4AF37; width: 20px; }
         
-        input, textarea { width: 100%; background: #080808; border: 1px solid #333; color: #fff; padding: 16px; border-radius: 10px; box-sizing: border-box; font-size: 14px; font-family: inherit; transition: 0.3s; }
-        input:focus, textarea:focus { border-color: #D4AF37; outline: none; background: #111; }
+        input, textarea { width: 100%; background: #080808; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 10px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
+        input:focus, textarea:focus { border-color: #D4AF37; outline: none; background: #151515; }
         
-        .btn-gold { width: 100%; background: linear-gradient(135deg, #D4AF37, #B59028); border: none; padding: 18px; color: #000; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2); transition: transform 0.2s; }
-        .btn-gold:active { transform: scale(0.98); }
-
-        /* SONUÇ ALANI */
+        .btn-gold { width: 100%; background: linear-gradient(135deg, #D4AF37, #B59028); border: none; padding: 18px; color: #000; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; }
+        
         #result-area { display: none; margin-top: 30px; background: #111; padding: 20px; border-radius: 12px; border: 1px dashed #555; text-align: center; }
-        .result-link { word-break: break-all; font-family: monospace; font-size: 11px; color: #0f0; background: #000; padding: 15px; margin: 15px 0; border-radius: 8px; border: 1px solid #222; }
-        .btn-copy { background: #333; color: #fff; border: 1px solid #555; padding: 10px 25px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+        .result-link { word-break: break-all; font-family: monospace; font-size: 11px; color: #0f0; background: #000; padding: 15px; border-radius: 8px; border: 1px solid #222; margin: 15px 0; }
+        .btn-copy { background: #333; color: #fff; border: 1px solid #555; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-        /* --- MİSAFİR PANELİ (İZLEME) --- */
-        #viewer-mode { display: none; width: 100%; animation: fadeIn 0.8s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- İZLEYİCİ MODU (MİSAFİR) --- */
+        #viewer-mode { display: none; padding-top: 20px; }
 
-        .section-title { color: #D4AF37; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; margin: 30px 0 10px 0; text-align: center; }
+        .menu-btn { 
+            background: #111; border: 1px solid #222; border-radius: 16px; 
+            padding: 25px 20px; margin-bottom: 20px; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .menu-btn:active { transform: scale(0.98); background: #1a1a1a; }
         
-        /* Video Kutusu */
-        .video-container { width: 100%; background: #000; border-radius: 16px; overflow: hidden; border: 1px solid #222; box-shadow: 0 10px 40px rgba(0,0,0,0.7); }
-        iframe { width: 100%; border: none; display: block; }
+        .menu-left { display: flex; align-items: center; gap: 20px; }
+        .menu-icon { 
+            width: 50px; height: 50px; background: #000; border-radius: 50%; 
+            display: flex; justify-content: center; align-items: center; 
+            color: #D4AF37; font-size: 20px; border: 1px solid #333;
+        }
+        .menu-text h3 { margin: 0; font-size: 16px; font-weight: 600; color: #eee; }
+        .menu-text p { margin: 4px 0 0; font-size: 11px; color: #777; }
+        .menu-arrow { color: #444; }
 
-        /* Albüm Butonu (Klasörler İçin) */
-        .album-btn { display: flex; align-items: center; justify-content: space-between; background: #1a1a1a; padding: 20px; border-radius: 12px; text-decoration: none; border: 1px solid #333; transition: 0.2s; margin-top: 10px; }
-        .album-btn:active { background: #222; transform: scale(0.99); }
-        .album-info { display: flex; align-items: center; gap: 15px; }
-        .album-icon { width: 50px; height: 50px; background: #000; border-radius: 10px; display: flex; justify-content: center; align-items: center; color: #D4AF37; border: 1px solid #333; font-size: 20px; }
-        .album-text h3 { margin: 0; font-size: 15px; color: #fff; font-weight: 600; }
-        .album-text p { margin: 3px 0 0; font-size: 11px; color: #888; }
-        .album-arrow { color: #D4AF37; }
+        /* --- TAM EKRAN MODALLAR (Pop-up) --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: none; flex-direction: column; animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        /* Not Kartı */
-        .note-card { background: #111; padding: 30px 25px; border-radius: 16px; border: 1px solid #222; margin-top: 20px; position: relative; }
-        .note-card::before { content: '“'; position: absolute; top: 10px; left: 20px; font-size: 60px; color: #D4AF37; opacity: 0.3; font-family: serif; }
-        .note-text { font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.7; text-align: center; color: #ddd; white-space: pre-wrap; }
+        .modal-header {
+            padding: 20px; background: #111; border-bottom: 1px solid #222;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-title { color: #D4AF37; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .close-btn { 
+            font-size: 28px; color: #fff; cursor: pointer; line-height: 0.8; 
+            width: 40px; height: 40px; text-align: center;
+        }
 
-        .footer { text-align: center; font-size: 10px; color: #444; margin-top: 60px; letter-spacing: 2px; text-transform: uppercase; }
+        .modal-body { flex: 1; overflow-y: auto; padding: 0; position: relative; }
+        
+        /* İçerik Stilleri */
+        iframe { width: 100%; height: 100%; border: none; display: block; }
+        
+        .note-content { 
+            padding: 40px 30px; color: #ddd; font-family: 'Playfair Display', serif; 
+            font-size: 20px; line-height: 1.8; text-align: center; white-space: pre-wrap; 
+            display: flex; align-items: center; justify-content: center; min-height: 50%;
+        }
+
+        .audio-wrapper {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100%; background: #000;
+        }
+        .audio-icon-large { font-size: 60px; color: #333; margin-bottom: 30px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+        .footer { text-align: center; font-size: 10px; color: #444; margin-top: 50px; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-    <div class="header" id="mainHeader">
-        <h1>FthLabz</h1>
-        <p>Digital Miras</p>
-    </div>
-
     <div class="container">
         
+        <div class="header" id="mainHeader">
+            <h1>FthLabz</h1>
+            <p>Digital Miras</p>
+        </div>
+
         <div id="creator-mode">
             
             <div class="guide-box">
-                <span class="guide-title">Nasıl Yapılır?</span>
-                <div class="guide-step"><i class="fas fa-1"></i> <span>Google Drive uygulamanıza girin ve paylaşmak istediğiniz video, resim veya klasörün <b>bağlantısını kopyalayın.</b></span></div>
-                <div class="guide-step"><i class="fas fa-2"></i> <span>Bağlantıları aşağıya yapıştırın ve <b>"Link Oluştur"</b> butonuna basın.</span></div>
-                <div class="guide-step"><i class="fas fa-3"></i> <span>Size verilen özel kodu kopyalayıp <b>NFC Tools</b> ile etiketinize yazın.</span></div>
+                <span class="guide-title">Adım Adım Kurulum</span>
+                <div class="guide-step"><i class="fas fa-1"></i> <span>Google Drive uygulamasını açın.</span></div>
+                <div class="guide-step"><i class="fas fa-2"></i> <span>Paylaşmak istediğiniz dosyanın yanındaki 3 noktaya basın.</span></div>
+                <div class="guide-step"><i class="fas fa-3"></i> <span>"Paylaş" > "Erişimi Yönet" kısmından <span class="important">"Bağlantıya sahip olan herkes"</span> seçeneğini seçin.</span></div>
+                <div class="guide-step"><i class="fas fa-4"></i> <span>Bağlantıyı kopyalayıp aşağıdaki ilgili kutulara yapıştırın.</span></div>
             </div>
 
             <div class="input-group">
-                <label class="input-label"><i class="fas fa-video"></i> Anı Videosu Linki</label>
-                <input type="text" id="inVideo" placeholder="Drive Video Linkini Yapıştır...">
+                <label class="input-label"><i class="fas fa-pen-nib"></i> Günlük Mesaj (Veda Notu)</label>
+                <textarea id="inNot" rows="4" placeholder="Sevdiklerinize bırakacağınız notu yazın..."></textarea>
             </div>
 
             <div class="input-group">
-                <label class="input-label"><i class="fas fa-folder-open"></i> Dijital Miras Klasörü (Albüm)</label>
-                <input type="text" id="inResim" placeholder="Drive Klasör veya Resim Linki...">
-                <div style="font-size:10px; color:#666; margin-top:5px;">*Tüm albümü koymak için Klasör linki yapıştırın.</div>
+                <label class="input-label"><i class="fas fa-microphone"></i> Günlük Sesli Mesaj Linki</label>
+                <input type="text" id="inSes" placeholder="Drive Ses Dosyası Linki...">
             </div>
 
             <div class="input-group">
-                <label class="input-label"><i class="fas fa-music"></i> Ses Kaydı Linki</label>
-                <input type="text" id="inSes" placeholder="Opsiyonel...">
+                <label class="input-label"><i class="fas fa-folder-open"></i> Dijital Miras Klasörü Linki</label>
+                <input type="text" id="inFolder" placeholder="Drive Klasör Linki...">
+                <div style="font-size:10px; color:#666; margin-top:5px;">*İçinde resim ve videoların olduğu klasör linki.</div>
             </div>
 
-            <div class="input-group">
-                <label class="input-label"><i class="fas fa-pen-nib"></i> Veda Notu / Mesaj</label>
-                <textarea id="inNot" rows="4" placeholder="Geleceğe bir not bırakın..."></textarea>
-            </div>
-
-            <button class="btn-gold" onclick="generateLink()">NFC Linkini Oluştur</button>
+            <button class="btn-gold" onclick="generateLink()">Link Oluştur</button>
 
             <div id="result-area">
-                <div style="color:#D4AF37; font-weight:bold; font-size:14px; margin-bottom:5px;">✅ Linkiniz Hazır!</div>
-                <div style="font-size:11px; color:#888;">Bu linki kopyalayıp NFC Tools ile etiketinize yazın.</div>
+                <div style="color:#D4AF37; font-weight:bold; font-size:14px; margin-bottom:10px;">✅ NFC LİNKİNİZ HAZIR!</div>
+                <div style="font-size:11px; color:#aaa; margin-bottom:10px;">
+                    NFC Tools programını açın, "Yaz" > "Kayıt Ekle" > "URL / Web Bağlantısı" seçin ve şu linki yazdırın:
+                </div>
                 
                 <div class="result-link" id="finalUrl">...</div>
                 
@@ -121,139 +149,164 @@
 
         <div id="viewer-mode">
             
-            <div id="areaVideo" style="display:none;">
-                <div class="section-title">Anı Videosu</div>
-                <div class="video-container">
-                    <iframe id="frameVideo" height="250" allow="autoplay; fullscreen"></iframe>
-                </div>
-            </div>
-
-            <div id="areaSes" style="display:none; margin-top:20px;">
-                <iframe id="frameSes" height="60" style="width:100%; border-radius:30px; border:1px solid #333;"></iframe>
-            </div>
-
-            <div id="areaResim" style="display:none;">
-                <div class="section-title">Dijital Miras Arşivi</div>
-                
-                <a id="btnAlbum" href="#" target="_blank" class="album-btn" style="display:none;">
-                    <div class="album-info">
-                        <div class="album-icon"><i class="fas fa-folder-open"></i></div>
-                        <div class="album-text">
-                            <h3>Albüme Git</h3>
-                            <p>Tüm resimleri görmek için tıklayın</p>
-                        </div>
+            <div id="btnNot" class="menu-btn" onclick="openModal('not')" style="display:none;">
+                <div class="menu-left">
+                    <div class="menu-icon"><i class="fas fa-pen-nib"></i></div>
+                    <div class="menu-text">
+                        <h3>Günlük Mesaj</h3>
+                        <p>Notu okumak için dokun</p>
                     </div>
-                    <div class="album-arrow"><i class="fas fa-chevron-right"></i></div>
-                </a>
-
-                <div id="singleImageBox" class="video-container" style="display:none;">
-                    <iframe id="frameResim" height="300"></iframe>
                 </div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
             </div>
 
-            <div id="areaNot" style="display:none;">
-                <div class="section-title">Veda Notu</div>
-                <div class="note-card">
-                    <div id="textNot" class="note-text"></div>
+            <div id="btnSes" class="menu-btn" onclick="openModal('ses')" style="display:none;">
+                <div class="menu-left">
+                    <div class="menu-icon"><i class="fas fa-microphone"></i></div>
+                    <div class="menu-text">
+                        <h3>Sesli Mesaj</h3>
+                        <p>Dinlemek için dokun</p>
+                    </div>
                 </div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
             </div>
 
-            <div class="footer">FTHLABZ DIGITAL MIRAS SYSTEM</div>
+            <div id="btnFolder" class="menu-btn" onclick="openModal('folder')" style="display:none;">
+                <div class="menu-left">
+                    <div class="menu-icon"><i class="fas fa-folder-open"></i></div>
+                    <div class="menu-text">
+                        <h3>Dijital Miras Klasörü</h3>
+                        <p>Albüme gitmek için dokun</p>
+                    </div>
+                </div>
+                <div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+
+            <div class="footer">POWERED BY FTHLABZ</div>
         </div>
 
     </div>
 
+    <div id="modalNot" class="modal-overlay">
+        <div class="modal-header">
+            <span class="modal-title">Günlük Mesaj</span>
+            <span class="close-btn" onclick="closeModal('not')">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="contentNot" class="note-content"></div>
+        </div>
+    </div>
+
+    <div id="modalSes" class="modal-overlay">
+        <div class="modal-header">
+            <span class="modal-title">Sesli Mesaj</span>
+            <span class="close-btn" onclick="closeModal('ses')">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="audio-wrapper">
+                <i class="fas fa-volume-up audio-icon-large"></i>
+                <iframe id="contentSes" style="width:90%; height:100px; border:none;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalFolder" class="modal-overlay">
+        <div class="modal-header">
+            <span class="modal-title">Dijital Miras Arşivi</span>
+            <span class="close-btn" onclick="closeModal('folder')">&times;</span>
+        </div>
+        <div class="modal-body">
+            <iframe id="contentFolder"></iframe>
+        </div>
+    </div>
+
     <script>
-        // Sayfa Yüklendiğinde URL Kontrolü
+        // URL Parametrelerini Al
         const params = new URLSearchParams(window.location.search);
-        
-        // Link parametrelerini al
-        const v = params.get('v');
-        const s = params.get('s');
-        const r = params.get('r');
-        const n = params.get('n');
+        const n = params.get('n'); // Not
+        const s = params.get('s'); // Ses
+        const f = params.get('f'); // Folder (Klasör)
 
-        // EĞER URL DOLUYSA -> İZLEME MODU
-        if (v || s || r || n) {
+        // Veri varsa İzleyici Modunu Aç
+        if (n || s || f) {
             document.getElementById('creator-mode').style.display = 'none';
-            document.getElementById('mainHeader').style.display = 'none';
+            document.getElementById('mainHeader').style.display = 'none'; // Headerı gizle (daha temiz)
             document.getElementById('viewer-mode').style.display = 'block';
-            
-            // Video
-            if(v) {
-                document.getElementById('areaVideo').style.display = 'block';
-                document.getElementById('frameVideo').src = cleanDriveLink(v, 'video');
-            }
-            // Ses
-            if(s) {
-                document.getElementById('areaSes').style.display = 'block';
-                document.getElementById('frameSes').src = cleanDriveLink(s, 'video'); // Ses de preview ile çalışır
-            }
-            // Resim / Albüm (AKILLI KONTROL)
-            if(r) {
-                document.getElementById('areaResim').style.display = 'block';
-                
-                // Link içinde "folders" geçiyorsa bu bir KLASÖRDÜR
-                if(r.includes("folders") || !r.includes("file/d/")) {
-                    const btn = document.getElementById('btnAlbum');
-                    btn.style.display = 'flex';
-                    btn.href = r; // Klasör linkine direkt git (Swipe orada çalışır)
-                } else {
-                    // Tekil dosyaysa göster
-                    const box = document.getElementById('singleImageBox');
-                    box.style.display = 'block';
-                    document.getElementById('frameResim').src = cleanDriveLink(r, 'img');
-                }
-            }
-            // Not
-            if(n) {
-                document.getElementById('areaNot').style.display = 'block';
-                document.getElementById('textNot').innerText = decodeURIComponent(n);
-            }
-        } 
-        
-        // --- LİNK OLUŞTURUCU ---
-        function generateLink() {
-            const vid = document.getElementById('inVideo').value.trim();
-            const ses = document.getElementById('inSes').value.trim();
-            const res = document.getElementById('inResim').value.trim();
-            const not = document.getElementById('inNot').value.trim();
 
-            if(!vid && !ses && !res && !not) { alert("Lütfen en az bir içerik ekleyin."); return; }
+            if(n) {
+                document.getElementById('btnNot').style.display = 'flex';
+                document.getElementById('contentNot').innerText = decodeURIComponent(n);
+            }
+            if(s) document.getElementById('btnSes').style.display = 'flex';
+            if(f) document.getElementById('btnFolder').style.display = 'flex';
+        }
+
+        // --- FONKSİYONLAR ---
+
+        // Link Oluşturucu
+        function generateLink() {
+            const not = document.getElementById('inNot').value.trim();
+            const ses = document.getElementById('inSes').value.trim();
+            const folder = document.getElementById('inFolder').value.trim();
+
+            if(!not && !ses && !folder) { alert("En az bir içerik girmelisiniz."); return; }
 
             const baseUrl = window.location.href.split('?')[0];
-            const newParams = new URLSearchParams();
-            if(vid) newParams.set('v', vid);
-            if(ses) newParams.set('s', ses);
-            if(res) newParams.set('r', res);
-            if(not) newParams.set('n', not);
+            const p = new URLSearchParams();
+            if(not) p.set('n', not);
+            if(ses) p.set('s', ses);
+            if(folder) p.set('f', folder);
 
-            const finalLink = `${baseUrl}?${newParams.toString()}`;
-
+            const final = `${baseUrl}?${p.toString()}`;
             document.getElementById('result-area').style.display = 'block';
-            document.getElementById('finalUrl').innerText = finalLink;
+            document.getElementById('finalUrl').innerText = final;
         }
 
         function copyUrl() {
-            const txt = document.getElementById('finalUrl').innerText;
-            navigator.clipboard.writeText(txt).then(() => alert("Kopyalandı!"));
+            navigator.clipboard.writeText(document.getElementById('finalUrl').innerText)
+            .then(() => alert("Kopyalandı!"));
         }
 
-        // --- DRIVE LİNK DÜZELTİCİ ---
-        function cleanDriveLink(link, type) {
-            if(!link) return "";
-            if (!link.includes("drive.google.com")) return link;
+        // Modal Açma / Kapama
+        function openModal(type) {
+            document.getElementById('modal' + capitalize(type)).style.display = 'flex';
             
-            // Eğer bu bir klasör linkiyse dokunma, olduğu gibi döndür
-            if(link.includes("drive.google.com/drive/folders")) return link;
+            // İçerikleri Yükle (Lazım olduğunda yükler, performans için)
+            if(type === 'ses') {
+                document.getElementById('contentSes').src = cleanLink(s, 'preview');
+            }
+            if(type === 'folder') {
+                // Klasörler iframe içinde bazen açılmaz, bu yüzden hem iframe deneriz hem de...
+                // Drive Klasörünü "Grid View" modunda açmaya çalışırız
+                document.getElementById('contentFolder').src = f; 
+            }
+        }
+
+        function closeModal(type) {
+            document.getElementById('modal' + capitalize(type)).style.display = 'none';
+            // Kapatınca sesi durdurmak için iframe'i boşalt
+            if(type === 'ses') document.getElementById('contentSes').src = "";
+            if(type === 'folder') document.getElementById('contentFolder').src = "";
+        }
+
+        function capitalize(s) {
+            return s.charAt(0).toUpperCase() + s.slice(1);
+        }
+
+        // Link Temizleyici
+        function cleanLink(link, mode) {
+            if(!link) return "";
+            if(!link.includes("drive.google.com")) return link;
+            
+            // Klasör linki ise olduğu gibi bırak
+            if(link.includes("/folders")) return link;
 
             let id = "";
             try {
                 if (link.includes("/d/")) id = link.split("/d/")[1].split("/")[0];
                 else if (link.includes("id=")) id = link.split("id=")[1].split("&")[0];
             } catch (e) { return link; }
-            
-            // Sadece izleme modu (Preview)
+
             return `https://drive.google.com/file/d/${id}/preview`;
         }
     </script>
