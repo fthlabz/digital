@@ -3,86 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dijital Miras</title>
+    <title>FTHLABZ - Digital Miras</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* TEMA: SİYAH & GOLD (PREMIUM) */
+        /* TEMA: DERİN SİYAH & LÜKS GOLD */
         body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .container { width: 90%; max-width: 450px; padding-bottom: 60px; }
+        .container { width: 90%; max-width: 450px; padding-bottom: 80px; }
         
-        .header { text-align: center; margin-top: 40px; margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 20px; }
-        .header h1 { color: #D4AF37; margin: 0; font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 1px; text-transform: uppercase; }
-        .header p { color: #666; font-size: 10px; letter-spacing: 3px; margin-top: 5px; text-transform: uppercase; }
+        /* HEADER */
+        .header { text-align: center; margin-top: 40px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 20px; }
+        .header h1 { color: #D4AF37; margin: 0; font-family: 'Playfair Display', serif; font-size: 28px; letter-spacing: 2px; text-transform: uppercase; }
+        .header p { color: #666; font-size: 11px; letter-spacing: 4px; margin-top: 5px; text-transform: uppercase; }
 
-        /* --- OLUŞTURUCU MODU (Müşteri) --- */
-        #creator-mode { display: block; background: #111; padding: 25px; border-radius: 16px; border: 1px solid #222; }
+        /* --- MÜŞTERİ PANELİ (KURULUM) --- */
+        #creator-mode { display: block; }
         
-        .info-box { background: #1a1a1a; padding: 15px; border-radius: 8px; border-left: 3px solid #D4AF37; margin-bottom: 25px; }
-        .info-text { font-size: 12px; color: #aaa; line-height: 1.5; margin: 0; }
+        /* Bilgilendirme Kutusu */
+        .guide-box { background: #111; border: 1px solid #333; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+        .guide-title { color: #D4AF37; font-weight: bold; font-size: 14px; margin-bottom: 10px; display: block; text-transform: uppercase; }
+        .guide-step { font-size: 12px; color: #ccc; margin-bottom: 8px; display: flex; gap: 10px; line-height: 1.4; }
+        .guide-step i { color: #D4AF37; margin-top: 3px; }
+
+        .input-group { margin-bottom: 20px; }
+        .input-label { color: #eee; font-size: 12px; font-weight: 600; margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+        .input-label i { color: #D4AF37; margin-right: 5px; }
         
-        .input-label { color: #D4AF37; font-size: 11px; font-weight: bold; margin-bottom: 8px; display: block; text-transform: uppercase; }
-        input, textarea { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 14px; border-radius: 8px; box-sizing: border-box; font-size: 13px; margin-bottom: 20px; font-family: inherit; transition: 0.3s; }
-        input:focus, textarea:focus { border-color: #D4AF37; outline: none; background: #0a0a0a; }
+        input, textarea { width: 100%; background: #080808; border: 1px solid #333; color: #fff; padding: 16px; border-radius: 10px; box-sizing: border-box; font-size: 14px; font-family: inherit; transition: 0.3s; }
+        input:focus, textarea:focus { border-color: #D4AF37; outline: none; background: #111; }
         
-        .btn-gold { width: 100%; background: linear-gradient(135deg, #D4AF37, #B59028); border: none; padding: 16px; color: #000; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2); }
-        .btn-gold:active { transform: scale(0.98); opacity: 0.9; }
+        .btn-gold { width: 100%; background: linear-gradient(135deg, #D4AF37, #B59028); border: none; padding: 18px; color: #000; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2); transition: transform 0.2s; }
+        .btn-gold:active { transform: scale(0.98); }
 
-        /* LİNK SONUÇ KUTUSU */
-        #result-area { display: none; margin-top: 25px; background: #050505; padding: 20px; border-radius: 12px; border: 1px dashed #555; text-align: center; }
-        .result-link { word-break: break-all; font-family: monospace; font-size: 11px; color: #0f0; background: #111; padding: 12px; margin: 15px 0; border-radius: 6px; border: 1px solid #222; }
-        .btn-copy { background: #333; color: #fff; border: 1px solid #555; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: 0.2s; }
-        .btn-copy:hover { background: #444; }
+        /* SONUÇ ALANI */
+        #result-area { display: none; margin-top: 30px; background: #111; padding: 20px; border-radius: 12px; border: 1px dashed #555; text-align: center; }
+        .result-link { word-break: break-all; font-family: monospace; font-size: 11px; color: #0f0; background: #000; padding: 15px; margin: 15px 0; border-radius: 8px; border: 1px solid #222; }
+        .btn-copy { background: #333; color: #fff; border: 1px solid #555; padding: 10px 25px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-        /* --- İZLEYİCİ MODU (Misafir) --- */
-        #viewer-mode { display: none; width: 100%; animation: fadeIn 1s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* --- MİSAFİR PANELİ (İZLEME) --- */
+        #viewer-mode { display: none; width: 100%; animation: fadeIn 0.8s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .media-card { background: #111; border-radius: 16px; overflow: hidden; margin-bottom: 20px; border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .card-header { background: #1a1a1a; padding: 12px 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #222; }
-        .card-header i { color: #D4AF37; }
-        .card-header span { font-size: 12px; font-weight: bold; color: #eee; text-transform: uppercase; letter-spacing: 1px; }
-
+        .section-title { color: #D4AF37; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; margin: 30px 0 10px 0; text-align: center; }
+        
+        /* Video Kutusu */
+        .video-container { width: 100%; background: #000; border-radius: 16px; overflow: hidden; border: 1px solid #222; box-shadow: 0 10px 40px rgba(0,0,0,0.7); }
         iframe { width: 100%; border: none; display: block; }
-        .note-content { padding: 30px 20px; color: #ddd; font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.6; text-align: center; white-space: pre-wrap; }
-        
-        .footer { text-align: center; font-size: 10px; color: #444; margin-top: 50px; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Albüm Butonu (Klasörler İçin) */
+        .album-btn { display: flex; align-items: center; justify-content: space-between; background: #1a1a1a; padding: 20px; border-radius: 12px; text-decoration: none; border: 1px solid #333; transition: 0.2s; margin-top: 10px; }
+        .album-btn:active { background: #222; transform: scale(0.99); }
+        .album-info { display: flex; align-items: center; gap: 15px; }
+        .album-icon { width: 50px; height: 50px; background: #000; border-radius: 10px; display: flex; justify-content: center; align-items: center; color: #D4AF37; border: 1px solid #333; font-size: 20px; }
+        .album-text h3 { margin: 0; font-size: 15px; color: #fff; font-weight: 600; }
+        .album-text p { margin: 3px 0 0; font-size: 11px; color: #888; }
+        .album-arrow { color: #D4AF37; }
+
+        /* Not Kartı */
+        .note-card { background: #111; padding: 30px 25px; border-radius: 16px; border: 1px solid #222; margin-top: 20px; position: relative; }
+        .note-card::before { content: '“'; position: absolute; top: 10px; left: 20px; font-size: 60px; color: #D4AF37; opacity: 0.3; font-family: serif; }
+        .note-text { font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.7; text-align: center; color: #ddd; white-space: pre-wrap; }
+
+        .footer { text-align: center; font-size: 10px; color: #444; margin-top: 60px; letter-spacing: 2px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
     <div class="header" id="mainHeader">
-        <h1>Dijital Miras</h1>
-        <p>Sonsuz Anı Platformu</p>
+        <h1>FthLabz</h1>
+        <p>Digital Miras</p>
     </div>
 
     <div class="container">
         
         <div id="creator-mode">
-            <div class="info-box">
-                <p class="info-text">
-                    <b>Kurulum Paneli:</b> Google Drive linklerinizi (herkese açık) aşağıya yapıştırın. Sistem, NFC etiketinize yazmanız gereken özel kodu üretecektir.
-                </p>
+            
+            <div class="guide-box">
+                <span class="guide-title">Nasıl Yapılır?</span>
+                <div class="guide-step"><i class="fas fa-1"></i> <span>Google Drive uygulamanıza girin ve paylaşmak istediğiniz video, resim veya klasörün <b>bağlantısını kopyalayın.</b></span></div>
+                <div class="guide-step"><i class="fas fa-2"></i> <span>Bağlantıları aşağıya yapıştırın ve <b>"Link Oluştur"</b> butonuna basın.</span></div>
+                <div class="guide-step"><i class="fas fa-3"></i> <span>Size verilen özel kodu kopyalayıp <b>NFC Tools</b> ile etiketinize yazın.</span></div>
             </div>
 
-            <label class="input-label"><i class="fas fa-video"></i> Video Linki</label>
-            <input type="text" id="inVideo" placeholder="https://drive.google.com/file/d/...">
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-video"></i> Anı Videosu Linki</label>
+                <input type="text" id="inVideo" placeholder="Drive Video Linkini Yapıştır...">
+            </div>
 
-            <label class="input-label"><i class="fas fa-music"></i> Ses Kaydı Linki</label>
-            <input type="text" id="inSes" placeholder="Opsiyonel">
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-folder-open"></i> Dijital Miras Klasörü (Albüm)</label>
+                <input type="text" id="inResim" placeholder="Drive Klasör veya Resim Linki...">
+                <div style="font-size:10px; color:#666; margin-top:5px;">*Tüm albümü koymak için Klasör linki yapıştırın.</div>
+            </div>
 
-            <label class="input-label"><i class="fas fa-images"></i> Albüm / Resim Linki</label>
-            <input type="text" id="inResim" placeholder="Opsiyonel">
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-music"></i> Ses Kaydı Linki</label>
+                <input type="text" id="inSes" placeholder="Opsiyonel...">
+            </div>
 
-            <label class="input-label"><i class="fas fa-pen-fancy"></i> Veda Notu / Mesaj</label>
-            <textarea id="inNot" rows="3" placeholder="Sevdiklerinize bir not bırakın..."></textarea>
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-pen-nib"></i> Veda Notu / Mesaj</label>
+                <textarea id="inNot" rows="4" placeholder="Geleceğe bir not bırakın..."></textarea>
+            </div>
 
             <button class="btn-gold" onclick="generateLink()">NFC Linkini Oluştur</button>
 
             <div id="result-area">
                 <div style="color:#D4AF37; font-weight:bold; font-size:14px; margin-bottom:5px;">✅ Linkiniz Hazır!</div>
-                <div style="font-size:11px; color:#888;">Aşağıdaki linki kopyalayıp <b>NFC Tools</b> uygulaması ile etiketinize yazın.</div>
+                <div style="font-size:11px; color:#888;">Bu linki kopyalayıp NFC Tools ile etiketinize yazın.</div>
                 
                 <div class="result-link" id="finalUrl">...</div>
                 
@@ -92,27 +121,44 @@
 
         <div id="viewer-mode">
             
-            <div id="cardVideo" class="media-card" style="display:none;">
-                <div class="card-header"><i class="fas fa-video"></i> <span>Anı Videosu</span></div>
-                <iframe id="frameVideo" height="250" allow="autoplay; fullscreen"></iframe>
+            <div id="areaVideo" style="display:none;">
+                <div class="section-title">Anı Videosu</div>
+                <div class="video-container">
+                    <iframe id="frameVideo" height="250" allow="autoplay; fullscreen"></iframe>
+                </div>
             </div>
 
-            <div id="cardSes" class="media-card" style="display:none;">
-                <div class="card-header"><i class="fas fa-music"></i> <span>Ses Kaydı</span></div>
-                <iframe id="frameSes" height="80"></iframe>
+            <div id="areaSes" style="display:none; margin-top:20px;">
+                <iframe id="frameSes" height="60" style="width:100%; border-radius:30px; border:1px solid #333;"></iframe>
             </div>
 
-            <div id="cardResim" class="media-card" style="display:none;">
-                <div class="card-header"><i class="fas fa-image"></i> <span>Fotoğraf</span></div>
-                <iframe id="frameResim" height="300"></iframe>
+            <div id="areaResim" style="display:none;">
+                <div class="section-title">Dijital Miras Arşivi</div>
+                
+                <a id="btnAlbum" href="#" target="_blank" class="album-btn" style="display:none;">
+                    <div class="album-info">
+                        <div class="album-icon"><i class="fas fa-folder-open"></i></div>
+                        <div class="album-text">
+                            <h3>Albüme Git</h3>
+                            <p>Tüm resimleri görmek için tıklayın</p>
+                        </div>
+                    </div>
+                    <div class="album-arrow"><i class="fas fa-chevron-right"></i></div>
+                </a>
+
+                <div id="singleImageBox" class="video-container" style="display:none;">
+                    <iframe id="frameResim" height="300"></iframe>
+                </div>
             </div>
 
-            <div id="cardNot" class="media-card" style="display:none;">
-                <div class="card-header"><i class="fas fa-quote-left"></i> <span>Not</span></div>
-                <div id="textNot" class="note-content"></div>
+            <div id="areaNot" style="display:none;">
+                <div class="section-title">Veda Notu</div>
+                <div class="note-card">
+                    <div id="textNot" class="note-text"></div>
+                </div>
             </div>
 
-            <div class="footer">Powered by FthLabz</div>
+            <div class="footer">FTHLABZ DIGITAL MIRAS SYSTEM</div>
         </div>
 
     </div>
@@ -121,82 +167,93 @@
         // Sayfa Yüklendiğinde URL Kontrolü
         const params = new URLSearchParams(window.location.search);
         
-        // Link parametrelerini al (v=Video, s=Ses, r=Resim, n=Not)
+        // Link parametrelerini al
         const v = params.get('v');
         const s = params.get('s');
         const r = params.get('r');
         const n = params.get('n');
 
-        // EĞER URL DOLUYSA -> İZLEME MODUNU AÇ
+        // EĞER URL DOLUYSA -> İZLEME MODU
         if (v || s || r || n) {
-            document.getElementById('creator-mode').style.display = 'none'; // Kurulumu gizle
-            document.getElementById('mainHeader').style.display = 'none'; // Başlığı gizle
-            document.getElementById('viewer-mode').style.display = 'block'; // İzlemeyi aç
+            document.getElementById('creator-mode').style.display = 'none';
+            document.getElementById('mainHeader').style.display = 'none';
+            document.getElementById('viewer-mode').style.display = 'block';
             
+            // Video
             if(v) {
-                document.getElementById('cardVideo').style.display = 'block';
-                document.getElementById('frameVideo').src = cleanDriveLink(v);
+                document.getElementById('areaVideo').style.display = 'block';
+                document.getElementById('frameVideo').src = cleanDriveLink(v, 'video');
             }
+            // Ses
             if(s) {
-                document.getElementById('cardSes').style.display = 'block';
-                document.getElementById('frameSes').src = cleanDriveLink(s);
+                document.getElementById('areaSes').style.display = 'block';
+                document.getElementById('frameSes').src = cleanDriveLink(s, 'video'); // Ses de preview ile çalışır
             }
+            // Resim / Albüm (AKILLI KONTROL)
             if(r) {
-                document.getElementById('cardResim').style.display = 'block';
-                document.getElementById('frameResim').src = cleanDriveLink(r);
+                document.getElementById('areaResim').style.display = 'block';
+                
+                // Link içinde "folders" geçiyorsa bu bir KLASÖRDÜR
+                if(r.includes("folders") || !r.includes("file/d/")) {
+                    const btn = document.getElementById('btnAlbum');
+                    btn.style.display = 'flex';
+                    btn.href = r; // Klasör linkine direkt git (Swipe orada çalışır)
+                } else {
+                    // Tekil dosyaysa göster
+                    const box = document.getElementById('singleImageBox');
+                    box.style.display = 'block';
+                    document.getElementById('frameResim').src = cleanDriveLink(r, 'img');
+                }
             }
+            // Not
             if(n) {
-                document.getElementById('cardNot').style.display = 'block';
-                // Türkçe karakterleri ve boşlukları düzelt
+                document.getElementById('areaNot').style.display = 'block';
                 document.getElementById('textNot').innerText = decodeURIComponent(n);
             }
         } 
         
-        // --- LİNK OLUŞTURMA FONKSİYONU ---
+        // --- LİNK OLUŞTURUCU ---
         function generateLink() {
             const vid = document.getElementById('inVideo').value.trim();
             const ses = document.getElementById('inSes').value.trim();
             const res = document.getElementById('inResim').value.trim();
             const not = document.getElementById('inNot').value.trim();
 
-            if(!vid && !ses && !res && !not) { alert("Lütfen en az bir link ekleyin."); return; }
+            if(!vid && !ses && !res && !not) { alert("Lütfen en az bir içerik ekleyin."); return; }
 
-            // Şu anki site adresini al (https://kullanici.github.io/repo/...)
             const baseUrl = window.location.href.split('?')[0];
-
-            // Parametreleri oluştur
             const newParams = new URLSearchParams();
             if(vid) newParams.set('v', vid);
             if(ses) newParams.set('s', ses);
             if(res) newParams.set('r', res);
             if(not) newParams.set('n', not);
 
-            // Son linki oluştur
             const finalLink = `${baseUrl}?${newParams.toString()}`;
 
-            // Ekrana bas
             document.getElementById('result-area').style.display = 'block';
             document.getElementById('finalUrl').innerText = finalLink;
         }
 
         function copyUrl() {
             const txt = document.getElementById('finalUrl').innerText;
-            navigator.clipboard.writeText(txt).then(() => alert("Kopyalandı! Şimdi NFC Tools ile yazabilirsiniz."));
+            navigator.clipboard.writeText(txt).then(() => alert("Kopyalandı!"));
         }
 
-        // --- DRIVE LİNKİNİ İZLENEBİLİR HALE GETİRME ---
-        function cleanDriveLink(link) {
+        // --- DRIVE LİNK DÜZELTİCİ ---
+        function cleanDriveLink(link, type) {
             if(!link) return "";
             if (!link.includes("drive.google.com")) return link;
             
+            // Eğer bu bir klasör linkiyse dokunma, olduğu gibi döndür
+            if(link.includes("drive.google.com/drive/folders")) return link;
+
             let id = "";
             try {
-                // /d/ID/view veya id=ID formatlarını yakala
                 if (link.includes("/d/")) id = link.split("/d/")[1].split("/")[0];
                 else if (link.includes("id=")) id = link.split("id=")[1].split("&")[0];
             } catch (e) { return link; }
             
-            // "preview" yaparak arayüzsüz oynatmayı sağlar
+            // Sadece izleme modu (Preview)
             return `https://drive.google.com/file/d/${id}/preview`;
         }
     </script>
