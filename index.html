@@ -23,30 +23,31 @@
         /* KURULUM PANELİ */
         #creator-mode { display: block; }
         
-        .guide-box { background: #0a0a0a; border: 1px solid #222; border-radius: 10px; padding: 15px; margin-bottom: 20px; font-size: 11px; color: #aaa; line-height: 1.5; }
-
-        /* TARAMA ALANI */
-        .scan-wrapper {
-            background: #111; border: 1px solid #333; border-radius: 12px; padding: 15px; margin-bottom: 20px;
+        .top-actions {
+            background: #111; border: 1px solid #333; border-radius: 12px; padding: 15px; margin-bottom: 25px;
         }
-        .scan-buttons { display: flex; gap: 10px; margin-bottom: 10px; }
+        .action-title { color: #D4AF37; font-size: 12px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; text-align: center; }
+
+        /* MANUEL LİNK YAPIŞTIRMA (ÖNCELİKLİ) */
+        .manual-paste-area { display: flex; gap: 5px; margin-bottom: 15px; }
+        .paste-input { 
+            flex: 1; background: #000; border: 1px solid #444; color: #fff; padding: 10px; 
+            border-radius: 6px; font-size: 11px; font-family: monospace;
+        }
+        .btn-load { background: #333; color: #D4AF37; border: 1px solid #D4AF37; padding: 0 15px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; }
+
+        /* TARAMA BUTONLARI */
+        .scan-buttons { display: flex; gap: 10px; }
         .scan-btn { 
-            flex: 1; background: #222; border: 1px dashed #D4AF37; color: #D4AF37; 
-            padding: 12px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer;
+            flex: 1; background: #222; border: 1px dashed #555; color: #888; 
+            padding: 10px; border-radius: 8px; font-size: 10px; font-weight: bold; cursor: pointer;
             display: flex; flex-direction: column; align-items: center; gap: 5px;
         }
+        .scan-btn i { font-size: 16px; color: #D4AF37; }
         
-        /* KAMERA GÖRÜNÜMÜ */
-        #reader { 
-            width: 100%; border-radius: 10px; overflow: hidden; display: none; margin-top: 10px; 
-            border: 2px solid #D4AF37; position: relative; background: #000;
-        }
-        /* Dosya input gizli */
+        #reader { width: 100%; border-radius: 12px; overflow: hidden; display: none; margin-top: 15px; border: 2px solid #D4AF37; }
         #qr-input-file { display: none; }
 
-        /* B PLANI: Link Yapıştırma */
-        .manual-paste { margin-top: 10px; display: none; border-top: 1px solid #333; padding-top: 10px; }
-        
         .input-group { margin-bottom: 15px; }
         label { display: block; color: #ccc; font-size: 11px; margin-bottom: 5px; font-weight: bold; text-transform: uppercase; }
         input, textarea { 
@@ -81,11 +82,17 @@
 
         .refresh-icon { position: absolute; top: 0; right: 0; color: #333; padding: 10px; cursor: pointer; }
 
+        /* GİZLİ ADMİN BUTONU */
+        .admin-lock {
+            text-align: center; margin-top: 30px; opacity: 0.3; cursor: pointer; padding: 10px;
+        }
+        .admin-lock i { font-size: 14px; color: #fff; }
+
         /* MODALLAR */
         .modal { position: fixed; inset: 0; background: #000; z-index: 100; display: none; flex-direction: column; animation: fadeIn 0.3s; }
         .modal-head { padding: 20px; background: #111; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; color: #D4AF37; font-family: 'Playfair Display', serif; }
         .close-btn { font-size: 28px; cursor: pointer; padding: 0 10px; }
-        .modal-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .modal-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; align-items: center; justify-content: center; text-align: center; flex-direction: column; }
         .note-content { font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.6; color: #ddd; white-space: pre-wrap; }
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -104,34 +111,24 @@
 
     <div id="creator-mode">
         
-        <div class="guide-box">
-            <b>DÜZENLEME MODU:</b> Mevcut bir albümün içeriğini güncellemek için QR kodunu okutun veya eski linki yapıştırın.
-        </div>
+        <div class="top-actions">
+            <div class="action-title">DÜZENLEME ARAÇLARI</div>
+            
+            <div class="manual-paste-area">
+                <input type="text" id="pasteInput" class="paste-input" placeholder="Düzenlenecek QR Linkini yapıştır...">
+                <button class="btn-load" onclick="loadFromPaste()">YÜKLE</button>
+            </div>
 
-        <div class="scan-wrapper">
             <div class="scan-buttons">
                 <div class="scan-btn" onclick="startCameraScan()">
-                    <i class="fas fa-camera"></i>
-                    <span>KAMERA İLE TARA</span>
+                    <i class="fas fa-camera"></i> <span>QR TARA</span>
                 </div>
                 <div class="scan-btn" onclick="document.getElementById('qr-input-file').click()">
-                    <i class="fas fa-image"></i>
-                    <span>GALERİDEN SEÇ</span>
-                </div>
-                <div class="scan-btn" onclick="toggleManual()">
-                    <i class="fas fa-link"></i>
-                    <span>LİNK YAPIŞTIR</span>
+                    <i class="fas fa-image"></i> <span>FOTOĞRAF</span>
                 </div>
             </div>
-
             <div id="reader"></div>
-            
             <input type="file" id="qr-input-file" accept="image/*" onchange="handleFileScan(this)">
-
-            <div id="manualInput" class="manual-paste">
-                <input type="text" id="pasteLinkInput" placeholder="Eski QR linkini buraya yapıştır..." oninput="parsePastedLink(this.value)">
-                <small style="color:#666;">QR okunamıyorsa linki buraya yapıştırın, otomatik dolar.</small>
-            </div>
         </div>
 
         <div class="input-group">
@@ -160,7 +157,7 @@
             <div style="color:#D4AF37; font-weight:bold; margin-bottom:10px;">✅ YENİ LİNK HAZIR!</div>
             <div class="result-link" id="finalUrl">...</div>
             <button class="btn-copy" onclick="copyUrl()">Linki Kopyala</button>
-            <p style="font-size:10px; color:#666; margin-top:10px;">NFC Tools ile etikete yazın. Masadaki QR değişmez, sadece içerik değişir.</p>
+            <p style="font-size:10px; color:#666; margin-top:10px;">Bu linki NFC Tools ile etikete yazın.</p>
         </div>
     </div>
 
@@ -185,8 +182,8 @@
         
         <div style="text-align:center; margin-top:30px; font-size:10px; color:#333;">POWERED BY FTHLABZ</div>
         
-        <div style="text-align:center; margin-top:20px; opacity:0.3;" onclick="switchToEdit()">
-            <i class="fas fa-cog"></i>
+        <div class="admin-lock" onclick="adminLogin()">
+            <i class="fas fa-lock"></i>
         </div>
     </div>
 
@@ -194,6 +191,15 @@
 
 <div id="modalNot" class="modal"><div class="modal-head"><span>Hikayemiz</span><div class="close-btn" onclick="closeModal('not')">&times;</div></div><div class="modal-body"><div id="contentNot" class="note-content"></div></div></div>
 <div id="modalSes" class="modal"><div class="modal-head"><span>Ses Anısı</span><div class="close-btn" onclick="closeModal('ses')">&times;</div></div><div class="modal-body"><iframe id="contentSes" style="width:90%; height:120px; border:none; border-radius:12px;"></iframe></div></div>
+
+<div id="modalAdmin" class="modal">
+    <div class="modal-head"><span>Yönetici Paneli</span><div class="close-btn" onclick="document.getElementById('modalAdmin').style.display='none'">&times;</div></div>
+    <div class="modal-body">
+        <p style="font-size:13px; color:#ccc; margin-bottom:15px;">Bu kartın mevcut ayarlarını kopyalamak için butona basın.</p>
+        <button class="btn-copy" onclick="copyCurrentLink()">AYARLARI KOPYALA</button>
+        <p style="font-size:10px; color:#666; margin-top:15px;">Kopyaladıktan sonra ana sayfaya dönüp "Link Yapıştır" kutusuna yapıştırarak düzenleme yapabilirsiniz.</p>
+    </div>
+</div>
 
 <script>
     const params = new URLSearchParams(window.location.search);
@@ -212,111 +218,71 @@
         if(f) document.getElementById('btnFolder').style.display = 'flex';
     }
 
-    // --- 1. KAMERA İLE TARAMA (GÜÇLENDİRİLMİŞ AYARLAR) ---
-    let html5QrCode;
-    
+    // --- GİZLİ ADMİN GİRİŞİ ---
+    function adminLogin() {
+        let pass = prompt("Yönetici Şifresi:");
+        if (pass === "fthlabz") {
+            document.getElementById('modalAdmin').style.display = 'flex';
+        } else if (pass) {
+            alert("Hatalı Şifre");
+        }
+    }
+
+    function copyCurrentLink() {
+        // Mevcut sayfanın tam adresini kopyalar (ID görevi görür)
+        const currentUrl = window.location.href;
+        navigator.clipboard.writeText(currentUrl).then(() => {
+            alert("✅ Link/ID Kopyalandı!\nŞimdi ana sayfaya dönüp 'Link Yapıştır' kısmına yapıştırın.");
+            document.getElementById('modalAdmin').style.display='none';
+        });
+    }
+
+    // --- LİNK YAPIŞTIRMA (YÜKLEME) ---
+    function loadFromPaste() {
+        const val = document.getElementById('pasteInput').value;
+        if(!val) { alert("Lütfen bir link yapıştırın."); return; }
+        fillFromUrl(val);
+    }
+
+    // --- KAMERA TARAMA ---
     function startCameraScan() {
         document.getElementById('reader').style.display = 'block';
-        document.getElementById('manualInput').style.display = 'none'; // Manueli kapat
-        
-        html5QrCode = new Html5Qrcode("reader");
-        
-        const config = { 
-            fps: 10, 
-            qrbox: { width: 250, height: 250 },
-            aspectRatio: 1.0,
-            experimentalFeatures: {
-                useBarCodeDetectorIfSupported: true // TELEFONUN KENDİ OKUYUCUSUNU ZORLA
-            }
-        };
-
-        html5QrCode.start(
-            { facingMode: "environment" }, 
-            config,
-            (decodedText, decodedResult) => {
-                // Başarılı Okuma
+        const html5QrCode = new Html5Qrcode("reader");
+        html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 },
+            (decodedText) => {
                 html5QrCode.stop();
                 document.getElementById('reader').style.display = 'none';
                 fillFromUrl(decodedText);
             },
-            (errorMessage) => {
-                // Okumaya çalışıyor...
-            }
-        ).catch(err => {
-            alert("Kamera hatası! Lütfen 'Fotoğraftan Tara' veya 'Link Yapıştır' seçeneğini kullanın.");
-            document.getElementById('reader').style.display = 'none';
-        });
+            () => {}
+        ).catch(err => { alert("Kamera hatası."); document.getElementById('reader').style.display = 'none'; });
     }
 
-    // --- 2. FOTOĞRAFTAN TARAMA ---
+    // --- DOSYA TARAMA ---
     function handleFileScan(input) {
         if (input.files.length === 0) return;
-        
-        const imageFile = input.files[0];
         const html5QrCode = new Html5Qrcode("reader");
-        
-        // Yüksek çözünürlük için dosyayı tara
-        html5QrCode.scanFile(imageFile, true)
-        .then(decodedText => {
-            fillFromUrl(decodedText);
-        })
-        .catch(err => {
-            alert("QR Kod çok karmaşık olduğu için okunamadı. Lütfen 'LİNK YAPIŞTIR' butonunu kullanarak eski linki manuel giriniz.");
-        });
+        html5QrCode.scanFile(input.files[0], true)
+        .then(decodedText => { fillFromUrl(decodedText); })
+        .catch(err => { alert("QR okunamadı."); });
     }
 
-    // --- 3. MANUEL LİNK YAPIŞTIRMA (B PLANI) ---
-    function toggleManual() {
-        const div = document.getElementById('manualInput');
-        div.style.display = div.style.display === 'none' ? 'block' : 'none';
-        if(html5QrCode) { html5QrCode.stop(); document.getElementById('reader').style.display = 'none'; }
-    }
-
-    function parsePastedLink(url) {
-        if(url.includes("?")) {
-            fillFromUrl(url);
-        }
-    }
-
-    // --- ORTAK DOLDURMA FONKSİYONU ---
     function fillFromUrl(url) {
         try {
-            // Tam URL mi yoksa sadece parametre mi geldi kontrol et
-            let urlToParse = url;
-            if(!url.startsWith("http")) {
-                urlToParse = "http://fake.com" + (url.startsWith("?") ? url : "?" + url);
-            }
-            
+            let urlToParse = url.startsWith("http") ? url : "http://fake.com" + (url.startsWith("?") ? url : "?" + url);
             const urlObj = new URL(urlToParse);
             const p = urlObj.searchParams;
             
-            let filled = false;
-            if(p.get('t')) { document.getElementById('inTitle').value = decodeURIComponent(p.get('t')); filled = true; }
-            if(p.get('n')) { document.getElementById('inNot').value = decodeURIComponent(p.get('n')); filled = true; }
-            if(p.get('s')) { document.getElementById('inSes').value = p.get('s'); filled = true; }
-            if(p.get('f')) { document.getElementById('inFolder').value = p.get('f'); filled = true; }
+            if(p.get('t')) document.getElementById('inTitle').value = decodeURIComponent(p.get('t'));
+            if(p.get('n')) document.getElementById('inNot').value = decodeURIComponent(p.get('n'));
+            if(p.get('s')) document.getElementById('inSes').value = p.get('s');
+            if(p.get('f')) document.getElementById('inFolder').value = p.get('f');
             
-            if(filled) {
-                alert("Bilgiler başarıyla yüklendi! Düzenleyip 'Güncelle' butonuna basabilirsiniz.");
-                document.getElementById('manualInput').style.display = 'none'; // İş bitince kapat
-            }
-        } catch(e) {
-            // Hata olursa sessiz kal veya uyar
-            console.log("Link ayrıştırma hatası", e);
-        }
-    }
-    
-    function switchToEdit() {
-        if(confirm("Bu albümü düzenlemek istiyor musunuz?")) {
-            document.getElementById('viewer-mode').style.display = 'none';
-            document.getElementById('creator-mode').style.display = 'block';
-            if(t) document.getElementById('inTitle').value = decodeURIComponent(t);
-            if(n) document.getElementById('inNot').value = decodeURIComponent(n);
-            if(s) document.getElementById('inSes').value = s;
-            if(f) document.getElementById('inFolder').value = f;
-        }
+            alert("Bilgiler Yüklendi! Düzenleyebilirsiniz.");
+        } catch(e) { alert("Link formatı geçersiz."); }
     }
 
+    // --- LİNK OLUŞTURMA ---
     function generateLink() {
         const title = document.getElementById('inTitle').value.trim();
         const not = document.getElementById('inNot').value.trim();
@@ -345,7 +311,6 @@
         document.getElementById('modal' + capitalize(type)).style.display = 'flex';
         if(type === 'ses') document.getElementById('contentSes').src = cleanLink(s);
     }
-
     function openFolder() {
         if(!f) return;
         let mobileLink = f;
@@ -357,12 +322,10 @@
         } catch(e) {}
         window.location.href = mobileLink;
     }
-
     function closeModal(type) {
         document.getElementById('modal' + capitalize(type)).style.display = 'none';
         if(type === 'ses') document.getElementById('contentSes').src = "";
     }
-
     function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
     function cleanLink(l) { 
         if(!l) return "";
