@@ -6,7 +6,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FthLabz - Dijital Miras</title>
+    <title>Dijital Anı Defteri</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -15,28 +15,33 @@
         body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         .container { max-width: 480px; margin: 0 auto; padding: 20px; min-height: 100vh; box-sizing: border-box; position: relative; }
         
-        /* HEADER */
-        .header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #222; }
-        .header h1 { color: #D4AF37; margin: 0; font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 2px; }
-        .header p { color: #666; font-size: 10px; letter-spacing: 3px; margin-top: 5px; text-transform: uppercase; }
+        /* HEADER (Üst Kısım) */
+        .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #222; }
+        .header h1 { color: #D4AF37; margin: 0; font-family: 'Playfair Display', serif; font-size: 28px; letter-spacing: 1px; text-transform: uppercase; line-height: 1.3; }
+        
+        /* ANLAMLI YAZI (Slogan) */
+        .slogan-text { 
+            color: #888; font-size: 13px; font-style: italic; margin-top: 15px; 
+            line-height: 1.6; font-family: 'Playfair Display', serif; 
+            padding: 0 10px;
+        }
 
-        /* YENİLE BUTONU (Sadece Creator) */
+        /* YENİLE BUTONU (Sadece Kurulumda) */
         .refresh-btn {
             position: absolute; top: 0; right: 0;
             background: #1a1a1a; color: #D4AF37; border: 1px solid #333;
             width: 35px; height: 35px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; font-size: 14px; z-index: 10;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* --- MÜŞTERİ PANELİ --- */
+        /* --- KURULUM PANELİ --- */
         #creator-mode { display: block; position: relative; }
         
-        .guide-box { background: #111; border: 1px solid #333; border-radius: 12px; padding: 20px; margin-bottom: 30px; margin-top: 20px; }
-        .guide-step { font-size: 13px; color: #ccc; margin-bottom: 12px; display: flex; gap: 12px; line-height: 1.5; }
+        .guide-box { background: #111; border: 1px solid #333; border-radius: 12px; padding: 15px; margin-bottom: 25px; margin-top: 10px; }
+        .guide-step { font-size: 12px; color: #ccc; margin-bottom: 8px; display: flex; gap: 10px; line-height: 1.4; }
         .guide-step i { color: #D4AF37; margin-top: 3px; font-size: 14px; }
-        .warning-text { color: #ff4444; font-weight: bold; text-decoration: underline; }
+        .warning-text { color: #ff4444; font-weight: bold; }
 
         .btn-drive {
             display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -47,7 +52,7 @@
         .btn-drive i { color: #1FA463; font-size: 18px; }
 
         .input-group { margin-bottom: 20px; }
-        .input-label { color: #eee; font-size: 12px; font-weight: 600; margin-bottom: 8px; display: block; text-transform: uppercase; }
+        .input-label { color: #eee; font-size: 12px; font-weight: 600; margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
         .input-label i { color: #D4AF37; width: 20px; }
         
         .paste-wrapper { display: flex; gap: 8px; }
@@ -72,8 +77,8 @@
         .btn-copy { background: #333; color: #fff; border: 1px solid #555; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 12px; }
         .btn-reset-large { width: 100%; background: #111; border: 1px solid #333; color: #888; padding: 15px; border-radius: 10px; margin-top: 30px; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- MİSAFİR PANELİ --- */
-        #viewer-mode { display: none; padding-top: 20px; }
+        /* --- İZLEYİCİ PANELİ --- */
+        #viewer-mode { display: none; padding-top: 10px; }
 
         .menu-btn { 
             background: #111; border: 1px solid #222; border-radius: 16px; 
@@ -110,8 +115,8 @@
     <div class="container">
         
         <div class="header" id="mainHeader">
-            <h1>FthLabz</h1>
-            <p>Digital Miras</p>
+            <h1 id="pageTitle">FthLabz</h1>
+            <p id="sloganText" class="slogan-text">"Geçmişten geleceğe bırakılan en değerli miras,<br>sevgiyle hatırlanan anılardır."</p>
         </div>
 
         <div id="creator-mode">
@@ -121,10 +126,10 @@
             </div>
 
             <div class="guide-box">
-                <div class="guide-step"><i class="fas fa-1"></i> <span>Drive'da resimlerinizi seçip bir klasöre koyun.</span></div>
-                <div class="guide-step"><i class="fas fa-2"></i> <span>"Paylaş" > "Erişimi Yönet" kısmına girin.</span></div>
-                <div class="guide-step"><i class="fas fa-3"></i> <span><span class="warning-text">"Bağlantıya sahip herkes"</span> ve <span class="warning-text">"Görüntüleyen"</span> seçin.</span></div>
-                <div class="guide-step"><i class="fas fa-4"></i> <span>Bağlantıyı kopyalayıp kutuya yapıştırın.</span></div>
+                <div class="guide-step"><i class="fas fa-1"></i> <span>Drive'da bir albüm veya dosya oluşturun.</span></div>
+                <div class="guide-step"><i class="fas fa-2"></i> <span>Bağlantı ayarını <span class="warning-text">"Herkes"</span> ve <span class="warning-text">"Görüntüleyen"</span> yapın.</span></div>
+                <div class="guide-step"><i class="fas fa-3"></i> <span>Aşağıdaki kutuları doldurup QR'ınızı oluşturun.</span></div>
+                <div class="guide-step"><i class="fas fa-heart" style="color:#D4AF37"></i> <span>Bu sistem; bebek albümleri, anı defterleri veya özel günler için uygundur.</span></div>
             </div>
             
             <a href="https://drive.google.com" target="_blank" class="btn-drive">
@@ -132,14 +137,21 @@
             </a>
 
             <div class="input-group">
-                <label class="input-label"><i class="fas fa-pen-nib"></i> Günlük Mesaj (Veda Notu)</label>
+                <label class="input-label"><i class="fas fa-heading"></i> Albüm Başlığı (Örn: Zehra'nın Anıları)</label>
                 <div class="paste-wrapper">
-                    <textarea id="inNot" rows="3" placeholder="Mesajınızı yazın..."></textarea>
+                    <input type="text" id="inTitle" placeholder="Sayfanın en üstünde görünecek isim...">
                 </div>
             </div>
 
             <div class="input-group">
-                <label class="input-label"><i class="fas fa-microphone"></i> Günlük Sesli Mesaj Linki</label>
+                <label class="input-label"><i class="fas fa-book-open"></i> Hikayemiz / Anı Defteri</label>
+                <div class="paste-wrapper">
+                    <textarea id="inNot" rows="3" placeholder="Bu anının hikayesini yazın..."></textarea>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-music"></i> Ses Anısı (Bebek Sesi / Mesaj)</label>
                 <div class="paste-wrapper">
                     <input type="text" id="inSes" placeholder="Ses linki...">
                     <button class="btn-paste" onclick="pasteFromClipboard('inSes')"><i class="fas fa-paste"></i></button>
@@ -147,14 +159,14 @@
             </div>
 
             <div class="input-group">
-                <label class="input-label"><i class="fas fa-folder-open"></i> Dijital Miras Klasörü Linki</label>
+                <label class="input-label"><i class="fas fa-images"></i> Fotoğraf Albümü Linki</label>
                 <div class="paste-wrapper">
-                    <input type="text" id="inFolder" placeholder="Klasör linki...">
+                    <input type="text" id="inFolder" placeholder="Drive klasör linki...">
                     <button class="btn-paste" onclick="pasteFromClipboard('inFolder')"><i class="fas fa-paste"></i></button>
                 </div>
             </div>
 
-            <button class="btn-gold" onclick="generateLink()">Link Oluştur</button>
+            <button class="btn-gold" onclick="generateLink()">Albümü Oluştur</button>
 
             <div id="result-area">
                 <div style="color:#D4AF37; font-weight:bold; font-size:14px; margin-bottom:10px;">✅ NFC LİNKİNİZ HAZIR!</div>
@@ -165,24 +177,25 @@
         </div>
 
         <div id="viewer-mode">
+            
             <div id="btnNot" class="menu-btn" onclick="openModal('not')" style="display:none;">
-                <div class="menu-left"><div class="menu-icon"><i class="fas fa-pen-nib"></i></div><div class="menu-text"><h3>Günlük Mesaj</h3><p>Okumak için dokun</p></div></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="menu-left"><div class="menu-icon"><i class="fas fa-book-open"></i></div><div class="menu-text"><h3>Hikayemiz</h3><p>Notu okumak için dokun</p></div></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
             </div>
             
             <div id="btnSes" class="menu-btn" onclick="openModal('ses')" style="display:none;">
-                <div class="menu-left"><div class="menu-icon"><i class="fas fa-microphone"></i></div><div class="menu-text"><h3>Sesli Mesaj</h3><p>Dinlemek için dokun</p></div></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="menu-left"><div class="menu-icon"><i class="fas fa-music"></i></div><div class="menu-text"><h3>Ses Anısı</h3><p>Dinlemek için dokun</p></div></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div>
             </div>
             
             <div id="btnFolder" class="menu-btn" onclick="openFolder()" style="display:none;">
-                <div class="menu-left"><div class="menu-icon"><i class="fas fa-folder-open"></i></div><div class="menu-text"><h3>Dijital Miras Klasörü</h3><p>Albüme gitmek için dokun</p></div></div><div class="menu-arrow"><i class="fas fa-external-link-alt"></i></div>
+                <div class="menu-left"><div class="menu-icon"><i class="fas fa-images"></i></div><div class="menu-text"><h3>Fotoğraf Albümü</h3><p>İncelemek için dokun</p></div></div><div class="menu-arrow"><i class="fas fa-external-link-alt"></i></div>
             </div>
             
             <div class="footer">POWERED BY FTHLABZ</div>
         </div>
     </div>
 
-    <div id="modalNot" class="fullscreen-modal"><div class="modal-header"><span class="modal-title">Günlük Mesaj</span><div class="close-icon" onclick="closeModal('not')">&times;</div></div><div class="modal-body"><div id="contentNot" class="note-container"></div></div></div>
-    <div id="modalSes" class="fullscreen-modal"><div class="modal-header"><span class="modal-title">Sesli Mesaj</span><div class="close-icon" onclick="closeModal('ses')">&times;</div></div><div class="modal-body"><div class="audio-container"><i class="fas fa-volume-up audio-anim"></i><iframe id="contentSes" style="width:90%; height:100px; border:none; border-radius:12px;"></iframe></div></div></div>
+    <div id="modalNot" class="fullscreen-modal"><div class="modal-header"><span class="modal-title">Hikayemiz</span><div class="close-icon" onclick="closeModal('not')">&times;</div></div><div class="modal-body"><div id="contentNot" class="note-container"></div></div></div>
+    <div id="modalSes" class="fullscreen-modal"><div class="modal-header"><span class="modal-title">Ses Anısı</span><div class="close-icon" onclick="closeModal('ses')">&times;</div></div><div class="modal-body"><div class="audio-container"><i class="fas fa-volume-up audio-anim"></i><iframe id="contentSes" style="width:90%; height:100px; border:none; border-radius:12px;"></iframe></div></div></div>
 
     <script>
         function resetApp() { window.location.href = window.location.pathname; }
@@ -198,19 +211,24 @@
         }
 
         const params = new URLSearchParams(window.location.search);
-        const n = params.get('n');
-        const s = params.get('s');
-        const f = params.get('f');
+        const t = params.get('t'); // Title
+        const n = params.get('n'); // Not
+        const s = params.get('s'); // Ses
+        const f = params.get('f'); // Folder
+
+        // Başlığı ayarla
+        if(t) {
+            document.getElementById('pageTitle').innerText = decodeURIComponent(t);
+        }
 
         if (n || s || f) {
             document.getElementById('creator-mode').style.display = 'none';
-            document.getElementById('mainHeader').style.display = 'none';
             document.getElementById('viewer-mode').style.display = 'block';
 
+            // ARTIK OTOMATİK AÇILMA YOK. Sadece butonu gösteriyoruz.
             if(n) { 
                 document.getElementById('btnNot').style.display = 'flex'; 
                 document.getElementById('contentNot').innerText = decodeURIComponent(n); 
-                openModal('not'); 
             }
 
             if(s) document.getElementById('btnSes').style.display = 'flex';
@@ -218,15 +236,21 @@
         }
 
         function generateLink() {
+            const title = document.getElementById('inTitle').value.trim();
             const not = document.getElementById('inNot').value.trim();
             const ses = document.getElementById('inSes').value.trim();
             const folder = document.getElementById('inFolder').value.trim();
+
             if(!not && !ses && !folder) { alert("Lütfen en az bir içerik ekleyin."); return; }
+
             const baseUrl = window.location.href.split('?')[0];
             const p = new URLSearchParams();
+            
+            if(title) p.set('t', title);
             if(not) p.set('n', not);
             if(ses) p.set('s', ses);
             if(folder) p.set('f', folder);
+            
             const final = `${baseUrl}?${p.toString()}`;
             document.getElementById('result-area').style.display = 'block';
             document.getElementById('finalUrl').innerText = final;
@@ -241,10 +265,8 @@
             if(type === 'ses') document.getElementById('contentSes').src = cleanLink(s);
         }
 
-        // --- TAM EKRAN AÇILMA GARANTİLİ FONKSİYON ---
         function openFolder() {
             if(!f) return;
-            
             let mobileLink = f;
             try {
                 if(f.includes("/folders/")) {
@@ -252,8 +274,6 @@
                     mobileLink = `https://drive.google.com/drive/folders/${id}?usp=sharing`;
                 }
             } catch(e) {}
-
-            // location.href = SAYFAYI YÖNLENDİR (Uygulama veya Mobil Siteyi Zorlar)
             window.location.href = mobileLink;
         }
 
