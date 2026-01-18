@@ -21,10 +21,17 @@
 
         /* KURULUM PANELİ */
         #setup-panel { display: none; }
-        .guide-box { background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 25px; }
-        .guide-step { font-size: 11px; color: #ccc; margin-bottom: 12px; display: flex; gap: 10px; line-height: 1.5; border-bottom: 1px solid #222; padding-bottom: 8px; }
-        .guide-step:last-child { border-bottom: none; }
-        .guide-step i { color: #D4AF37; margin-top: 3px; font-size: 14px; min-width: 20px; }
+        
+        /* DETAYLI REHBER KUTUSU */
+        .guide-box { background: #111; padding: 20px; border-radius: 12px; border: 1px solid #333; margin-bottom: 25px; }
+        .guide-title { color: #D4AF37; font-weight: bold; font-size: 14px; margin-bottom: 15px; display: block; text-align: center; border-bottom: 1px dashed #333; padding-bottom: 10px; }
+        
+        .guide-section { margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 15px; }
+        .guide-section:last-child { border-bottom: none; }
+        .guide-h { color: #fff; font-size: 12px; font-weight: bold; margin-bottom: 8px; display:flex; align-items:center; gap:8px;}
+        .guide-h i { color: #D4AF37; }
+        .guide-p { font-size: 11px; color: #ccc; line-height: 1.5; margin-left: 20px; }
+        .guide-p b { color: #fff; }
 
         .privacy-alert { background: rgba(255, 0, 0, 0.1); border: 1px solid #ff4444; color: #ffcccc; padding: 12px; border-radius: 8px; font-size: 10px; line-height: 1.4; margin-bottom: 20px; text-align: center; }
 
@@ -80,11 +87,41 @@
         <h3 style="color:#D4AF37; text-align:center; margin-bottom:20px;">ALBÜM KURULUMU</h3>
         
         <div class="guide-box">
-            <span class="guide-title">NASIL YAPILIR?</span>
-            <div class="guide-step"><i class="fab fa-google-drive"></i> <span>Google Drive'da Video, Resim ve Sesler için <b>3 ayrı klasör</b> oluşturun.</span></div>
-            <div class="guide-step"><i class="fas fa-link"></i> <span>Her klasörün paylaşım ayarını <b>"Bağlantıya sahip herkes"</b> yapıp linkleri aşağıya yapıştırın.</span></div>
-        </div>
+            <span class="guide-title">LÜTFEN OKUYUN: ADIM ADIM KURULUM</span>
+            
+            <div class="guide-section">
+                <div class="guide-h"><i class="fab fa-google-drive"></i> 1. HAZIRLIK (Google Drive)</div>
+                <div class="guide-p">
+                    Telefonunuzda <b>Google Drive</b> uygulamasını açın.<br>
+                    <b>(+)</b> butonuna basıp <b>3 Tane Klasör</b> oluşturun ve şu isimleri verin:<br>
+                    1. Klasör: <b>VİDEOLAR</b><br>
+                    2. Klasör: <b>RESİMLER</b><br>
+                    3. Klasör: <b>SESLER</b>
+                </div>
+            </div>
 
+            <div class="guide-section">
+                <div class="guide-h"><i class="fas fa-upload"></i> 2. YÜKLEME</div>
+                <div class="guide-p">
+                    Çektiğiniz videoları Video klasörüne, resimleri Resim klasörüne, ses kayıtlarını Ses klasörüne yükleyin.
+                </div>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-h"><i class="fas fa-globe"></i> 3. ÇOK ÖNEMLİ: İZİN AYARI</div>
+                <div class="guide-p">
+                    Her klasörün yanındaki <b>(3 Nokta)</b> > <b>Erişimi Yönet</b> menüsüne girin.<br>
+                    "Kısıtlanmış" yazan yeri değiştirip <b>"Bağlantıya sahip herkes"</b> yapın.
+                </div>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-h"><i class="fas fa-copy"></i> 4. LİNKLERİ YAPIŞTIRMA</div>
+                <div class="guide-p">
+                    Her klasörün linkini kopyalayıp (zincir ikonu), aşağıda o klasöre ait olan kutucuğa yapıştırın.
+                </div>
+            </div>
+        </div>
         <div class="privacy-alert"><i class="fas fa-lock"></i> Şifrenizi unutursanız veriler kurtarılamaz.</div>
 
         <label>1. Albüm Başlığı</label>
@@ -94,15 +131,15 @@
         <textarea id="inNot" rows="3" placeholder="Buraya anılarınızı yazın..."></textarea>
         
         <label>3. Günlük Sesli Mesaj Linki (Opsiyonel)</label>
-        <input type="text" id="inSes" placeholder="Günlük değişecek ses linki...">
+        <input type="text" id="inSes" placeholder="Tek bir ses dosyasının linki (Günlük Değişebilir)">
 
         <label style="color:#D4AF37; border-top:1px dashed #333; padding-top:10px; margin-top:10px;">4. KLASÖR LİNKLERİ (ZORUNLU)</label>
         
-        <input type="text" id="inVideoLink" placeholder="VİDEO Klasör Linki">
-        <input type="text" id="inPhotoLink" placeholder="RESİM Klasör Linki">
-        <input type="text" id="inSoundLink" placeholder="SES ARŞİVİ Klasör Linki">
+        <input type="text" id="inVideoLink" placeholder="VİDEOLAR Klasörünün Linkini Buraya Yapıştırın">
+        <input type="text" id="inPhotoLink" placeholder="RESİMLER Klasörünün Linkini Buraya Yapıştırın">
+        <input type="text" id="inSoundLink" placeholder="SESLER Klasörünün Linkini Buraya Yapıştırın">
         
-        <label style="color:#D4AF37; margin-top:15px;">YÖNETİCİ ŞİFRESİ</label>
+        <label style="color:#D4AF37; margin-top:15px;">YÖNETİCİ ŞİFRESİ BELİRLEYİN</label>
         <input type="password" id="inPass" placeholder="Örn: 1234">
 
         <button class="btn-gold" onclick="saveData()">ŞİFRELE VE KAYDET</button>
@@ -156,7 +193,7 @@
 </div>
 
 <script>
-    // SENİN LİNKİN AYNI KALDI
+    // SENİN LİNKİN AYNI:
     const API_URL = "https://script.google.com/macros/s/AKfycbypgMb5URFmLu5aHqqOACygD3jk4jj9ZygbkKXvLlVHrncHSkC-T74DBV6g5JNstX9bUA/exec"; 
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -199,11 +236,10 @@
             const bytesNot = CryptoJS.AES.decrypt(encryptedData.not, pass);
             const not = bytesNot.toString(CryptoJS.enc.Utf8);
             
-            // BURADA SİHİRBAZLIK YAPIYORUZ: Folder verisi artık 3 parçalı bir paket
+            // PAKETİ AÇ
             const bytesFolder = CryptoJS.AES.decrypt(encryptedData.folder, pass);
             const combinedFolder = bytesFolder.toString(CryptoJS.enc.Utf8);
             
-            // Paketi açıyoruz: (Video ||| Resim ||| Ses)
             const parts = combinedFolder.split('|||');
             const videoLink = parts[0] || "";
             const photoLink = parts[1] || "";
@@ -217,13 +253,12 @@
 
             if(!title) throw "Hatalı Şifre";
 
-            // VERİLERİ SAKLA (Düzenleme için)
             pageData = { title, not, ses, videoLink, photoLink, soundLink, pass };
             
             document.getElementById('displayTitle').innerText = title;
             document.getElementById('contentNot').innerText = not;
             
-            // 1. GÜNLÜK SES
+            // BUTONLARI AYARLA
             if(ses && ses.length > 5) {
                 document.getElementById('btnSes').href = ses;
                 document.getElementById('btnSes').style.display = "flex";
@@ -231,15 +266,12 @@
                 document.getElementById('btnSes').style.display = "none";
             }
 
-            // 2. VİDEO BUTONU
             if(videoLink) { document.getElementById('btnVideo').href = videoLink; } 
             else { document.getElementById('btnVideo').style.display = 'none'; }
 
-            // 3. RESİM BUTONU
             if(photoLink) { document.getElementById('btnPhoto').href = photoLink; } 
             else { document.getElementById('btnPhoto').style.display = 'none'; }
 
-            // 4. SES ARŞİV BUTONU
             if(soundLink) { document.getElementById('btnSound').href = soundLink; } 
             else { document.getElementById('btnSound').style.display = 'none'; }
 
@@ -256,7 +288,6 @@
         const pass = document.getElementById('inPass').value;
         if(!pass) return alert("Lütfen güvenlik için bir şifre belirleyin!");
         
-        // 3 AYRI LİNKİ ALIP TEK PAKET YAPIYORUZ (Video|||Resim|||Ses)
         const v = document.getElementById('inVideoLink').value.trim();
         const p = document.getElementById('inPhotoLink').value.trim();
         const s = document.getElementById('inSoundLink').value.trim();
@@ -272,7 +303,6 @@
         try {
             const encTitle = CryptoJS.AES.encrypt(document.getElementById('inTitle').value, pass).toString();
             const encNot = CryptoJS.AES.encrypt(document.getElementById('inNot').value, pass).toString();
-            // Paketlenmiş linki şifreliyoruz
             const encFolder = CryptoJS.AES.encrypt(combinedFolder, pass).toString();
             const encSes = CryptoJS.AES.encrypt(document.getElementById('inSes').value, pass).toString();
 
@@ -301,7 +331,6 @@
             document.getElementById('inSes').value = pageData.ses;
             document.getElementById('inPass').value = pageData.pass; 
             
-            // Paketi açıp inputlara geri koyuyoruz
             document.getElementById('inVideoLink').value = pageData.videoLink;
             document.getElementById('inPhotoLink').value = pageData.photoLink;
             document.getElementById('inSoundLink').value = pageData.soundLink;
