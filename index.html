@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Yönlendiriliyor...</title>
+    <script>
+        // 1. QR'dan gelen ID numarasını yakala (Örn: ?id=1001)
+        const gelenID = window.location.search;
+        
+        // 2. Yeni Render adresine bu ID ile birlikte fırlat
+        // DİKKAT: Buradaki link senin çalışan Render linkin olmalı
+        const yeniAdres = "https://digital-miras.onrender.com/" + gelenID;
+        
+        window.location.href = yeniAdres;
+    </script>
+    <meta http-equiv="refresh" content="0; url=https://digital-miras.onrender.com/">
+</head>
+<body>
+    <p style="text-align:center; padding-top:50px; font-family:sans-serif;">
+        Yeni sisteme yönlendiriliyorsunuz...<br>
+        <a href="https://digital-miras.onrender.com/">Tıklayın</a>
+    </p>
+</body>
+</html>
