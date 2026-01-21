@@ -9,32 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* --- TEMEL AYARLAR (BETON GİBİ KİLİTLEME) --- */
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        html, body {
-            background-color: #000; color: #fff; font-family: 'Inter', sans-serif; 
-            margin: 0; padding: 0; 
-            width: 100%; height: 100%;
-            overflow-x: hidden; /* YATAY KAYMAYI KESİN ENGELLE */
-            position: fixed; /* Sayfanın komple kaymasını engeller */
-            top: 0; left: 0;
-        }
-
-        /* Ana Kaydırılabilir Alan */
-        .scroll-wrapper {
-            width: 100%; height: 100%;
-            overflow-y: auto; /* Sadece aşağı yukarı kaydır */
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .container { 
-            max-width: 480px; margin: 0 auto; 
-            display: flex; flex-direction: column; 
-            padding: 20px; 
-            min-height: 100vh;
-        }
+        /* --- GENEL AYARLAR --- */
+        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 20px; -webkit-tap-highlight-color: transparent; }
+        .container { max-width: 480px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
         
         /* HEADER */
         .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #222; }
@@ -66,18 +43,15 @@
         input:focus, textarea:focus { border-color: #D4AF37; outline: none; background: #050505; }
         .main-btn { width: 100%; background: #D4AF37; color: #000; padding: 18px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 30px; font-size: 14px; letter-spacing: 1px; }
 
-        /* --- MODAL (GÖRÜNTÜLEYİCİ) --- */
+        /* MODAL (GÖRÜNTÜLEYİCİ) */
         #viewer-modal {
-            position: fixed; inset: 0; 
-            background: #000; 
-            z-index: 9999; 
-            display: none; flex-direction: column;
-            width: 100%; height: 100%;
+            position: fixed; inset: 0; background: #000; z-index: 999; display: none; flex-direction: column;
+            opacity: 0; transition: opacity 0.4s ease;
         }
+        #viewer-modal.show { opacity: 1; }
 
         .viewer-header {
-            height: 60px; flex-shrink: 0;
-            border-bottom: 1px solid #222; 
+            height: 60px; border-bottom: 1px solid #222; 
             display: flex; align-items: center; justify-content: space-between; 
             padding: 0 15px; background: #050505;
         }
@@ -88,17 +62,9 @@
         .close-viewer i { color: #D4AF37; font-size: 18px; }
         .viewer-title { color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 18px; letter-spacing: 0.5px; }
         
-        .iframe-container { 
-            flex: 1; 
-            width: 100%; height: 100%; 
-            background: #000;
-            overflow: hidden; /* Iframe taşmasın */
-        }
-
-        .drive-embed { 
-            border: none; width: 100%; height: 100%; 
-            display: block; 
-        }
+        .iframe-container { flex: 1; position: relative; width: 100%; height: 100%; background: #000; }
+        .drive-embed { border: none; width: 100%; height: 100%; background: #000; opacity: 0; transition: opacity 0.8s ease; }
+        .drive-embed.loaded { opacity: 1; }
 
         .loading-text {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -118,54 +84,52 @@
 </head>
 <body>
 
-<div class="scroll-wrapper">
-    <div class="container">
-        <div class="header"><h1>FthLabz</h1><p class="slogan">"Geçmişten geleceğe bırakılan en değerli miras..."</p></div>
+<div class="container">
+    <div class="header"><h1>FthLabz</h1><p class="slogan">"Geçmişten geleceğe bırakılan en değerli miras..."</p></div>
+    
+    <div id="loading">SİSTEM HAZIRLANIYOR...</div>
+
+    <div id="password-screen" class="panel">
+        <div class="lock-icon"><i class="fas fa-lock"></i></div>
+        <p style="color:#888; font-size:13px; margin-bottom:20px;">Bu albüm şifrelenmiştir.</p>
+        <input type="password" id="unlockPass" placeholder="Şifreniz..." style="text-align:center; font-size:18px; letter-spacing: 3px;">
+        <button class="main-btn" onclick="unlockAlbum()">GİRİŞ YAP</button>
+    </div>
+
+    <div id="setup-panel" class="panel">
+        <div class="gold-card"><h2 class="user-title">Albüm Kurulumu</h2><p style="font-size:11px; color:#888;">Lütfen Drive linklerinizi girin.</p></div>
+        <label>1. ALBÜM BAŞLIĞI</label><input type="text" id="inTitle" placeholder="Örn: Canım Ailem">
+        <label>2. ANI DEFTERİM (NOTUNUZ)</label><textarea id="inNot" rows="4" placeholder="Anılarınızı buraya yazın..."></textarea>
+        <label>3. GÜNLÜK SESLİ MESAJ LİNKİ (OPSİYONEL)</label><input type="text" id="inSes" placeholder="Drive dosya linki">
+        <div style="border-top: 1px dashed #333; margin-top: 25px; padding-top:10px;">
+            <label style="color:#fff;">4. KLASÖR LİNKLERİ (ZORUNLU)</label>
+            <p style="font-size:10px; color:#666; margin-bottom:10px;">Klasörleriniz "Bağlantıya Sahip Herkes" modunda olmalıdır.</p>
+            <input type="text" id="inVideoLink" placeholder="VİDEOLAR Klasör Linki" style="margin-bottom:10px;">
+            <input type="text" id="inPhotoLink" placeholder="RESİMLER Klasör Linki" style="margin-bottom:10px;">
+            <input type="text" id="inSoundLink" placeholder="SESLER Klasör Linki">
+        </div>
         
-        <div id="loading">SİSTEM HAZIRLANIYOR...</div>
+        <label style="color:#D4AF37; margin-top:20px;">YÖNETİCİ ŞİFRESİ BELİRLEYİN</label>
+        <input type="password" id="inPass" placeholder="Şifrenizi Girin">
+        <input type="password" id="inPassConfirm" placeholder="Şifreyi Tekrar Girin (Doğrulama)" style="margin-top:10px; border-color:#555;">
+        
+        <button class="main-btn" onclick="saveData()">ŞİFRELE VE KAYDET</button><br><br>
+    </div>
 
-        <div id="password-screen" class="panel">
-            <div class="lock-icon"><i class="fas fa-lock"></i></div>
-            <p style="color:#888; font-size:13px; margin-bottom:20px;">Bu albüm şifrelenmiştir.</p>
-            <input type="password" id="unlockPass" placeholder="Şifreniz..." style="text-align:center; font-size:18px; letter-spacing: 3px;">
-            <button class="main-btn" onclick="unlockAlbum()">GİRİŞ YAP</button>
-        </div>
-
-        <div id="setup-panel" class="panel">
-            <div class="gold-card"><h2 class="user-title">Albüm Kurulumu</h2><p style="font-size:11px; color:#888;">Lütfen Drive linklerinizi girin.</p></div>
-            <label>1. ALBÜM BAŞLIĞI</label><input type="text" id="inTitle" placeholder="Örn: Canım Ailem">
-            <label>2. ANI DEFTERİM (NOTUNUZ)</label><textarea id="inNot" rows="4" placeholder="Anılarınızı buraya yazın..."></textarea>
-            <label>3. GÜNLÜK SESLİ MESAJ LİNKİ (OPSİYONEL)</label><input type="text" id="inSes" placeholder="Drive dosya linki">
-            <div style="border-top: 1px dashed #333; margin-top: 25px; padding-top:10px;">
-                <label style="color:#fff;">4. KLASÖR LİNKLERİ (ZORUNLU)</label>
-                <p style="font-size:10px; color:#666; margin-bottom:10px;">Klasörleriniz "Bağlantıya Sahip Herkes" modunda olmalıdır.</p>
-                <input type="text" id="inVideoLink" placeholder="VİDEOLAR Klasör Linki" style="margin-bottom:10px;">
-                <input type="text" id="inPhotoLink" placeholder="RESİMLER Klasör Linki" style="margin-bottom:10px;">
-                <input type="text" id="inSoundLink" placeholder="SESLER Klasör Linki">
-            </div>
-            
-            <label style="color:#D4AF37; margin-top:20px;">YÖNETİCİ ŞİFRESİ BELİRLEYİN</label>
-            <input type="password" id="inPass" placeholder="Şifrenizi Girin">
-            <input type="password" id="inPassConfirm" placeholder="Şifreyi Tekrar Girin (Doğrulama)" style="margin-top:10px; border-color:#555;">
-            
-            <button class="main-btn" onclick="saveData()">ŞİFRELE VE KAYDET</button><br><br>
-        </div>
-
-        <div id="view-panel" class="panel">
-            <div class="gold-card"><h2 id="displayTitle" class="user-title">...</h2></div>
-            
-            <div class="menu-btn" onclick="openTextModal()"><div class="menu-icon"><i class="fas fa-book"></i></div><div class="menu-text"><h3>Anı Defterim</h3><p>Okumak için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
-            
-            <div id="btnSes" class="menu-btn" onclick="openAudioPlayer()"><div class="menu-icon"><i class="fas fa-microphone"></i></div><div class="menu-text"><h3>Günlük Sesli Mesaj</h3><p>Dinlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-play"></i></div></div>
-            
-            <div id="btnVideo" class="menu-btn" onclick="openDriveViewer('video')"><div class="menu-icon"><i class="fas fa-video"></i></div><div class="menu-text"><h3>Dijital Albüm Videolar</h3><p>İzlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
-            
-            <div id="btnPhoto" class="menu-btn" onclick="openDriveViewer('photo')"><div class="menu-icon"><i class="fas fa-images"></i></div><div class="menu-text"><h3>Dijital Albüm Resimler</h3><p>Görüntülemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
-            
-            <div id="btnSound" class="menu-btn" onclick="openDriveViewer('sound')"><div class="menu-icon"><i class="fas fa-music"></i></div><div class="menu-text"><h3>Dijital Albüm Sesler</h3><p>Arşivi dinlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
-            
-            <div style="text-align:center; margin-top:20px; opacity:0.3; font-size:10px;"><span onclick="enableEdit()">Düzenle</span></div>
-        </div>
+    <div id="view-panel" class="panel">
+        <div class="gold-card"><h2 id="displayTitle" class="user-title">...</h2></div>
+        
+        <div class="menu-btn" onclick="openTextModal()"><div class="menu-icon"><i class="fas fa-book"></i></div><div class="menu-text"><h3>Anı Defterim</h3><p>Okumak için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
+        
+        <div id="btnSes" class="menu-btn" onclick="openAudioPlayer()"><div class="menu-icon"><i class="fas fa-microphone"></i></div><div class="menu-text"><h3>Günlük Sesli Mesaj</h3><p>Dinlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-play"></i></div></div>
+        
+        <div id="btnVideo" class="menu-btn" onclick="openDriveViewer('video')"><div class="menu-icon"><i class="fas fa-video"></i></div><div class="menu-text"><h3>Dijital Albüm Videolar</h3><p>İzlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
+        
+        <div id="btnPhoto" class="menu-btn" onclick="openDriveViewer('photo')"><div class="menu-icon"><i class="fas fa-images"></i></div><div class="menu-text"><h3>Dijital Albüm Resimler</h3><p>Görüntülemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
+        
+        <div id="btnSound" class="menu-btn" onclick="openDriveViewer('sound')"><div class="menu-icon"><i class="fas fa-music"></i></div><div class="menu-text"><h3>Dijital Albüm Sesler</h3><p>Arşivi dinlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
+        
+        <div style="text-align:center; margin-top:20px; opacity:0.3; font-size:10px;"><span onclick="enableEdit()">Düzenle</span></div>
     </div>
 </div>
 
@@ -199,7 +163,7 @@
     function frameLoaded() {
         const textLoader = document.querySelector('.loading-text');
         const iframe = document.getElementById('drive-frame');
-        textLoader.style.display = 'none'; iframe.style.opacity = '1'; 
+        textLoader.style.display = 'none'; iframe.classList.add('loaded'); 
     }
 
     function openDriveViewer(type) { 
@@ -214,13 +178,15 @@
         const textLoader = document.querySelector('.loading-text');
 
         if(folderId) { 
+            // GRID Modu - En iyi galeri deneyimi için
             const embedUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}#grid`; 
             document.getElementById('viewer-title-text').innerText = title; 
             document.getElementById('text-content').style.display = 'none'; 
-            iframe.style.opacity = '0'; iframe.style.display = 'block'; textLoader.style.display = 'block'; 
+            iframe.classList.remove('loaded'); iframe.style.display = 'block'; textLoader.style.display = 'block'; 
             iframe.src = embedUrl; 
             modal.style.display = 'flex';
-            setTimeout(() => { frameLoaded(); }, 4000); 
+            setTimeout(() => { modal.classList.add('show'); }, 10);
+            setTimeout(() => { frameLoaded(); }, 4000); // 4sn sonra garanti aç
         } else { window.open(link, '_blank'); } 
     }
     
@@ -232,7 +198,7 @@
         const txt = document.getElementById('text-content'); 
         txt.innerText = pageData.not; txt.style.display = 'block'; 
         document.getElementById('viewer-title-text').innerText = "Anı Defteri"; 
-        modal.style.display = 'flex'; 
+        modal.style.display = 'flex'; setTimeout(() => { modal.classList.add('show'); }, 10);
     }
     
     function openAudioPlayer() { 
@@ -244,39 +210,48 @@
             const textLoader = document.querySelector('.loading-text');
             document.getElementById('viewer-title-text').innerText = "Sesli Mesaj"; 
             document.getElementById('text-content').style.display = 'none'; 
-            iframe.style.opacity = '0'; iframe.style.display = 'block'; textLoader.style.display = 'block';
+            iframe.classList.remove('loaded'); iframe.style.display = 'block'; textLoader.style.display = 'block';
             iframe.src = previewLink; 
-            modal.style.display = 'flex'; 
+            modal.style.display = 'flex'; setTimeout(() => { modal.classList.add('show'); }, 10);
             setTimeout(() => { frameLoaded(); }, 4000);
         } else { window.open(pageData.ses, '_blank'); } 
     }
     
     function closeViewer() { 
         const modal = document.getElementById('viewer-modal');
-        modal.style.display = 'none'; 
-        document.getElementById('drive-frame').src = ""; 
+        modal.classList.remove('show');
+        setTimeout(() => { modal.style.display = 'none'; document.getElementById('drive-frame').src = ""; }, 400);
     }
     
+    // --- GÜVENLİK GÜNCELLEMESİ (ÇİFT ŞİFRE) ---
     function saveData() { 
         const pass = document.getElementById('inPass').value; 
         const passConfirm = document.getElementById('inPassConfirm').value;
+        
+        // ŞİFRE EŞLEŞME KONTROLÜ
         if(!pass) { alert("Lütfen şifre belirleyin!"); return; }
-        if(pass !== passConfirm) { alert("⚠️ HATA: Girdiğiniz şifreler birbirini tutmuyor!"); return; }
+        if(pass !== passConfirm) {
+            alert("⚠️ HATA: Girdiğiniz şifreler birbirini tutmuyor!\nLütfen iki kutuya da aynı şifreyi yazın.");
+            return;
+        }
 
         const v = document.getElementById('inVideoLink').value.trim(); 
         const p = document.getElementById('inPhotoLink').value.trim(); 
         const s = document.getElementById('inSoundLink').value.trim(); 
         const combinedFolder = `${v}|||${p}|||${s}`; 
         
-        const btn = document.querySelector('.main-btn'); btn.innerText = "KAYDEDİLİYOR..."; btn.disabled = true; 
+        const btn = document.querySelector('.main-btn'); 
+        btn.innerText = "KAYDEDİLİYOR..."; btn.disabled = true; 
+        
         const encTitle = CryptoJS.AES.encrypt(document.getElementById('inTitle').value, pass).toString(); 
         const encNot = CryptoJS.AES.encrypt(document.getElementById('inNot').value, pass).toString(); 
         const encSes = CryptoJS.AES.encrypt(document.getElementById('inSes').value, pass).toString(); 
         const encFolder = CryptoJS.AES.encrypt(combinedFolder, pass).toString(); 
         
         const query = `?action=save&id=${currentID}&password=encrypted&title=${encodeURIComponent(encTitle)}&not=${encodeURIComponent(encNot)}&folder=${encodeURIComponent(encFolder)}&ses=${encodeURIComponent(encSes)}`; 
+        
         fetch(API_URL + query).then(res => res.json()).then(data => { 
-            if(data.status === "success") { alert("✅ Kurulum Başarılı!"); location.reload(); } 
+            if(data.status === "success") { alert("✅ Kurulum Başarılı!\nŞimdi test edebilirsiniz."); location.reload(); } 
             else { alert("Hata!"); btn.disabled = false; } 
         }); 
     }
