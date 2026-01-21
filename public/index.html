@@ -9,9 +9,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* TEMA: PREMIUM BLACK & GOLD */
+        /* --- ZİFİRİ KARANLIK TEMA --- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background: radial-gradient(circle at top, #1a1a1a, #000); color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 0; width: 100%; min-height: 100vh; overflow-x: hidden; }
+        
+        /* HTML ve BODY'yi zorla SİYAH yapıyoruz ki beyaz patlama olmasın */
+        html { background-color: #000000; }
+        body { 
+            background-color: #000000; 
+            background-image: radial-gradient(circle at top, #1a1a1a, #000); 
+            color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; padding: 0; 
+            width: 100%; min-height: 100vh; 
+            overflow-x: hidden; 
+        }
 
         .container { max-width: 520px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; padding: 20px; position: relative; }
 
@@ -19,14 +30,18 @@
         .header h1 { color: #D4AF37; margin: 0; font-family: 'Playfair Display', serif; font-size: 28px; letter-spacing: 1px; }
         .slogan { color: #888; font-size: 11px; font-style: italic; margin-top: 5px; }
 
-        /* QR / TARAYICI UYARISI */
+        /* YÜKLENİYOR EKRANI */
+        #loading { 
+            text-align: center; margin-top: 50px; color: #D4AF37; 
+            font-size: 14px; letter-spacing: 1px;
+        }
+
+        /* QR UYARISI */
         #browser-alert {
             display: none; background: #D4AF37; color: #000; padding: 15px; 
             border-radius: 12px; margin-bottom: 20px; text-align: center; font-size: 12px; font-weight: bold;
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
         }
-
-        #loading { text-align: center; margin-top: 50px; color: #D4AF37; }
 
         /* KURULUM PANELİ */
         #setup-panel { display: none; }
@@ -45,7 +60,7 @@
         #view-panel { display: none; text-align: center; }
         .user-title { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 25px; border: 1px solid #222; padding: 15px; border-radius: 12px; background: #0a0a0a; color: #D4AF37; }
 
-        /* HİKAYE MODU BUTONLARI (YUVARLAK) */
+        /* HİKAYE BUTONLARI */
         .story-row { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
         .story-btn { 
             width: 70px; height: 70px; border-radius: 50%; 
@@ -58,7 +73,7 @@
         .story-wrapper { display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .story-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* LİSTE MODU BUTONLARI (DİKDÖRTGEN) */
+        /* LİSTE BUTONLARI */
         .menu-link { 
             display: flex; align-items: center; gap: 20px; 
             background: #111; border: 1px solid #222; padding: 18px; margin-bottom: 15px; 
@@ -77,10 +92,10 @@
         .footer { text-align: center; margin-top: auto; padding-top: 30px; font-size: 10px; color: #333; letter-spacing: 2px; }
         .admin-lock { position: fixed; bottom: 20px; right: 20px; opacity: 0.3; cursor: pointer; font-size: 12px; padding: 10px; background: #111; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border: 1px solid #333; }
 
-        /* METİN MODALI (Sadece Notlar İçin) */
+        /* SADECE METİN MODALI */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100; display: none; flex-direction: column; animation: fadeIn 0.3s; }
         .modal-head { padding: 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; color: #D4AF37; }
-        .close-btn { font-size: 28px; cursor: pointer; }
+        .close-btn { font-size: 28px; cursor: pointer; color:#fff;}
         .modal-body { padding: 30px; overflow-y: auto; text-align: center; white-space: pre-wrap; color: #ddd; font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.6; }
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -90,7 +105,7 @@
 
 <div class="container">
     <div id="browser-alert">
-        ⚠️ Lütfen sağ üstteki menüden <b>"Tarayıcıda Aç"</b> (Chrome/Safari) seçeneğine tıklayın.
+        ⚠️ Tam performans için sağ üstteki menüden <b>"Tarayıcıda Aç"</b> (Chrome/Safari) seçeneğini kullanın.
     </div>
 
     <div class="header">
@@ -98,7 +113,7 @@
         <p class="slogan">"Geçmişten geleceğe bırakılan en değerli miras..."</p>
     </div>
 
-    <div id="loading"><i class="fas fa-spinner fa-spin fa-2x"></i><br><br>Veriler Çekiliyor...</div>
+    <div id="loading"><i class="fas fa-spinner fa-spin fa-2x"></i><br><br>Veriler Güvenle Çekiliyor...</div>
 
     <div id="setup-panel">
         <h3 style="color:#D4AF37; text-align:center; margin-bottom:20px;">HIZLI KURULUM</h3>
@@ -129,7 +144,7 @@
 
     <div id="password-screen">
         <div class="lock-icon"><i class="fas fa-lock"></i></div>
-        <p style="color:#ccc; font-size:14px; margin-bottom:20px;">Lütfen giriş şifresini giriniz.</p>
+        <p style="color:#ccc; font-size:14px; margin-bottom:20px;">Güvenli giriş için şifrenizi giriniz.</p>
         <input type="password" id="unlockPass" placeholder="Şifre..." style="text-align:center; font-size:18px;">
         <button class="btn-gold" onclick="unlockAlbum()">GİRİŞ YAP</button>
     </div>
@@ -203,7 +218,7 @@
     let pageData = {};
     let encryptedData = {};
 
-    // --- QR TARAYICI KONTROLÜ ---
+    // QR TARAYICI KONTROLÜ
     const ua = navigator.userAgent || navigator.vendor || window.opera;
     if ((ua.indexOf('Instagram') > -1) || (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1)) {
         document.getElementById('browser-alert').style.display = 'block';
@@ -211,7 +226,7 @@
 
     window.onload = function() {
         if (!currentID) {
-            document.body.innerHTML = "<div style='color:#ccc;text-align:center;margin-top:50px;'>ID Bulunamadı (Örn: ?id=1002)</div>";
+            document.body.innerHTML = "<div style='color:#ccc;text-align:center;margin-top:50px;'>ID Eksik</div>";
             return;
         }
         checkID();
@@ -223,16 +238,16 @@
             document.getElementById('loading').style.display = 'none';
             if (data.status === "empty") { document.getElementById('setup-panel').style.display = 'block'; } 
             else { encryptedData = data; document.getElementById('password-screen').style.display = 'block'; }
-        }).catch(err => alert("Veri çekilemedi. İnternetinizi kontrol edin."));
+        }).catch(err => alert("Bağlantı Hatası"));
     }
 
     function unlockAlbum() {
         const pass = document.getElementById('unlockPass').value;
-        if(!pass) return alert("Lütfen şifre giriniz.");
+        if(!pass) return alert("Şifre giriniz.");
 
         try {
             const title = CryptoJS.AES.decrypt(encryptedData.title, pass).toString(CryptoJS.enc.Utf8);
-            if(!title) throw "Hatalı Şifre"; // Şifre yanlışsa burası patlar
+            if(!title) throw "Hatalı Şifre"; 
 
             const not = CryptoJS.AES.decrypt(encryptedData.not, pass).toString(CryptoJS.enc.Utf8);
             const folderStr = CryptoJS.AES.decrypt(encryptedData.folder, pass).toString(CryptoJS.enc.Utf8);
@@ -241,18 +256,16 @@
             let ses = "";
             if(encryptedData.ses) ses = CryptoJS.AES.decrypt(encryptedData.ses, pass).toString(CryptoJS.enc.Utf8);
 
-            // Verileri Ata
             pageData = { title, not, ses, pass, vLink: folders[0], pLink: folders[1], sLink: folders[2] };
 
-            // UI Güncelle
             document.getElementById('displayTitle').innerText = title;
             document.getElementById('textContent').innerText = not;
 
-            // Linkleri Yerleştir (Direkt Native Açılış)
+            // Linkleri Ayarla (DİREKT GEÇİŞ)
             setupLink('linkSesStory', 'storySes', 'linkSesList', ses);
             setupLink('linkVideoStory', 'storyVideo', 'linkVideoList', pageData.vLink);
             setupLink('linkPhotoStory', 'storyPhoto', 'linkPhotoList', pageData.pLink);
-            setupLink('linkSoundList', 'n/a', 'linkSoundList', pageData.sLink); // Sadece listede var
+            setupLink('linkSoundList', 'n/a', 'linkSoundList', pageData.sLink);
 
             document.getElementById('password-screen').style.display = 'none';
             document.getElementById('view-panel').style.display = 'block';
@@ -294,7 +307,7 @@
         const q = `?action=save&id=${currentID}&password=enc&title=${encodeURIComponent(encTitle)}&not=${encodeURIComponent(encNot)}&folder=${encodeURIComponent(encFolder)}&ses=${encodeURIComponent(encSes)}`;
         
         fetch(API_URL + q).then(res => res.json()).then(data => {
-            if(data.status === "success") { alert("✅ Başarıyla Kaydedildi!"); location.reload(); } 
+            if(data.status === "success") { alert("✅ Kayıt Başarılı!"); location.reload(); } 
             else { alert("Hata!"); btn.disabled = false; }
         });
     }
