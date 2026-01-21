@@ -50,33 +50,37 @@
         }
         #viewer-modal.show { opacity: 1; }
 
+        /* Header Düzeni - Geri Butonu Solda */
         .viewer-header {
-            height: 60px; border-bottom: 1px solid #222; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: #050505;
+            height: 60px; border-bottom: 1px solid #222; 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 0 15px; background: #050505;
         }
-        .close-viewer { color: #fff; font-size: 24px; cursor: pointer; padding: 10px; }
-        .viewer-title { color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 18px; }
+        
+        /* Geri Butonu Tasarımı */
+        .close-viewer { 
+            color: #fff; font-size: 15px; font-weight: 500; cursor: pointer; 
+            display: flex; align-items: center; gap: 6px; padding: 10px 5px;
+        }
+        .close-viewer i { color: #D4AF37; font-size: 18px; } /* Altın rengi ok */
+        
+        .viewer-title { color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 18px; letter-spacing: 0.5px; }
         
         .iframe-container { flex: 1; position: relative; width: 100%; height: 100%; background: #000; }
         
         .drive-embed {
             border: none; width: 100%; height: 100%; background: #000;
-            opacity: 0; transition: opacity 0.8s ease; /* Daha yavaş, sinematik açılış */
+            opacity: 0; transition: opacity 0.8s ease;
         }
         .drive-embed.loaded { opacity: 1; }
 
-        /* --- YENİ ANİMASYONLU YAZI --- */
+        /* Yükleniyor Yazısı */
         .loading-text {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             color: #D4AF37; 
-            font-family: 'Playfair Display', serif; 
-            font-size: 14px; 
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            text-align: center;
-            width: 100%;
-            z-index: 10;
-            display: none;
-            animation: pulseText 2s infinite ease-in-out;
+            font-family: 'Playfair Display', serif; font-size: 14px; letter-spacing: 3px;
+            text-transform: uppercase; text-align: center; width: 100%; z-index: 10;
+            display: none; animation: pulseText 2s infinite ease-in-out;
         }
 
         @keyframes pulseText {
@@ -138,13 +142,14 @@
 
 <div id="viewer-modal">
     <div class="viewer-header">
+        <div class="close-viewer" onclick="closeViewer()">
+            <i class="fas fa-chevron-left"></i> <span>Geri</span>
+        </div>
         <span class="viewer-title" id="viewer-title-text">Albüm</span>
-        <div class="close-viewer" onclick="closeViewer()"><i class="fas fa-times"></i></div>
     </div>
     
     <div class="iframe-container">
         <div class="loading-text">ANILARINIZ<br>HAZIRLANIYOR...</div>
-        
         <iframe id="drive-frame" class="drive-embed" src="" onload="frameLoaded()"></iframe>
         <div id="text-content" style="padding:30px; color:#ddd; font-size:16px; line-height:1.6; display:none; overflow-y:auto;"></div>
     </div>
@@ -162,13 +167,11 @@
     
     function getFolderId(url) { const match = url.match(/folders\/([-a-zA-Z0-9_]+)/); return match ? match[1] : null; }
     
-    // --- GÜVENLİ YÜKLEME ---
     function frameLoaded() {
         const textLoader = document.querySelector('.loading-text');
         const iframe = document.getElementById('drive-frame');
-        
-        textLoader.style.display = 'none'; // Yazıyı gizle
-        iframe.classList.add('loaded'); // İçeriği göster
+        textLoader.style.display = 'none'; 
+        iframe.classList.add('loaded'); 
     }
 
     function openDriveViewer(type) { 
@@ -184,40 +187,28 @@
 
         if(folderId) { 
             const embedUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}#grid`; 
-            
             document.getElementById('viewer-title-text').innerText = title; 
             document.getElementById('text-content').style.display = 'none'; 
             
-            // Sıfırla
             iframe.classList.remove('loaded');
             iframe.style.display = 'block'; 
-            textLoader.style.display = 'block'; // Yazıyı aç
+            textLoader.style.display = 'block'; 
             
             iframe.src = embedUrl; 
-            
             modal.style.display = 'flex';
             setTimeout(() => { modal.classList.add('show'); }, 10);
-            
-            // SİGORTA: 4 saniye sonra yazıyı zorla kaldır
             setTimeout(() => { frameLoaded(); }, 4000);
-
-        } else { 
-            window.open(link, '_blank'); 
-        } 
+        } else { window.open(link, '_blank'); } 
     }
     
     function openTextModal() { 
         const modal = document.getElementById('viewer-modal');
         const iframe = document.getElementById('drive-frame');
         const textLoader = document.querySelector('.loading-text');
-        
-        iframe.style.display = 'none';
-        textLoader.style.display = 'none';
+        iframe.style.display = 'none'; textLoader.style.display = 'none';
         
         const txt = document.getElementById('text-content'); 
-        txt.innerText = pageData.not; 
-        txt.style.display = 'block'; 
-        
+        txt.innerText = pageData.not; txt.style.display = 'block'; 
         document.getElementById('viewer-title-text').innerText = "Anı Defteri"; 
         modal.style.display = 'flex'; 
         setTimeout(() => { modal.classList.add('show'); }, 10);
@@ -235,26 +226,18 @@
             document.getElementById('text-content').style.display = 'none'; 
             
             iframe.classList.remove('loaded');
-            iframe.style.display = 'block'; 
-            textLoader.style.display = 'block';
-            
+            iframe.style.display = 'block'; textLoader.style.display = 'block';
             iframe.src = previewLink; 
             modal.style.display = 'flex'; 
             setTimeout(() => { modal.classList.add('show'); }, 10);
-            
             setTimeout(() => { frameLoaded(); }, 4000);
-        } else { 
-            window.open(pageData.ses, '_blank'); 
-        } 
+        } else { window.open(pageData.ses, '_blank'); } 
     }
     
     function closeViewer() { 
         const modal = document.getElementById('viewer-modal');
         modal.classList.remove('show');
-        setTimeout(() => {
-            modal.style.display = 'none'; 
-            document.getElementById('drive-frame').src = ""; 
-        }, 400);
+        setTimeout(() => { modal.style.display = 'none'; document.getElementById('drive-frame').src = ""; }, 400);
     }
     
     function saveData() { const pass = document.getElementById('inPass').value; if(!pass) return alert("Şifre belirleyin!"); const v = document.getElementById('inVideoLink').value.trim(); const p = document.getElementById('inPhotoLink').value.trim(); const s = document.getElementById('inSoundLink').value.trim(); const combinedFolder = `${v}|||${p}|||${s}`; const btn = document.querySelector('.main-btn'); btn.innerText = "KAYDEDİLİYOR..."; btn.disabled = true; const encTitle = CryptoJS.AES.encrypt(document.getElementById('inTitle').value, pass).toString(); const encNot = CryptoJS.AES.encrypt(document.getElementById('inNot').value, pass).toString(); const encSes = CryptoJS.AES.encrypt(document.getElementById('inSes').value, pass).toString(); const encFolder = CryptoJS.AES.encrypt(combinedFolder, pass).toString(); const query = `?action=save&id=${currentID}&password=encrypted&title=${encodeURIComponent(encTitle)}&not=${encodeURIComponent(encNot)}&folder=${encodeURIComponent(encFolder)}&ses=${encodeURIComponent(encSes)}`; fetch(API_URL + query).then(res => res.json()).then(data => { if(data.status === "success") { alert("Kurulum Başarılı!"); location.reload(); } else { alert("Hata!"); btn.disabled = false; } }); }
