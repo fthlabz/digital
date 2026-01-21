@@ -15,23 +15,14 @@
         html, body {
             background-color: #000; color: #fff; font-family: 'Inter', sans-serif; 
             margin: 0; padding: 0; 
-            width: 100%; height: 100%; /* Tam ekranı kapsa */
-            overflow: hidden; /* Ana sayfa kaymasın, sadece içerik kaysın */
-        }
-
-        /* --- ANA MENÜ KAYDIRMA ALANI --- */
-        .scroll-wrapper {
-            width: 100%; height: 100%;
-            overflow-y: auto; /* Aşağı yukarı kaydırma serbest */
-            overflow-x: hidden; /* Sağa sola taşma yasak */
-            -webkit-overflow-scrolling: touch; /* iPhone'da yağ gibi aksın */
+            width: 100%; min-height: 100vh;
+            overflow-x: hidden; /* Sadece yatay taşmayı engelle */
         }
 
         .container { 
             max-width: 480px; margin: 0 auto; 
             padding: 20px; 
             display: flex; flex-direction: column;
-            min-height: 100%;
         }
         
         .header { text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #222; }
@@ -57,47 +48,39 @@
         input:focus, textarea:focus { border-color: #D4AF37; outline: none; background: #050505; }
         .main-btn { width: 100%; background: #D4AF37; color: #000; padding: 18px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 30px; font-size: 14px; letter-spacing: 1px; }
 
-        /* KILAVUZ KUTUSU */
         .guide-box { background: #151515; border: 1px solid #333; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-size: 12px; color: #ccc; line-height: 1.6; }
         .guide-title { color: #D4AF37; font-weight: bold; font-size: 14px; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; display: block; }
         .guide-step { margin-bottom: 8px; padding-left: 10px; border-left: 2px solid #444; }
-        .guide-sub { font-size: 11px; color: #888; margin-top: 2px; }
 
-        /* --- MODAL (GÖRÜNTÜLEYİCİ - ÇÖZÜM BURADA) --- */
+        /* --- MODAL (GÖRÜNTÜLEYİCİ - YENİ DÜZEN) --- */
         #viewer-modal {
             position: fixed; inset: 0; background: #000; z-index: 9999; 
-            display: none; 
-            flex-direction: column; /* Alt alta diz */
-            width: 100%; height: 100%;
+            display: none; width: 100%; height: 100%;
         }
 
+        /* HEADER ARTIK ÇAKIILI VE EN ÜSTTE */
         .viewer-header {
-            height: 60px; 
-            flex-shrink: 0; /* Asla küçülme, hep sabit kal */
-            border-bottom: 1px solid #222; 
+            position: absolute; top: 0; left: 0; width: 100%; height: 60px;
+            background: #050505; border-bottom: 1px solid #222; 
             display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 15px; background: #050505;
-            z-index: 100; /* Her şeyin üstünde */
+            padding: 0 15px; z-index: 10000;
         }
-        
+
+        /* GERİ BUTONU TASARIMI */
         .close-viewer { 
-            color: #fff; font-size: 15px; font-weight: 500; cursor: pointer; 
+            color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; 
             display: flex; align-items: center; gap: 8px; padding: 10px; 
-            background: rgba(255,255,255,0.05); border-radius: 8px; /* Buton belirgin olsun */
+            background: rgba(212, 175, 55, 0.1); border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.2);
         }
-        .close-viewer i { color: #D4AF37; font-size: 18px; }
+        .close-viewer i { color: #D4AF37; font-size: 16px; }
         .viewer-title { color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 18px; letter-spacing: 0.5px; }
         
+        /* IFRAME İÇİN BOŞLUK (HEADER'IN ALTINDA KALSIN DİYE) */
         .iframe-container { 
-            flex-grow: 1; /* Kalan tüm alanı kapla */
-            width: 100%; 
+            position: absolute; top: 60px; left: 0; width: 100%; bottom: 0; /* Header kadar (60px) aşağıdan başla */
             background: #000; 
-            overflow-y: auto; /* İÇERİK KAYAR, HEADER SABİT KALIR */
-            -webkit-overflow-scrolling: touch;
-            position: relative;
         }
 
-        /* Iframe'e dokunma yasağını kaldırdık - SWIPE ARTIK ÇALIŞIR */
         .drive-embed { border: none; width: 100%; height: 100%; display: block; }
 
         .loading-text {
@@ -118,80 +101,76 @@
 </head>
 <body onclick="resetTimer()" onmousemove="resetTimer()" onkeypress="resetTimer()" ontouchstart="resetTimer()">
 
-<div class="scroll-wrapper">
-    <div class="container">
-        <div class="header"><h1>FthLabz</h1><p class="slogan">"Geçmişten geleceğe bırakılan en değerli miras..."</p></div>
+<div class="container">
+    <div class="header"><h1>FthLabz</h1><p class="slogan">"Geçmişten geleceğe bırakılan en değerli miras..."</p></div>
+    
+    <div id="loading">SİSTEM HAZIRLANIYOR...</div>
+
+    <div id="password-screen" class="panel">
+        <div class="lock-icon"><i class="fas fa-lock"></i></div>
+        <p style="color:#888; font-size:13px; margin-bottom:20px;">Bu albüm şifrelenmiştir.</p>
+        <input type="password" id="unlockPass" placeholder="Şifreniz..." style="text-align:center; font-size:18px; letter-spacing: 3px;">
+        <button class="main-btn" onclick="unlockAlbum()">GİRİŞ YAP</button>
+    </div>
+
+    <div id="setup-panel" class="panel">
+        <div class="gold-card"><h2 class="user-title">Albüm Kurulumu</h2><p style="font-size:11px; color:#888;">Lütfen aşağıdaki adımları takip edin.</p></div>
         
-        <div id="loading">SİSTEM HAZIRLANIYOR...</div>
-
-        <div id="password-screen" class="panel">
-            <div class="lock-icon"><i class="fas fa-lock"></i></div>
-            <p style="color:#888; font-size:13px; margin-bottom:20px;">Bu albüm şifrelenmiştir.</p>
-            <input type="password" id="unlockPass" placeholder="Şifreniz..." style="text-align:center; font-size:18px; letter-spacing: 3px;">
-            <button class="main-btn" onclick="unlockAlbum()">GİRİŞ YAP</button>
+        <div class="guide-box">
+            <span class="guide-title">1. DRIVE HESABI VE KLASÖRLER</span>
+            <div class="guide-step">Google Drive uygulamasını açın.</div>
+            <div class="guide-step">3 Klasör oluşturun: <b>Videolar</b>, <b>Resimler</b>, <b>Sesler</b></div>
         </div>
 
-        <div id="setup-panel" class="panel">
-            <div class="gold-card"><h2 class="user-title">Albüm Kurulumu</h2><p style="font-size:11px; color:#888;">Lütfen aşağıdaki adımları takip edin.</p></div>
-            
-            <div class="guide-box">
-                <span class="guide-title">1. DRIVE HESABI VE KLASÖRLER</span>
-                <div class="guide-step">Google Drive uygulamasını açın.</div>
-                <div class="guide-step">3 tane Klasör oluşturun:
-                    <br><span style="color:#D4AF37">Videolar</span>, <span style="color:#D4AF37">Resimler</span>, <span style="color:#D4AF37">Sesler</span>
-                </div>
-            </div>
-
-            <div class="guide-box">
-                <span class="guide-title">2. RESİM YÜKLEME (KOLAY YOL)</span>
-                <div class="guide-step">Telefon Galerinizi açın, resimleri seçin.</div>
-                <div class="guide-step">Drive uygulamasına sürükleyip ilgili klasöre bırakın.</div>
-                <div class="guide-step">Veya Drive içinde (+) butonuna basıp "Yükle" deyin.</div>
-            </div>
-
-            <div class="guide-box">
-                <span class="guide-title">3. LİNKLERİ ALMA (ÇOK ÖNEMLİ)</span>
-                <div class="guide-step">Klasörün yanındaki 3 noktaya (...) tıklayın.</div>
-                <div class="guide-step">"Erişimi Yönet" veya "Paylaş" deyin.</div>
-                <div class="guide-step">"Kısıtlı" yazan yeri <b>"Bağlantıya sahip herkes"</b> yapın.</div>
-                <div class="guide-step">Link simgesine basıp kopyalayın.</div>
-            </div>
-
-            <label>1. ALBÜM BAŞLIĞI</label><input type="text" id="inTitle" placeholder="Örn: Canım Ailem">
-            <label>2. ANI DEFTERİM</label><textarea id="inNot" rows="4" placeholder="Anılarınızı buraya yazın..."></textarea>
-            <label>3. SESLİ MESAJ LİNKİ (OPSİYONEL)</label><input type="text" id="inSes" placeholder="Drive dosya linki">
-            
-            <div style="border-top: 1px dashed #333; margin-top: 25px; padding-top:10px;">
-                <label style="color:#fff;">4. KLASÖR LİNKLERİ (ZORUNLU)</label>
-                <input type="text" id="inVideoLink" placeholder="VİDEOLAR Klasör Linki" style="margin-bottom:10px;">
-                <input type="text" id="inPhotoLink" placeholder="RESİMLER Klasör Linki" style="margin-bottom:10px;">
-                <input type="text" id="inSoundLink" placeholder="SESLER Klasör Linki">
-            </div>
-            
-            <label style="color:#D4AF37; margin-top:20px;">YÖNETİCİ ŞİFRESİ BELİRLEYİN</label>
-            <input type="password" id="inPass" placeholder="Şifrenizi Girin">
-            <input type="password" id="inPassConfirm" placeholder="Şifreyi Tekrar Girin (Doğrulama)" style="margin-top:10px; border-color:#555;">
-            
-            <button class="main-btn" onclick="saveData()">ŞİFRELE VE KAYDET</button><br><br>
+        <div class="guide-box">
+            <span class="guide-title">2. RESİM YÜKLEME</span>
+            <div class="guide-step">Galeriden resimleri seçip Drive klasörüne yükleyin.</div>
         </div>
 
-        <div id="view-panel" class="panel">
-            <div class="gold-card"><h2 id="displayTitle" class="user-title">...</h2></div>
-            <div class="menu-btn" onclick="openTextModal()"><div class="menu-icon"><i class="fas fa-book"></i></div><div class="menu-text"><h3>Anı Defterim</h3><p>Okumak için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
-            <div id="btnSes" class="menu-btn" onclick="openAudioPlayer()"><div class="menu-icon"><i class="fas fa-microphone"></i></div><div class="menu-text"><h3>Günlük Sesli Mesaj</h3><p>Dinlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-play"></i></div></div>
-            <div id="btnVideo" class="menu-btn" onclick="openDriveViewer('video')"><div class="menu-icon"><i class="fas fa-video"></i></div><div class="menu-text"><h3>Dijital Albüm Videolar</h3><p>İzlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
-            <div id="btnPhoto" class="menu-btn" onclick="openDriveViewer('photo')"><div class="menu-icon"><i class="fas fa-images"></i></div><div class="menu-text"><h3>Dijital Albüm Resimler</h3><p>Görüntülemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
-            <div id="btnSound" class="menu-btn" onclick="openDriveViewer('sound')"><div class="menu-icon"><i class="fas fa-music"></i></div><div class="menu-text"><h3>Dijital Albüm Sesler</h3><p>Arşivi dinlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
-            <div style="text-align:center; margin-top:20px; opacity:0.3; font-size:10px;"><span onclick="enableEdit()">Düzenle</span></div>
+        <div class="guide-box">
+            <span class="guide-title">3. LİNKLERİ ALMA</span>
+            <div class="guide-step">Klasörün yanındaki 3 noktaya (...) basın.</div>
+            <div class="guide-step">"Erişimi Yönet" > "Bağlantıya sahip herkes" seçin.</div>
+            <div class="guide-step">Linki kopyalayıp aşağıya yapıştırın.</div>
         </div>
+
+        <label>1. ALBÜM BAŞLIĞI</label><input type="text" id="inTitle" placeholder="Örn: Canım Ailem">
+        <label>2. ANI DEFTERİM</label><textarea id="inNot" rows="4" placeholder="Anılarınızı buraya yazın..."></textarea>
+        <label>3. SESLİ MESAJ LİNKİ (OPSİYONEL)</label><input type="text" id="inSes" placeholder="Drive dosya linki">
+        
+        <div style="border-top: 1px dashed #333; margin-top: 25px; padding-top:10px;">
+            <label style="color:#fff;">4. KLASÖR LİNKLERİ (ZORUNLU)</label>
+            <input type="text" id="inVideoLink" placeholder="VİDEOLAR Klasör Linki" style="margin-bottom:10px;">
+            <input type="text" id="inPhotoLink" placeholder="RESİMLER Klasör Linki" style="margin-bottom:10px;">
+            <input type="text" id="inSoundLink" placeholder="SESLER Klasör Linki">
+        </div>
+        
+        <label style="color:#D4AF37; margin-top:20px;">YÖNETİCİ ŞİFRESİ BELİRLEYİN</label>
+        <input type="password" id="inPass" placeholder="Şifrenizi Girin">
+        <input type="password" id="inPassConfirm" placeholder="Şifreyi Tekrar Girin (Doğrulama)" style="margin-top:10px; border-color:#555;">
+        
+        <button class="main-btn" onclick="saveData()">ŞİFRELE VE KAYDET</button><br><br>
+    </div>
+
+    <div id="view-panel" class="panel">
+        <div class="gold-card"><h2 id="displayTitle" class="user-title">...</h2></div>
+        <div class="menu-btn" onclick="openTextModal()"><div class="menu-icon"><i class="fas fa-book"></i></div><div class="menu-text"><h3>Anı Defterim</h3><p>Okumak için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
+        <div id="btnSes" class="menu-btn" onclick="openAudioPlayer()"><div class="menu-icon"><i class="fas fa-microphone"></i></div><div class="menu-text"><h3>Günlük Sesli Mesaj</h3><p>Dinlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-play"></i></div></div>
+        <div id="btnVideo" class="menu-btn" onclick="openDriveViewer('video')"><div class="menu-icon"><i class="fas fa-video"></i></div><div class="menu-text"><h3>Dijital Albüm Videolar</h3><p>İzlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
+        <div id="btnPhoto" class="menu-btn" onclick="openDriveViewer('photo')"><div class="menu-icon"><i class="fas fa-images"></i></div><div class="menu-text"><h3>Dijital Albüm Resimler</h3><p>Görüntülemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
+        <div id="btnSound" class="menu-btn" onclick="openDriveViewer('sound')"><div class="menu-icon"><i class="fas fa-music"></i></div><div class="menu-text"><h3>Dijital Albüm Sesler</h3><p>Arşivi dinlemek için dokun</p></div><div class="menu-arrow"><i class="fas fa-chevron-right"></i></div></div>
+        <div style="text-align:center; margin-top:20px; opacity:0.3; font-size:10px;"><span onclick="enableEdit()">Düzenle</span></div>
     </div>
 </div>
 
 <div id="viewer-modal">
     <div class="viewer-header">
-        <div class="close-viewer" onclick="closeViewer()"><i class="fas fa-chevron-left"></i> <span>Geri Dön</span></div>
+        <div class="close-viewer" onclick="closeViewer()">
+            <i class="fas fa-chevron-left"></i> <span>GERİ DÖN</span>
+        </div>
         <span class="viewer-title" id="viewer-title-text">Albüm</span>
     </div>
+    
     <div class="iframe-container">
         <div class="loading-text">ANILARINIZ<br>HAZIRLANIYOR...</div>
         <iframe id="drive-frame" class="drive-embed" src="" allow="autoplay; fullscreen" onload="frameLoaded()"></iframe>
@@ -205,7 +184,7 @@
     const currentID = urlParams.get('id');
     let pageData = {}, encryptedData = {};
     
-    // --- GÜVENLİK SAYACI (1 SAAT = 3600000 ms) ---
+    // --- GÜVENLİK SAYACI (1 SAAT) ---
     let inactivityTimer;
     const TIMEOUT_DURATION = 3600000; 
 
