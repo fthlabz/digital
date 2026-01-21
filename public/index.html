@@ -15,14 +15,15 @@
         html, body {
             background-color: #000; color: #fff; font-family: 'Inter', sans-serif; 
             margin: 0; padding: 0; 
-            width: 100%; min-height: 100vh;
-            overflow-x: hidden; /* Sadece yatay taşmayı engelle */
+            width: 100%; height: 100%;
+            overflow-x: hidden; /* Yatay taşmayı engelle */
         }
 
         .container { 
             max-width: 480px; margin: 0 auto; 
             padding: 20px; 
             display: flex; flex-direction: column;
+            min-height: 100vh;
         }
         
         .header { text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #222; }
@@ -48,17 +49,19 @@
         input:focus, textarea:focus { border-color: #D4AF37; outline: none; background: #050505; }
         .main-btn { width: 100%; background: #D4AF37; color: #000; padding: 18px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 30px; font-size: 14px; letter-spacing: 1px; }
 
-        .guide-box { background: #151515; border: 1px solid #333; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-size: 12px; color: #ccc; line-height: 1.6; }
-        .guide-title { color: #D4AF37; font-weight: bold; font-size: 14px; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; display: block; }
-        .guide-step { margin-bottom: 8px; padding-left: 10px; border-left: 2px solid #444; }
+        /* QR UYARISI */
+        #browser-warning {
+            display: none; /* JS ile açılacak */
+            background: #D4AF37; color: #000; padding: 15px; text-align: center; 
+            font-weight: bold; font-size: 13px; border-radius: 10px; margin-bottom: 20px;
+        }
 
-        /* --- MODAL (GÖRÜNTÜLEYİCİ - YENİ DÜZEN) --- */
+        /* --- MODAL (TAM EKRAN + SABİT HEADER) --- */
         #viewer-modal {
             position: fixed; inset: 0; background: #000; z-index: 9999; 
             display: none; width: 100%; height: 100%;
         }
 
-        /* HEADER ARTIK ÇAKIILI VE EN ÜSTTE */
         .viewer-header {
             position: absolute; top: 0; left: 0; width: 100%; height: 60px;
             background: #050505; border-bottom: 1px solid #222; 
@@ -66,21 +69,22 @@
             padding: 0 15px; z-index: 10000;
         }
 
-        /* GERİ BUTONU TASARIMI */
         .close-viewer { 
             color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; 
             display: flex; align-items: center; gap: 8px; padding: 10px; 
-            background: rgba(212, 175, 55, 0.1); border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(255, 255, 255, 0.1); border-radius: 8px; border: 1px solid #333;
         }
         .close-viewer i { color: #D4AF37; font-size: 16px; }
         .viewer-title { color: #D4AF37; font-family: 'Playfair Display', serif; font-size: 18px; letter-spacing: 0.5px; }
         
-        /* IFRAME İÇİN BOŞLUK (HEADER'IN ALTINDA KALSIN DİYE) */
+        /* HEADER'IN ALTINA GELEN ALAN */
         .iframe-container { 
-            position: absolute; top: 60px; left: 0; width: 100%; bottom: 0; /* Header kadar (60px) aşağıdan başla */
+            position: absolute; top: 60px; left: 0; width: 100%; bottom: 0; 
             background: #000; 
+            overflow: auto; 
+            -webkit-overflow-scrolling: touch; /* İOS Kaydırma Düzeltmesi */
         }
-
+        
         .drive-embed { border: none; width: 100%; height: 100%; display: block; }
 
         .loading-text {
@@ -99,9 +103,13 @@
         .lock-icon { font-size: 40px; color: #D4AF37; margin-bottom: 20px; }
     </style>
 </head>
-<body onclick="resetTimer()" onmousemove="resetTimer()" onkeypress="resetTimer()" ontouchstart="resetTimer()">
+<body>
 
 <div class="container">
+    <div id="browser-warning">
+        ⚠️ Tam performans için lütfen sağ üstteki menüden <b>"Tarayıcıda Aç"</b> (Chrome/Safari) seçeneğini kullanın.
+    </div>
+
     <div class="header"><h1>FthLabz</h1><p class="slogan">"Geçmişten geleceğe bırakılan en değerli miras..."</p></div>
     
     <div id="loading">SİSTEM HAZIRLANIYOR...</div>
@@ -114,26 +122,8 @@
     </div>
 
     <div id="setup-panel" class="panel">
-        <div class="gold-card"><h2 class="user-title">Albüm Kurulumu</h2><p style="font-size:11px; color:#888;">Lütfen aşağıdaki adımları takip edin.</p></div>
+        <div class="gold-card"><h2 class="user-title">Albüm Kurulumu</h2><p style="font-size:11px; color:#888;">Lütfen Drive linklerinizi girin.</p></div>
         
-        <div class="guide-box">
-            <span class="guide-title">1. DRIVE HESABI VE KLASÖRLER</span>
-            <div class="guide-step">Google Drive uygulamasını açın.</div>
-            <div class="guide-step">3 Klasör oluşturun: <b>Videolar</b>, <b>Resimler</b>, <b>Sesler</b></div>
-        </div>
-
-        <div class="guide-box">
-            <span class="guide-title">2. RESİM YÜKLEME</span>
-            <div class="guide-step">Galeriden resimleri seçip Drive klasörüne yükleyin.</div>
-        </div>
-
-        <div class="guide-box">
-            <span class="guide-title">3. LİNKLERİ ALMA</span>
-            <div class="guide-step">Klasörün yanındaki 3 noktaya (...) basın.</div>
-            <div class="guide-step">"Erişimi Yönet" > "Bağlantıya sahip herkes" seçin.</div>
-            <div class="guide-step">Linki kopyalayıp aşağıya yapıştırın.</div>
-        </div>
-
         <label>1. ALBÜM BAŞLIĞI</label><input type="text" id="inTitle" placeholder="Örn: Canım Ailem">
         <label>2. ANI DEFTERİM</label><textarea id="inNot" rows="4" placeholder="Anılarınızı buraya yazın..."></textarea>
         <label>3. SESLİ MESAJ LİNKİ (OPSİYONEL)</label><input type="text" id="inSes" placeholder="Drive dosya linki">
@@ -166,13 +156,13 @@
 <div id="viewer-modal">
     <div class="viewer-header">
         <div class="close-viewer" onclick="closeViewer()">
-            <i class="fas fa-chevron-left"></i> <span>GERİ DÖN</span>
+            <i class="fas fa-chevron-left"></i> <span>MENÜYE DÖN</span>
         </div>
         <span class="viewer-title" id="viewer-title-text">Albüm</span>
     </div>
     
     <div class="iframe-container">
-        <div class="loading-text">ANILARINIZ<br>HAZIRLANIYOR...</div>
+        <div class="loading-text">YÜKLENİYOR...</div>
         <iframe id="drive-frame" class="drive-embed" src="" allow="autoplay; fullscreen" onload="frameLoaded()"></iframe>
         <div id="text-content" style="padding:30px; color:#ddd; font-size:16px; line-height:1.6; display:none; overflow-y:auto;"></div>
     </div>
@@ -183,26 +173,12 @@
     const urlParams = new URLSearchParams(window.location.search);
     const currentID = urlParams.get('id');
     let pageData = {}, encryptedData = {};
-    
-    // --- GÜVENLİK SAYACI (1 SAAT) ---
-    let inactivityTimer;
-    const TIMEOUT_DURATION = 3600000; 
 
-    function resetTimer() {
-        clearTimeout(inactivityTimer);
-        if(document.getElementById('view-panel').style.display === 'block') {
-            inactivityTimer = setTimeout(lockScreen, TIMEOUT_DURATION);
-        }
-    }
-
-    function lockScreen() {
-        pageData = {};
-        document.getElementById('displayTitle').innerText = "...";
-        document.getElementById('unlockPass').value = "";
-        document.getElementById('view-panel').style.display = 'none';
-        closeViewer(); 
-        document.getElementById('password-screen').style.display = 'block';
-        alert("🔒 Güvenlik: 1 saat işlem yapılmadığı için oturum kilitlendi.");
+    // --- QR / IN-APP BROWSER KONTROLÜ ---
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const isInstagram = (ua.indexOf('Instagram') > -1) || (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1);
+    if (isInstagram) {
+        document.getElementById('browser-warning').style.display = 'block';
     }
 
     window.onload = function() { if (!currentID) { document.getElementById('loading').innerHTML = "ID Bulunamadı (Örn: ?id=1001)"; return; } fetchData(); };
@@ -229,8 +205,6 @@
             
             document.getElementById('password-screen').style.display = 'none'; 
             document.getElementById('view-panel').style.display = 'block'; 
-            
-            resetTimer(); 
         } catch(e) { alert("Hatalı Şifre!"); } 
     }
     
@@ -254,12 +228,20 @@
         const textLoader = document.querySelector('.loading-text');
 
         if(folderId) { 
+            // GRID Modu en temiz olanıdır
             const embedUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}#grid`; 
             document.getElementById('viewer-title-text').innerText = title; 
             document.getElementById('text-content').style.display = 'none'; 
-            iframe.style.opacity = '0'; iframe.style.display = 'block'; textLoader.style.display = 'block'; 
+            
+            // Sıfırlama
+            iframe.style.opacity = '0'; 
+            iframe.style.display = 'block'; 
+            textLoader.style.display = 'block'; 
+            
             iframe.src = embedUrl; 
             modal.style.display = 'flex';
+            
+            // 4 saniye sonra garanti açılış
             setTimeout(() => { frameLoaded(); }, 4000); 
         } else { window.open(link, '_blank'); } 
     }
