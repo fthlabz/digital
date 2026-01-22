@@ -21,14 +21,11 @@
         .slogan { color: #888; font-size: 11px; font-style: italic; margin-top: 5px; }
 
         #loading { text-align: center; margin-top: 60px; color: #D4AF37; font-size: 12px; letter-spacing: 2px; }
-
         .panel { display: none; animation: fadeIn 0.5s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* KURULUM & ŞİFRE */
         .hero-card { background: linear-gradient(150deg, #111, #000); border: 1px solid #333; padding: 20px; border-radius: 16px; margin-bottom: 20px; text-align: center; }
-        .hero-title { font-family: 'Playfair Display', serif; font-size: 18px; color: #D4AF37; margin-bottom: 5px; }
-        
         label { display: block; color: #aaa; font-size: 10px; margin-bottom: 6px; text-transform: uppercase; font-weight: 600; margin-top: 15px; }
         input, textarea { width: 100%; background: #0f0f0f; border: 1px solid #333; color: #fff; padding: 14px; border-radius: 10px; font-family: inherit; font-size: 13px; }
         input:focus { border-color: #D4AF37; outline: none; }
@@ -37,64 +34,39 @@
         #password-screen { text-align: center; padding-top: 60px; }
         .lock-icon { font-size: 40px; color: #D4AF37; margin-bottom: 20px; }
 
-        /* MENÜ & BUTONLAR */
+        /* MENÜ */
         .title-card { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 25px; border-bottom: 1px solid #222; padding-bottom: 15px; color: #D4AF37; text-align: center; }
-
         .quick-row { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
         .quick-btn { width: 65px; height: 65px; border-radius: 50%; background: #111; border: 1px solid #333; display: flex; align-items: center; justify-content: center; color: #D4AF37; font-size: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .quick-btn:active { transform: scale(0.95); border-color: #D4AF37; }
         .quick-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .quick-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
 
         .menu-list { display: flex; flex-direction: column; gap: 12px; }
         .menu-item { display: flex; align-items: center; gap: 16px; background: #0f0f0f; border: 1px solid #222; padding: 16px; border-radius: 14px; cursor: pointer; transition: 0.2s; }
-        .menu-item:active { background: #1a1a1a; transform: scale(0.99); }
         .menu-icon { color: #D4AF37; font-size: 18px; width: 36px; height: 36px; background: rgba(212, 175, 55, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
         .menu-text h3 { margin: 0; font-size: 14px; color: #eee; font-weight: 600; }
         
         .footer { text-align: center; margin-top: 40px; font-size: 10px; color: #444; letter-spacing: 2px; }
         .admin-edit { position: fixed; bottom: 20px; right: 20px; opacity: 0.3; width: 30px; height: 30px; background: #111; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; border: 1px solid #333; z-index: 10; }
 
-        /* --- HAYALET GALERİ (SWIPE SYSTEM) --- */
-        #gallery-overlay {
-            position: fixed; inset: 0; background: #000; z-index: 9999;
-            display: none; flex-direction: column;
-        }
-        .gallery-header {
-            height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
-            background: rgba(0,0,0,0.9); position: absolute; top:0; width:100%; z-index: 10000;
-        }
+        /* GALERİ (SWIPE) */
+        #gallery-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; display: none; flex-direction: column; }
+        .gallery-header { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: rgba(0,0,0,0.9); position: absolute; top:0; width:100%; z-index: 10000; }
         .close-gallery { color: #fff; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         
-        /* KAYDIRMA ALANI */
-        .slider-container {
-            flex: 1; display: flex; 
-            overflow-x: auto; 
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory; /* Mıknatıs gibi yapış */
-            -webkit-overflow-scrolling: touch;
-            height: 100%; width: 100%;
-            align-items: center;
-        }
+        .slider-container { flex: 1; display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; height: 100%; width: 100%; align-items: center; }
         .slider-container::-webkit-scrollbar { display: none; }
 
-        .slide {
-            flex: 0 0 100%; height: 100%;
-            scroll-snap-align: center; /* Ortala */
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
-        }
-        .slide img {
-            max-width: 100%; max-height: 100%; 
-            object-fit: contain;
-            pointer-events: none; /* Resim sürüklemeyi engelle, swipe çalışsın */
-        }
-        .slide video { width: 100%; max-height: 80%; }
+        .slide { flex: 0 0 100%; height: 100%; scroll-snap-align: center; display: flex; align-items: center; justify-content: center; position: relative; }
+        /* RESİM AYARI */
+        .slide img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
+        /* VİDEO AYARI (IFRAME) */
+        .slide iframe { width: 100%; height: 100%; border:none; pointer-events: auto; }
+        .video-wrapper { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
 
         .spinner { color: #D4AF37; font-size: 24px; position: absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align: center; }
         .error-msg { color: #ff9999; font-size: 12px; text-align: center; margin-top: 100px; padding: 20px; background: rgba(50,0,0,0.5); border-radius: 10px; width: 80%; margin-left:auto; margin-right:auto; border:1px solid #550000; }
         
-        /* METİN MODALI */
         #textModal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: none; flex-direction: column; }
         .text-body { padding: 30px; overflow-y: auto; text-align: center; color: #ddd; font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.6; }
     </style>
@@ -105,10 +77,10 @@
 
 <div class="container">
     <div class="header"><h1>FthLabz</h1><p class="slogan">"Geçmişten geleceğe bırakılan en değerli miras..."</p></div>
-    <div id="loading"><i class="fas fa-circle-notch fa-spin fa-2x"></i><br><br>Veriler Çekiliyor...</div>
+    <div id="loading"><i class="fas fa-circle-notch fa-spin fa-2x"></i><br><br>Sistem Hazırlanıyor...</div>
 
     <div id="setup-panel" class="panel">
-        <div class="hero-card"><div class="hero-title">Kurulum</div><p style="font-size:11px; color:#aaa;">Drive Linklerini Girin</p></div>
+        <div class="hero-card"><div class="hero-title">Kurulum</div><p style="font-size:11px; color:#aaa;">Drive Linklerini Yapıştırın</p></div>
         <label>1. ALBÜM BAŞLIĞI</label><input type="text" id="inTitle" placeholder="Örn: Canım Ailem">
         <label>2. ANI DEFTERİ</label><textarea id="inNot" rows="3"></textarea>
         <label>3. SESLİ MESAJ</label><input type="text" id="inSes">
@@ -171,7 +143,7 @@
 </div>
 
 <script>
-    // ⚠️⚠️ SENİN VERDİĞİN YENİ LİNK ⚠️⚠️
+    // ⚠️ SON VERSİYON API URL
     const API_URL = "https://script.google.com/macros/s/AKfycbyvtvYWLmkq8AqmCEhf_FP5fYLaliFpz_p-Jx4_miEM1vgCvHIM8qDS06A5kKP9F6W0ZA/exec"; 
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -219,7 +191,6 @@
         } catch(e) { alert("Şifre Yanlış!"); }
     }
 
-    // --- HAYALET GALERİ MANTIĞI ---
     function openGallery(type) {
         let link = "";
         let title = "";
@@ -241,8 +212,7 @@
         .then(data => {
             slider.innerHTML = "";
             if(data.status === "error") {
-                // HATA DETAYINI EKRANA YAZ (DEBUG MODU)
-                slider.innerHTML = `<div class="error-msg">⚠️ BAĞLANTI HATASI<br><br>Sistem Mesajı: ${data.msg}<br><br>Denediğim ID: ${data.triedId || "Yok"}<br><br>Drive Klasörünün Paylaşım Ayarını kontrol edin.</div>`;
+                slider.innerHTML = `<div class="error-msg">⚠️ BAĞLANTI HATASI<br>${data.msg}<br>ID: ${data.triedId}</div>`;
                 return;
             }
             if(!data.files || data.files.length === 0) {
@@ -253,12 +223,20 @@
             data.files.forEach(file => {
                 const slide = document.createElement('div');
                 slide.className = 'slide';
-                const proxyUrl = "https://lh3.googleusercontent.com/d/" + file.id + "=s2000";
                 
                 if(file.type === 'image') {
+                    // Resimler için proxy (Thumbnail)
+                    const proxyUrl = "https://lh3.googleusercontent.com/d/" + file.id + "=s2000";
                     slide.innerHTML = `<img src="${proxyUrl}" loading="lazy">`;
                 } else if (file.type === 'video') {
-                    slide.innerHTML = `<div style="text-align:center;"><i class="fas fa-play-circle" style="font-size:50px; color:#D4AF37;"></i><br><br><a href="${proxyUrl}" target="_blank" style="color:#fff; text-decoration:underline;">Oynat</a></div>`;
+                    // !!! ÇÖZÜM BURADA: Videoyu IFRAME içine gömüyoruz.
+                    // Bu sayede video siyah ekranın içinde, oynatıcı olarak açılır.
+                    // "preview" linki oynatmayı garanti eder.
+                    const videoUrl = `https://drive.google.com/file/d/${file.id}/preview`;
+                    slide.innerHTML = `
+                        <div class="video-wrapper">
+                            <iframe src="${videoUrl}" allow="autoplay" allowfullscreen></iframe>
+                        </div>`;
                 }
                 slider.appendChild(slide);
             });
