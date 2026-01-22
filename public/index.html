@@ -66,28 +66,10 @@
         .spinner { color: #D4AF37; font-size: 24px; position: absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align: center; }
         .error-msg { color: #ff9999; font-size: 12px; text-align: center; margin-top: 100px; padding: 20px; background: rgba(50,0,0,0.5); border-radius: 10px; width: 80%; margin-left:auto; margin-right:auto; border:1px solid #550000; }
         
-        /* METİN MODALI (FİXLENDİ) */
+        /* METİN MODALI */
         #textModal { position: fixed; inset: 0; background: #000; z-index: 9999; display: none; flex-direction: column; }
-        
-        /* Başlık kısmı en üstte ve tıklanabilir */
-        .text-modal-header { 
-            height: 60px; display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 20px; background: rgba(0,0,0,0.95); border-bottom: 1px solid #222;
-            position: absolute; top: 0; left: 0; width: 100%; z-index: 20000; /* Çok yüksek Z-Index */
-        }
-
-        .text-body { 
-            padding: 80px 25px 50px 25px; /* Header altından başla */
-            overflow-y: auto; 
-            text-align: center; 
-            color: #ffffff; 
-            font-family: 'Playfair Display', serif; 
-            font-size: 18px; 
-            line-height: 1.7; 
-            height: 100%; 
-            position: relative; 
-            z-index: 10000; /* Header'dan düşük */
-        }
+        .text-modal-header { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: rgba(0,0,0,0.95); border-bottom: 1px solid #222; position: absolute; top: 0; left: 0; width: 100%; z-index: 20000; }
+        .text-body { padding: 80px 25px 50px 25px; overflow-y: auto; text-align: center; color: #ffffff; font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.7; height: 100%; position: relative; z-index: 10000; }
     </style>
 </head>
 <body>
@@ -102,11 +84,10 @@
         <div class="hero-card"><div class="hero-title">Kurulum</div><p style="font-size:11px; color:#aaa;">Drive Linklerini Yapıştırın</p></div>
         <label>1. ALBÜM BAŞLIĞI</label><input type="text" id="inTitle" placeholder="Örn: Canım Ailem">
         <label>2. ANI DEFTERİ</label><textarea id="inNot" rows="3"></textarea>
-        <label>3. SESLİ MESAJ</label><input type="text" id="inSes" placeholder="Tek dosya linki">
+        <label>3. SESLİ MESAJ (Tek Dosya)</label><input type="text" id="inSes" placeholder="Drive dosya linki">
         <label style="color:#D4AF37; margin-top:15px; border-top:1px dashed #333; padding-top:10px;">4. KLASÖR LİNKLERİ</label>
         <input type="text" id="inVideoLink" placeholder="VİDEOLAR Klasör Linki">
         <input type="text" id="inPhotoLink" placeholder="RESİMLER Klasör Linki">
-        <input type="text" id="inSoundLink" placeholder="SESLER Klasör Linki">
         <label style="color:#D4AF37; margin-top:15px;">ŞİFRE</label>
         <input type="password" id="inPass" placeholder="Şifreniz">
         <input type="password" id="inPassConfirm" placeholder="Şifre Tekrar">
@@ -137,8 +118,7 @@
             <div class="menu-item" onclick="openLink('ses')" id="listSes"><div class="menu-icon"><i class="fas fa-microphone-alt"></i></div><div class="menu-text"><h3>Sesli Mesaj</h3></div></div>
             <div class="menu-item" onclick="openGallery('video')" id="listVideo"><div class="menu-icon"><i class="fas fa-video"></i></div><div class="menu-text"><h3>Videolar</h3></div></div>
             <div class="menu-item" onclick="openGallery('photo')" id="listPhoto"><div class="menu-icon"><i class="fas fa-images"></i></div><div class="menu-text"><h3>Resimler</h3></div></div>
-            <div class="menu-item" onclick="openGallery('sound')" id="listSound"><div class="menu-icon"><i class="fas fa-music"></i></div><div class="menu-text"><h3>Ses Arşivi</h3></div></div>
-        </div>
+            </div>
 
         <div class="admin-edit" onclick="enableEdit()"><i class="fas fa-pen"></i></div>
         <div class="footer">POWERED BY FTHLABZ</div>
@@ -162,6 +142,7 @@
 </div>
 
 <script>
+    // ⚠️ SON API URL
     const API_URL = "https://script.google.com/macros/s/AKfycbyvtvYWLmkq8AqmCEhf_FP5fYLaliFpz_p-Jx4_miEM1vgCvHIM8qDS06A5kKP9F6W0ZA/exec"; 
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -194,7 +175,7 @@
             let ses = "";
             if(encryptedData.ses) ses = CryptoJS.AES.decrypt(encryptedData.ses, pass).toString(CryptoJS.enc.Utf8);
 
-            pageData = { title, not, ses, pass, vLink: folders[0], pLink: folders[1], sLink: folders[2] };
+            pageData = { title, not, ses, pass, vLink: folders[0], pLink: folders[1] }; // sLink kaldırıldı
             
             document.getElementById('displayTitle').innerText = title;
             document.getElementById('textContent').innerText = not;
@@ -202,8 +183,7 @@
             if(!ses) { document.getElementById('listSes').style.display='none'; document.getElementById('storySes').style.display='none'; }
             if(!folders[0]) { document.getElementById('listVideo').style.display='none'; document.getElementById('storyVideo').style.display='none'; }
             if(!folders[1]) { document.getElementById('listPhoto').style.display='none'; document.getElementById('storyPhoto').style.display='none'; }
-            if(!folders[2]) { document.getElementById('listSound').style.display='none'; document.getElementById('listSound').style.display='none'; }
-
+            
             document.getElementById('password-screen').style.display = 'none';
             document.getElementById('view-panel').style.display = 'block';
         } catch(e) { alert("Şifre Yanlış!"); }
@@ -235,7 +215,7 @@
         let title = "";
         if(type === 'video') { link = pageData.vLink; title = "Videolar"; }
         if(type === 'photo') { link = pageData.pLink; title = "Resimler"; }
-        if(type === 'sound') { link = pageData.sLink; title = "Ses Arşivi"; }
+        // Ses klasör kontrolü kaldırıldı
 
         if(!link) return;
 
@@ -288,14 +268,14 @@
         btn.innerText = "KAYDEDİLİYOR...";
         btn.disabled = true;
 
-        const combined = `${document.getElementById('inVideoLink').value}|||${document.getElementById('inPhotoLink').value}|||${document.getElementById('inSoundLink').value}`;
+        // Sound kısmına boş veri gönderiyoruz ki eski yapı bozulmasın
+        const combined = `${document.getElementById('inVideoLink').value}|||${document.getElementById('inPhotoLink').value}|||`;
         const encTitle = CryptoJS.AES.encrypt(document.getElementById('inTitle').value, pass).toString();
         const encNot = CryptoJS.AES.encrypt(document.getElementById('inNot').value, pass).toString();
         const encFolder = CryptoJS.AES.encrypt(combined, pass).toString();
         const encSes = CryptoJS.AES.encrypt(document.getElementById('inSes').value, pass).toString();
 
-        // ⚠️ DÜZELTME: "&not=" parametresi doğru gönderiliyor
-        fetch(API_URL + `?action=save&id=${currentID}&title=${encodeURIComponent(encTitle)}&not=${encodeURIComponent(encNot)}&folder=${encodeURIComponent(encFolder)}&ses=${encodeURIComponent(encSes)}`)
+        fetch(API_URL + `?action=save&id=${currentID}&title=${encodeURIComponent(encTitle)}¬=${encodeURIComponent(encNot)}&folder=${encodeURIComponent(encFolder)}&ses=${encodeURIComponent(encSes)}`)
         .then(res => res.json())
         .then(data => {
             if(data.status==="success") location.reload();
@@ -313,7 +293,6 @@
             document.getElementById('inSes').value = pageData.ses;
             document.getElementById('inVideoLink').value = pageData.vLink;
             document.getElementById('inPhotoLink').value = pageData.pLink;
-            document.getElementById('inSoundLink').value = pageData.sLink;
             
             document.getElementById('inPass').value = pageData.pass;
             document.getElementById('inPassConfirm').value = pageData.pass;
