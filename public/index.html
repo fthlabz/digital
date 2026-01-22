@@ -66,6 +66,7 @@
         }
         .close-gallery { color: #fff; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         
+        /* KAYDIRMA ALANI */
         .slider-container {
             flex: 1; display: flex; 
             overflow-x: auto; 
@@ -83,10 +84,10 @@
             display: flex; align-items: center; justify-content: center;
             position: relative;
         }
-        .slide img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .slide img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
         .slide video { width: 100%; max-height: 80%; }
 
-        .spinner { color: #D4AF37; font-size: 24px; position: absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+        .spinner { color: #D4AF37; font-size: 24px; position: absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align: center; }
         .error-msg { color: #ff4444; font-size: 12px; text-align: center; margin-top: 100px; padding: 20px;}
         
         /* METİN MODALI */
@@ -167,7 +168,7 @@
 
 <script>
     // ⚠️⚠️ YENİ URL ENTEGRE EDİLDİ ⚠️⚠️
-    const API_URL = "https://script.google.com/macros/s/AKfycbzetEjhErrGCorbH4Juc3GohnsqP-d7-9qZHkFbJstrDleT6Zq66CCUTDEV4m4kCmDHeg/exec"; 
+    const API_URL = "https://script.google.com/macros/s/AKfycbxSM5y1DKRXAEXGJyKHrQpUGTQ_QCPO4PpG2l-Bm4E59xEs-8HqFy77tXKV579AsJa5Hg/exec"; 
 
     const urlParams = new URLSearchParams(window.location.search);
     const currentID = urlParams.get('id');
@@ -214,7 +215,7 @@
         } catch(e) { alert("Şifre Yanlış!"); }
     }
 
-    // --- HAYALET GALERİ MANTIĞI (İZ BIRAKMAZ & APP AÇMAZ) ---
+    // --- HAYALET GALERİ MANTIĞI ---
     function openGallery(type) {
         let link = "";
         let title = "";
@@ -228,7 +229,7 @@
         const slider = document.getElementById('slider-track');
         document.getElementById('galTitle').innerText = title;
         
-        slider.innerHTML = '<div class="spinner"><i class="fas fa-circle-notch fa-spin"></i></div>';
+        slider.innerHTML = '<div class="spinner"><i class="fas fa-circle-notch fa-spin"></i><br><span style="font-size:10px;">Yükleniyor...</span></div>';
         overlay.style.display = 'flex';
 
         fetch(API_URL + "?action=getFiles&url=" + encodeURIComponent(link))
@@ -236,7 +237,7 @@
         .then(data => {
             slider.innerHTML = "";
             if(data.status === "error" || !data.files || data.files.length === 0) {
-                slider.innerHTML = '<div class="error-msg">Dosya bulunamadı.<br>Klasör "Herkes"e açık olmalı.</div>';
+                slider.innerHTML = '<div class="error-msg">Dosya bulunamadı.<br>Klasör linkini kontrol edin.</div>';
                 return;
             }
 
@@ -244,7 +245,7 @@
                 const slide = document.createElement('div');
                 slide.className = 'slide';
                 
-                // Güvenli Google Proxy URL (Embed)
+                // Google Drive Proxy Linki
                 const proxyUrl = "https://lh3.googleusercontent.com/d/" + file.id + "=s2000";
                 
                 if(file.type === 'image') {
