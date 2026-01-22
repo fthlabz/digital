@@ -24,7 +24,7 @@
         .panel { display: none; animation: fadeIn 0.5s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* KURULUM & ŞİFRE */
+        /* KURULUM */
         .hero-card { background: linear-gradient(150deg, #111, #000); border: 1px solid #333; padding: 20px; border-radius: 16px; margin-bottom: 20px; text-align: center; }
         label { display: block; color: #aaa; font-size: 10px; margin-bottom: 6px; text-transform: uppercase; font-weight: 600; margin-top: 15px; }
         input, textarea { width: 100%; background: #0f0f0f; border: 1px solid #333; color: #fff; padding: 14px; border-radius: 10px; font-family: inherit; font-size: 13px; }
@@ -43,15 +43,16 @@
 
         .menu-list { display: flex; flex-direction: column; gap: 12px; }
         .menu-item { display: flex; align-items: center; gap: 16px; background: #0f0f0f; border: 1px solid #222; padding: 16px; border-radius: 14px; cursor: pointer; transition: 0.2s; }
+        .menu-item:active { background: #1a1a1a; transform: scale(0.99); }
         .menu-icon { color: #D4AF37; font-size: 18px; width: 36px; height: 36px; background: rgba(212, 175, 55, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
         .menu-text h3 { margin: 0; font-size: 14px; color: #eee; font-weight: 600; }
         
         .footer { text-align: center; margin-top: 40px; font-size: 10px; color: #444; letter-spacing: 2px; }
         .admin-edit { position: fixed; bottom: 20px; right: 20px; opacity: 0.3; width: 30px; height: 30px; background: #111; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; border: 1px solid #333; z-index: 10; }
 
-        /* GALERİ (SWIPE) */
+        /* GALERİ (SWIPE & SES) */
         #gallery-overlay { position: fixed; inset: 0; background: #000; z-index: 9999; display: none; flex-direction: column; }
-        .gallery-header { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: rgba(0,0,0,0.9); position: absolute; top:0; width:100%; z-index: 10000; }
+        .gallery-header { height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: rgba(0,0,0,0.95); position: absolute; top:0; width:100%; z-index: 10000; border-bottom:1px solid #222;}
         .close-gallery { color: #fff; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         
         .slider-container { flex: 1; display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; height: 100%; width: 100%; align-items: center; }
@@ -65,18 +66,9 @@
         .spinner { color: #D4AF37; font-size: 24px; position: absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align: center; }
         .error-msg { color: #ff9999; font-size: 12px; text-align: center; margin-top: 100px; padding: 20px; background: rgba(50,0,0,0.5); border-radius: 10px; width: 80%; margin-left:auto; margin-right:auto; border:1px solid #550000; }
         
-        /* METİN MODALI (DÜZELTİLDİ: Üstten Boşluk Artırıldı) */
-        #textModal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: none; flex-direction: column; }
-        .text-body { 
-            padding: 90px 20px 40px 20px; /* Üstten 90px boşluk bırakıldı */
-            overflow-y: auto; 
-            text-align: center; 
-            color: #ddd; 
-            font-family: 'Playfair Display', serif; 
-            font-size: 18px; 
-            line-height: 1.6; 
-            height: 100%;
-        }
+        /* METİN MODALI */
+        #textModal { position: fixed; inset: 0; background: #000; z-index: 9999; display: none; flex-direction: column; }
+        .text-body { padding: 100px 25px 50px 25px; overflow-y: auto; text-align: center; color: #ffffff; font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.7; height: 100%; position: relative; z-index: 10001; }
     </style>
 </head>
 <body>
@@ -91,7 +83,7 @@
         <div class="hero-card"><div class="hero-title">Kurulum</div><p style="font-size:11px; color:#aaa;">Drive Linklerini Yapıştırın</p></div>
         <label>1. ALBÜM BAŞLIĞI</label><input type="text" id="inTitle" placeholder="Örn: Canım Ailem">
         <label>2. ANI DEFTERİ</label><textarea id="inNot" rows="3"></textarea>
-        <label>3. SESLİ MESAJ</label><input type="text" id="inSes">
+        <label>3. SESLİ MESAJ</label><input type="text" id="inSes" placeholder="Tek dosya linki">
         <label style="color:#D4AF37; margin-top:15px; border-top:1px dashed #333; padding-top:10px;">4. KLASÖR LİNKLERİ</label>
         <input type="text" id="inVideoLink" placeholder="VİDEOLAR Klasör Linki">
         <input type="text" id="inPhotoLink" placeholder="RESİMLER Klasör Linki">
@@ -199,6 +191,38 @@
         } catch(e) { alert("Şifre Yanlış!"); }
     }
 
+    // --- SESLİ MESAJ FİX (HAYALET OYNATICI) ---
+    function openLink(type) {
+        if(type === 'ses' && pageData.ses) {
+            const overlay = document.getElementById('gallery-overlay');
+            const slider = document.getElementById('slider-track');
+            const titleEl = document.getElementById('galTitle');
+            
+            titleEl.innerText = "Sesli Mesaj";
+            slider.innerHTML = "";
+            overlay.style.display = 'flex';
+
+            // Linkten ID'yi çek
+            let fileId = "";
+            const rawLink = pageData.ses;
+            const match = rawLink.match(/[-\w]{25,}/);
+            if (match) fileId = match[0];
+
+            if(fileId) {
+                // Siyah ekranın içine Iframe player göm
+                const playerUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                slider.innerHTML = `
+                    <div class="slide">
+                        <div class="video-wrapper" style="height:50%;">
+                            <iframe src="${playerUrl}" allow="autoplay"></iframe>
+                        </div>
+                    </div>`;
+            } else {
+                slider.innerHTML = '<div class="error-msg">Link Hatalı</div>';
+            }
+        }
+    }
+
     function openGallery(type) {
         let link = "";
         let title = "";
@@ -253,10 +277,6 @@
     }
 
     function openTextModal() { document.getElementById('textModal').style.display = 'flex'; }
-    
-    function openLink(type) {
-        if(type === 'ses' && pageData.ses) window.open(pageData.ses, '_blank');
-    }
 
     function saveData() {
         const pass = document.getElementById('inPass').value;
