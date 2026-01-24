@@ -5,13 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Dijital Katalog</title>
 
-  <!-- CryptoJS (admin şifre hash için) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-
-  <!-- Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
@@ -21,14 +16,11 @@
 
       --txt-main: #f2f2f2;
       --txt-body: #d9d9d9;
-      --txt-muted: rgba(242,242,242,.55);
       --txt-dim: rgba(242,242,242,.35);
 
       --gold: #efc07b;
       --gold-deep: #d4a35d;
       --teal: #33BECC;
-      --sage: #557373;
-      --rose: #a6445d;
 
       --glass: rgba(255,255,255,.03);
       --edge-top: rgba(255,255,255,.14);
@@ -43,7 +35,6 @@
 
     *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
     html,body{ height:100%; }
-
     body{
       margin:0;
       color: var(--txt-main);
@@ -75,11 +66,7 @@
       z-index:1;
     }
 
-    /* Header (FthLabz yok) */
-    .header{
-      text-align:center;
-      padding: 8px 10px 2px;
-    }
+    .header{ text-align:center; padding: 8px 10px 2px; }
     .company-name{
       font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
@@ -102,7 +89,6 @@
       color: rgba(242,242,242,.35);
     }
 
-    /* Loading */
     #loading{
       margin-top: 52px;
       text-align:center;
@@ -112,11 +98,9 @@
     }
     #loading i{ color: var(--gold); }
 
-    /* Panels */
     .panel{ display:none; animation: fadeIn .45s ease-out; }
     @keyframes fadeIn{ from{opacity:0; transform: translateY(10px)} to{opacity:1; transform: translateY(0)} }
 
-    /* Glass */
     .glass{
       background: var(--glass);
       backdrop-filter: blur(26px);
@@ -137,7 +121,6 @@
         inset -1px -1px 0 var(--edge-bot);
     }
 
-    /* Setup (Admin) */
     .hero-card{
       padding: 18px;
       border-radius: var(--r-lg);
@@ -196,7 +179,6 @@
     }
     .btn-gold:disabled{ opacity:.7; cursor:not-allowed; }
 
-    /* Certificate / Identity */
     .certificate{
       padding: 16px;
       border-radius: var(--r-lg);
@@ -206,40 +188,25 @@
       position:relative;
       overflow:hidden;
     }
-    .cert-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-    }
+    .cert-top{ display:flex; align-items:center; justify-content:space-between; gap: 12px; }
     .cert-badge{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      font-size: 11px;
-      letter-spacing: .12em;
+      display:inline-flex; align-items:center; gap: 8px;
+      font-size: 11px; letter-spacing: .12em;
       text-transform: uppercase;
       color: rgba(242,242,242,.8);
       font-weight: 800;
     }
     .cert-badge i{ color: var(--gold); }
-    .cert-meta{
-      font-size: 12px;
-      color: rgba(242,242,242,.55);
-      white-space: nowrap;
-    }
+    .cert-meta{ font-size: 12px; color: rgba(242,242,242,.55); white-space: nowrap; }
     .cert-line{
       margin-top: 10px;
       height: 1px;
       background: linear-gradient(90deg, rgba(239,192,123,.0), rgba(239,192,123,.45), rgba(239,192,123,.0));
     }
 
-    /* Dock */
     .dock{ margin-top: 6px; }
     .dock-inner{
-      display:flex;
-      justify-content:space-between;
-      gap: 10px;
+      display:flex; justify-content:space-between; gap: 10px;
       padding: 12px;
       border-radius: 999px;
       background: rgba(255,255,255,.06);
@@ -262,19 +229,14 @@
     }
     .dock-btn i{ font-size: 18px; opacity:.95; }
     .dock-btn:active{ transform: scale(.99); }
-
-    /* “Günlük” özel */
     .dock-btn.daily{
       border-color: rgba(239,192,123,.35);
       background: rgba(239,192,123,.10);
       box-shadow: var(--glow-gold);
     }
     .dock-btn.daily i{ color: var(--gold); }
-
     .dock-labels{
-      display:flex;
-      justify-content:space-between;
-      gap: 10px;
+      display:flex; justify-content:space-between; gap: 10px;
       padding: 8px 12px 0;
       color: var(--txt-dim);
       font-size: 10px;
@@ -291,14 +253,10 @@
       color: var(--txt-dim);
     }
 
-    /* Flash (local) */
     .flash{ padding: 16px; border-radius: var(--r-lg); }
     .flash-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      margin-bottom: 12px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 10px; margin-bottom: 12px;
     }
     .flash-title{
       font-family: "Space Grotesk", sans-serif;
@@ -400,32 +358,6 @@
     }
     .btn-ghost:active{ transform: scale(.99); }
 
-    /* Customer note */
-    .note-box{
-      padding: 16px;
-      border-radius: var(--r-lg);
-    }
-    .note-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .note-title{
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      color: rgba(242,242,242,.85);
-      display:flex;
-      align-items:center;
-      gap: 10px;
-    }
-    .note-title i{ color: var(--gold); }
-
-    /* Footer / Admin edit */
     .footer{
       text-align:center;
       margin: 8px 0 18px;
@@ -452,7 +384,6 @@
     .admin-edit i{ font-size: 14px; }
     .admin-edit:active{ transform: scale(.98); }
 
-    /* Gallery overlay */
     #gallery-overlay{
       position:fixed; inset:0;
       background:#000;
@@ -548,7 +479,6 @@
       border: 1px solid rgba(166,68,93,.35);
     }
 
-    /* Text modal (İletişim Bilgileri) */
     #textModal{
       position:fixed; inset:0;
       background:#000;
@@ -633,9 +563,7 @@
       gap: 10px;
       margin-top: 10px;
     }
-    .contact-actions button{
-      flex:1;
-    }
+    .contact-actions button{ flex:1; }
 
     @media (max-width: 380px){
       .company-name{ font-size: 24px; }
@@ -648,7 +576,6 @@
   <div class="bg-glow"></div>
 
   <div class="container">
-    <!-- Header -->
     <div class="header">
       <div class="company-name" id="companyName">...</div>
       <div class="company-slogan" id="companySlogan">...</div>
@@ -660,7 +587,7 @@
       Veriler Çekiliyor...
     </div>
 
-    <!-- SETUP / ADMIN PANEL -->
+    <!-- ADMIN / SETUP -->
     <div id="setup-panel" class="panel">
       <div class="hero-card">
         <div class="hero-title">Yönetici Kurulumu</div>
@@ -670,7 +597,7 @@
       </div>
 
       <label>1) ŞİRKET ADI</label>
-      <input type="text" id="inTitle" placeholder="Örn: Ümmühanın Yeri / X Mağazası">
+      <input type="text" id="inTitle" placeholder="Örn: X Mağazası">
 
       <label>2) SLOGAN</label>
       <input type="text" id="inSlogan" placeholder="Örn: Kaliteyi uygun fiyata sunarız.">
@@ -704,11 +631,27 @@
       <label>Videolu Reklamlar (Videolar Klasör Linki)</label>
       <input type="text" id="inVideoLink" placeholder="Drive klasör linki">
 
-      <label>Günlük Kampanya (Tek Drive Dosyası — video/ses fark etmez)</label>
-      <input type="text" id="inSes" placeholder="Drive dosya linki">
+      <label>Günlük (Tek Drive Dosyası — video/ses fark etmez)</label>
+      <input type="text" id="inDaily" placeholder="Drive dosya linki">
 
       <label style="color: var(--gold); margin-top: 18px; border-top:1px dashed rgba(255,255,255,.18); padding-top:12px;">
-        5) YASAL / AÇIKLAMA METNİ (KAYITTA KALIR)
+        5) ANLIK KAMPANYA (YÖNETİCİDEN — KALICI)
+      </label>
+
+      <label>Kampanya Görseli (Tek Drive Görsel Linki)</label>
+      <input type="text" id="inFlashImg" placeholder="Drive görsel linki">
+
+      <label>Eski Fiyat</label>
+      <input type="text" id="inOldPrice" placeholder="Örn: 1.499₺">
+
+      <label>Yeni Fiyat</label>
+      <input type="text" id="inNewPrice" placeholder="Örn: 999₺">
+
+      <label>Kampanya Etiketi (Opsiyonel)</label>
+      <input type="text" id="inFlashLabel" placeholder="Örn: FLAŞ FIRSAT / HAFTANIN ÜRÜNÜ">
+
+      <label style="color: var(--gold); margin-top: 18px; border-top:1px dashed rgba(255,255,255,.18); padding-top:12px;">
+        6) YASAL / AÇIKLAMA METNİ
       </label>
       <textarea id="inNot" rows="4" placeholder="Örn: Tüm hakları saklıdır..."></textarea>
 
@@ -719,7 +662,7 @@
       <button class="btn-gold" onclick="saveData()">KAYDET</button>
     </div>
 
-    <!-- VIEW / BUSINESS PAGE -->
+    <!-- VIEW -->
     <div id="view-panel" class="panel">
       <div class="certificate">
         <div class="cert-top">
@@ -733,11 +676,10 @@
         </div>
         <div class="cert-line"></div>
         <div style="margin-top:10px; font-size:12px; color: rgba(242,242,242,.55);">
-          Ürünler, reklamlar ve günlük fırsatlar bu sayfada yayınlanır.
+          Ürünler, reklamlar ve fırsatlar bu sayfada yayınlanır.
         </div>
       </div>
 
-      <!-- Dock: İletişim / Ürünler / Reklam / Günlük -->
       <div class="dock">
         <div class="dock-inner">
           <div class="dock-btn" onclick="openContactModal()" title="İletişim Bilgileri">
@@ -765,39 +707,30 @@
         </div>
       </div>
 
-      <!-- Flash Campaign (local, stays on this device) -->
       <div class="section-label">Anlık Kampanya</div>
 
       <div class="flash glass" id="flashBox">
         <div class="flash-head">
-          <div class="flash-title"><i class="fas fa-bolt"></i> FLAŞ FIRSAT</div>
+          <div class="flash-title" id="flashTitle"><i class="fas fa-bolt"></i> FLAŞ FIRSAT</div>
           <div class="flash-chip" id="flashState">Yayında</div>
         </div>
 
         <div class="flash-media" id="flashMedia">
           <div class="placeholder" id="flashPlaceholder">
-            <i class="fas fa-camera"></i>
-            Görsel seç
-            <div style="font-size:11px; color: rgba(242,242,242,.35); text-transform:none; letter-spacing:0;">
-              (Bu cihazda kalır — değiştirene kadar)
-            </div>
+            <i class="fas fa-tag"></i>
+            Kampanya yok
           </div>
           <img id="flashImg" alt="" style="display:none;">
         </div>
-
-        <!-- Hidden file input -->
-        <input type="file" id="flashFile" accept="image/*" style="display:none;">
 
         <div class="price-row">
           <div class="price-box">
             <div class="price-label">Eski Fiyat</div>
             <div class="price-val old" id="oldPriceText">—</div>
-            <input id="oldPrice" placeholder="Örn: 1.499₺" inputmode="text">
           </div>
           <div class="price-box">
             <div class="price-label">Yeni Fiyat</div>
             <div class="price-val" id="newPriceText">—</div>
-            <input id="newPrice" placeholder="Örn: 999₺" inputmode="text">
           </div>
         </div>
 
@@ -807,26 +740,11 @@
         </div>
       </div>
 
-      <!-- Customer note (local, stays on this device) -->
-      <div class="section-label">Müşteri Notu</div>
-
-      <div class="note-box glass">
-        <div class="note-head">
-          <div class="note-title"><i class="fas fa-pen-fancy"></i> NOTUNUZ</div>
-          <div style="font-size:11px; color: rgba(242,242,242,.45); letter-spacing:.08em; text-transform:uppercase;">
-            Bu cihazda saklanır
-          </div>
-        </div>
-        <textarea id="customerNote" rows="3" placeholder="Sipariş notu / talep / açıklama..."></textarea>
-        <button class="btn-ghost" style="margin-top:12px; width:100%;" onclick="saveCustomerNote()">Notu Kaydet</button>
-      </div>
-
       <div class="admin-edit" onclick="enableEdit()"><i class="fas fa-pen"></i></div>
       <div class="footer">POWERED BY DİJİTAL KATALOG</div>
     </div>
   </div>
 
-  <!-- Gallery Overlay -->
   <div id="gallery-overlay">
     <div class="gallery-header">
       <div class="close-gallery" onclick="closeGallery()"><i class="fas fa-chevron-left"></i> Geri</div>
@@ -835,7 +753,6 @@
     <div class="slider-container" id="slider-track"></div>
   </div>
 
-  <!-- Contact Modal -->
   <div id="textModal">
     <div class="text-modal-header">
       <div class="close-gallery" onclick="document.getElementById('textModal').style.display='none'">
@@ -855,37 +772,43 @@
     const urlParams = new URLSearchParams(window.location.search);
     const currentID = urlParams.get('id');
 
-    // Data model:
-    // title: companyName
-    // not: legalText (plain)
-    // ses: daily single file link (Drive video/audio)
-    // folder: pLink|||vLink|||adminHash|||slogan|||phone|||whats|||insta|||address|||maps
-    // NOTE: viewer no password
+    // Data model (NO viewer password):
+    // title: company
+    // not: legal
+    // ses: daily single file link (Drive preview)
+    // folder (packed):
+    // 0 pLink
+    // 1 vLink
+    // 2 adminHash
+    // 3 slogan
+    // 4 phone
+    // 5 whats
+    // 6 insta
+    // 7 address
+    // 8 maps
+    // 9 flashImg
+    // 10 flashOld
+    // 11 flashNew
+    // 12 flashLabel
     let pageData = {
-      company: "",
-      slogan: "",
-      phone: "",
-      whats: "",
-      insta: "",
-      address: "",
-      maps: "",
+      company: "", slogan: "",
+      phone: "", whats: "", insta: "", address: "", maps: "",
       legal: "",
-      pLink: "",
-      vLink: "",
+      pLink: "", vLink: "",
       daily: "",
-      adminHash: ""
+      adminHash: "",
+      flashImg: "", flashOld: "", flashNew: "", flashLabel: ""
     };
 
     function sha256hex(str){
       return CryptoJS.SHA256(str).toString(CryptoJS.enc.Hex);
     }
     function storageKey(name){ return `${name}_${currentID}`; }
+    function encodeSafe(s){ return encodeURIComponent((s||"").trim()); }
+    function decodeSafe(s){ try { return decodeURIComponent(s); } catch(e){ return s; } }
 
     window.onload = function() {
-      if (!currentID) {
-        document.getElementById('loading').innerHTML = "ID Yok";
-        return;
-      }
+      if (!currentID) { document.getElementById('loading').innerHTML = "ID Yok"; return; }
       document.getElementById('certId').innerText = currentID;
 
       fetch(API_URL + "?action=read&id=" + currentID)
@@ -894,14 +817,13 @@
           document.getElementById('loading').style.display = 'none';
 
           if (data.status === "empty") {
-            // first time setup
             document.getElementById('companyName').innerText = "Yeni Katalog";
             document.getElementById('companySlogan').innerText = "Kurulum gerekli";
             document.getElementById('setup-panel').style.display = 'block';
             return;
           }
 
-          // Legacy encrypted detection (old AES). Viewer password removed: show admin instruction only.
+          // Legacy encrypted detection (old AES)
           const looksEncrypted = (v) => typeof v === 'string' && v.startsWith("U2FsdGVkX1");
           if (looksEncrypted(data.title) || looksEncrypted(data.not) || looksEncrypted(data.folder) || looksEncrypted(data.ses)) {
             document.getElementById('companyName').innerText = "Güncelleme Gerekli";
@@ -910,19 +832,19 @@
             document.getElementById('btnProducts').style.display='none';
             document.getElementById('btnAds').style.display='none';
             document.getElementById('btnDaily').style.display='none';
+            document.getElementById('flashBox').style.display='none';
             document.getElementById('textContent').innerText =
               "Bu sayfa eski sürümde şifreli kaydedilmiş.\n\nİzleyici şifresi kaldırıldığı için içerik görüntülenemez.\n\nYönetici: Sağ alttaki kalem ikonuna bas → şifre ile düzenle → Kaydet.";
             return;
           }
 
-          // Parse new
           pageData.company = (data.title || "").trim();
-          pageData.legal = (data.not || "").trim();
-          pageData.daily = (data.ses || "").trim();
+          pageData.legal   = (data.not || "").trim();
+          pageData.daily   = (data.ses || "").trim();
 
           const folderStr = (data.folder || "").trim();
           const parts = folderStr.split("|||");
-          // old order in earlier version might be v|||p|||adminHash. Here we use p|||v|||adminHash|||...
+
           pageData.pLink = (parts[0] || "").trim();
           pageData.vLink = (parts[1] || "").trim();
           pageData.adminHash = (parts[2] || "").trim();
@@ -934,49 +856,73 @@
           pageData.address = decodeSafe(parts[7] || "");
           pageData.maps    = decodeSafe(parts[8] || "");
 
-          // Render header
+          pageData.flashImg   = decodeSafe(parts[9] || "");
+          pageData.flashOld   = decodeSafe(parts[10] || "");
+          pageData.flashNew   = decodeSafe(parts[11] || "");
+          pageData.flashLabel = decodeSafe(parts[12] || "");
+
           document.getElementById('companyName').innerText = pageData.company || "Dijital Katalog";
           document.getElementById('companySlogan').innerText = pageData.slogan || "";
 
-          // Hide buttons if missing
           if (!pageData.pLink) document.getElementById('btnProducts').style.display='none';
           if (!pageData.vLink) document.getElementById('btnAds').style.display='none';
           if (!pageData.daily) document.getElementById('btnDaily').style.display='none';
 
-          // Restore local flash + note
-          restoreFlash();
-          restoreCustomerNote();
-
+          renderFlash();
           document.getElementById('view-panel').style.display = 'block';
         })
         .catch(() => alert("Bağlantı Hatası: URL'yi kontrol et."));
     };
 
-    function encodeSafe(s){ return encodeURIComponent((s||"").trim()); }
-    function decodeSafe(s){
-      try { return decodeURIComponent(s); } catch(e){ return s; }
+    // ===== Flash render (viewer cannot edit) =====
+    function getDriveId(link){
+      const m = (link||"").match(/[-\w]{25,}/);
+      return m ? m[0] : "";
     }
 
-    // ===== Dock actions =====
-    function openContactModal(){
-      renderContactModal();
-      document.getElementById('textModal').style.display = 'flex';
+    function renderFlash(){
+      const box = document.getElementById('flashBox');
+      const img = document.getElementById('flashImg');
+      const ph  = document.getElementById('flashPlaceholder');
+      const oldT = document.getElementById('oldPriceText');
+      const newT = document.getElementById('newPriceText');
+      const title = document.getElementById('flashTitle');
+
+      // title
+      const label = (pageData.flashLabel || "FLAŞ FIRSAT").trim();
+      title.innerHTML = `<i class="fas fa-bolt"></i> ${escapeHtml(label).toUpperCase()}`;
+
+      // prices
+      oldT.innerText = pageData.flashOld ? pageData.flashOld : "—";
+      newT.innerText = pageData.flashNew ? pageData.flashNew : "—";
+
+      // image
+      if(pageData.flashImg){
+        const id = getDriveId(pageData.flashImg);
+        const src = id ? (`https://lh3.googleusercontent.com/d/${id}=s2000`) : pageData.flashImg;
+        img.src = src;
+        img.style.display = 'block';
+        ph.style.display = 'none';
+      } else {
+        img.style.display = 'none';
+        ph.style.display = 'flex';
+      }
+
+      // if totally empty, keep box but show "kampanya yok"
+      // If you want to hide instead, uncomment:
+      // if(!pageData.flashImg && !pageData.flashOld && !pageData.flashNew) box.style.display='none';
     }
 
+    // ===== Daily single file preview =====
     function openDaily(){
-      // daily single file link is stored in pageData.daily (sheet ses column)
       if(!pageData.daily) return;
-      // reuse openLink style: show iframe preview
       const overlay = document.getElementById('gallery-overlay');
       const slider = document.getElementById('slider-track');
       document.getElementById('galTitle').innerText = "Günlük";
       slider.innerHTML = "";
       overlay.style.display = 'flex';
 
-      let fileId = "";
-      const match = pageData.daily.match(/[-\w]{25,}/);
-      if(match) fileId = match[0];
-
+      const fileId = getDriveId(pageData.daily);
       if(fileId){
         const playerUrl = `https://drive.google.com/file/d/${fileId}/preview`;
         slider.innerHTML = `<div class="slide"><div class="video-wrapper"><iframe src="${playerUrl}" allow="autoplay; fullscreen" allowfullscreen></iframe></div></div>`;
@@ -1032,18 +978,22 @@
       document.getElementById('slider-track').innerHTML = "";
     }
 
-    // ===== Contact modal template =====
+    // ===== Contact modal =====
+    function openContactModal(){
+      renderContactModal();
+      document.getElementById('textModal').style.display = 'flex';
+    }
+
     function renderContactModal(){
       const wrap = document.createElement('div');
 
-      // Contact Card
       const card = document.createElement('div');
       card.className = 'contact-card';
 
-      const title = document.createElement('div');
-      title.className = 'contact-title';
-      title.innerHTML = `<i class="fas fa-address-card"></i> Şirket İletişimi`;
-      card.appendChild(title);
+      const t = document.createElement('div');
+      t.className = 'contact-title';
+      t.innerHTML = `<i class="fas fa-address-card"></i> Şirket İletişimi`;
+      card.appendChild(t);
 
       card.appendChild(contactRow('fa-phone', 'Telefon', pageData.phone, pageData.phone ? `tel:${normalizeTel(pageData.phone)}` : ""));
       card.appendChild(contactRow('fa-whatsapp', 'WhatsApp', pageData.whats, pageData.whats ? `https://wa.me/${normalizeWhats(pageData.whats)}` : ""));
@@ -1051,7 +1001,6 @@
       card.appendChild(contactRow('fa-location-dot', 'Adres', pageData.address, ""));
       card.appendChild(contactRow('fa-map-location-dot', 'Konum', pageData.maps, pageData.maps ? pageData.maps : ""));
 
-      // Quick actions
       const actions = document.createElement('div');
       actions.className = 'contact-actions';
       actions.innerHTML = `
@@ -1062,7 +1011,6 @@
 
       wrap.appendChild(card);
 
-      // Legal text
       const legal = document.createElement('div');
       legal.className = 'contact-card';
       legal.innerHTML = `
@@ -1086,55 +1034,42 @@
         valHtml = `<a href="${link}" target="_blank" rel="noopener">${safeVal}</a>`;
       }
 
+      // brand vs solid
+      const isBrand = (icon.includes('whatsapp') || icon.includes('instagram'));
+      const icoHtml = isBrand ? `<i class="fa-brands ${icon}"></i>` : `<i class="fas ${icon}"></i>`;
+
       row.innerHTML = `
-        <div class="contact-ico"><i class="fa-brands ${icon}"></i></div>
-        <div class="contact-val"><div style="color: rgba(242,242,242,.45); font-size: 12px; margin-bottom:4px; letter-spacing:.08em; text-transform:uppercase;">${label}</div>${valHtml}</div>
+        <div class="contact-ico">${icoHtml}</div>
+        <div class="contact-val">
+          <div style="color: rgba(242,242,242,.45); font-size: 12px; margin-bottom:4px; letter-spacing:.08em; text-transform:uppercase;">${label}</div>
+          ${valHtml}
+        </div>
       `;
-
-      // Fix icons for non-brand icons
-      if(icon.startsWith('fa-') && !icon.includes('whatsapp') && !icon.includes('instagram')){
-        row.innerHTML = `
-          <div class="contact-ico"><i class="fas ${icon}"></i></div>
-          <div class="contact-val"><div style="color: rgba(242,242,242,.45); font-size: 12px; margin-bottom:4px; letter-spacing:.08em; text-transform:uppercase;">${label}</div>${valHtml}</div>
-        `;
-      }
-
       return row;
     }
 
-    function normalizeHandle(h){
-      return (h||"").trim().replace(/^@/,'').replace(/\s+/g,'');
-    }
-    function normalizeWhats(w){
-      return (w||"").replace(/[^\d]/g,'').replace(/^0/,'90'); // crude TR normalize
-    }
-    function normalizeTel(t){
-      return (t||"").replace(/\s+/g,'');
-    }
-
+    function normalizeHandle(h){ return (h||"").trim().replace(/^@/,'').replace(/\s+/g,''); }
+    function normalizeWhats(w){ return (w||"").replace(/[^\d]/g,'').replace(/^0/,'90'); }
+    function normalizeTel(t){ return (t||"").replace(/\s+/g,''); }
     function escapeHtml(str){
       return (str||"").replace(/[&<>"']/g, m => ({
         '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
       }[m]));
     }
 
-    // ===== WhatsApp Order =====
+    // ===== WhatsApp Order (no customer note) =====
     function orderOnWhatsApp(){
       const num = normalizeWhats(pageData.whats);
       if(!num){
         alert("WhatsApp numarası eklenmemiş. Yönetici panelinden ekleyin.");
         return;
       }
-      const note = (document.getElementById('customerNote')?.value || "").trim();
-      const oldP = (document.getElementById('oldPrice')?.value || "").trim();
-      const newP = (document.getElementById('newPrice')?.value || "").trim();
 
       const msgLines = [];
       msgLines.push(`Merhaba, ${pageData.company || "işletme"} için sipariş/teklif istiyorum.`);
-      if(newP || oldP){
-        msgLines.push(`Kampanya: ${oldP ? ("Eski: " + oldP) : ""}${(oldP && newP) ? " | " : ""}${newP ? ("Yeni: " + newP) : ""}`);
+      if(pageData.flashNew || pageData.flashOld){
+        msgLines.push(`Anlık Kampanya: ${pageData.flashOld ? ("Eski: " + pageData.flashOld) : ""}${(pageData.flashOld && pageData.flashNew) ? " | " : ""}${pageData.flashNew ? ("Yeni: " + pageData.flashNew) : ""}`);
       }
-      if(note) msgLines.push(`Not: ${note}`);
       msgLines.push(`Katalog ID: ${currentID}`);
 
       const msg = encodeURIComponent(msgLines.join("\n"));
@@ -1142,111 +1077,23 @@
       window.open(url, "_blank");
     }
 
-    // ===== Local Flash (persists on same device) =====
-    const flashMedia = document.getElementById('flashMedia');
-    const flashFile = document.getElementById('flashFile');
-    const flashImg = document.getElementById('flashImg');
-    const flashPlaceholder = document.getElementById('flashPlaceholder');
-
-    const oldPrice = document.getElementById('oldPrice');
-    const newPrice = document.getElementById('newPrice');
-    const oldPriceText = document.getElementById('oldPriceText');
-    const newPriceText = document.getElementById('newPriceText');
-
-    flashMedia.addEventListener('click', () => flashFile.click());
-
-    flashFile.addEventListener('change', (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        setFlashImage(reader.result);
-        persistFlash();
-      };
-      reader.readAsDataURL(file);
-    });
-
-    oldPrice.addEventListener('input', () => { oldPriceText.innerText = oldPrice.value || "—"; persistFlash(); });
-    newPrice.addEventListener('input', () => { newPriceText.innerText = newPrice.value || "—"; persistFlash(); });
-
-    function setFlashImage(dataUrl){
-      flashImg.src = dataUrl;
-      flashImg.style.display = 'block';
-      flashPlaceholder.style.display = 'none';
-    }
-
-    function persistFlash(){
-      try{
-        const payload = {
-          img: flashImg && flashImg.style.display !== 'none' ? flashImg.src : "",
-          old: oldPrice.value || "",
-          neu: newPrice.value || ""
-        };
-        localStorage.setItem(storageKey("flash"), JSON.stringify(payload));
-      }catch(e){}
-    }
-
-    function restoreFlash(){
-      try{
-        const raw = localStorage.getItem(storageKey("flash"));
-        if(!raw) return;
-        const payload = JSON.parse(raw);
-        if(payload.img){
-          setFlashImage(payload.img);
-        }
-        if(payload.old){
-          oldPrice.value = payload.old;
-          oldPriceText.innerText = payload.old;
-        }
-        if(payload.neu){
-          newPrice.value = payload.neu;
-          newPriceText.innerText = payload.neu;
-        }
-      }catch(e){}
-    }
-
-    // ===== Customer note (local) =====
-    function saveCustomerNote(){
-      try{
-        localStorage.setItem(storageKey("custnote"), (document.getElementById('customerNote').value || ""));
-        alert("Not kaydedildi.");
-      }catch(e){}
-    }
-    function restoreCustomerNote(){
-      try{
-        const v = localStorage.getItem(storageKey("custnote"));
-        if(v != null) document.getElementById('customerNote').value = v;
-      }catch(e){}
-    }
-
-    // ===== Admin auth: one-time per device =====
+    // ===== Admin auth remember per device =====
     function isAdminRemembered(){
-      try{
-        return localStorage.getItem(storageKey("admin_ok")) === "1";
-      }catch(e){ return false; }
+      try{ return localStorage.getItem(storageKey("admin_ok")) === "1"; }
+      catch(e){ return false; }
     }
     function rememberAdmin(){
-      try{
-        localStorage.setItem(storageKey("admin_ok"), "1");
-      }catch(e){}
-    }
-    function clearAdminRemember(){
-      try{
-        localStorage.removeItem(storageKey("admin_ok"));
-      }catch(e){}
+      try{ localStorage.setItem(storageKey("admin_ok"), "1"); } catch(e){}
     }
 
     function enableEdit() {
-      // If admin already validated on this device, open setup directly
       if(isAdminRemembered()){
         openSetupPrefilled();
         return;
       }
 
-      // If missing hash (old/incomplete) allow confirm
       if(!pageData.adminHash){
-        const ok = confirm("Yönetici şifresi kaydı bulunamadı. Düzenleme için devam edilsin mi?");
+        const ok = confirm("Yönetici şifresi kaydı bulunamadı. Düzenlemeye geçilsin mi?");
         if(!ok) return;
         openSetupPrefilled();
         return;
@@ -1271,17 +1118,24 @@
 
       document.getElementById('inTitle').value = pageData.company || "";
       document.getElementById('inSlogan').value = pageData.slogan || "";
+
       document.getElementById('inPhone').value = pageData.phone || "";
       document.getElementById('inWhats').value = pageData.whats || "";
       document.getElementById('inInsta').value = pageData.insta || "";
       document.getElementById('inAddress').value = pageData.address || "";
       document.getElementById('inMaps').value = pageData.maps || "";
+
       document.getElementById('inPhotoLink').value = pageData.pLink || "";
       document.getElementById('inVideoLink').value = pageData.vLink || "";
-      document.getElementById('inSes').value = pageData.daily || "";
+      document.getElementById('inDaily').value = pageData.daily || "";
+
+      document.getElementById('inFlashImg').value = pageData.flashImg || "";
+      document.getElementById('inOldPrice').value = pageData.flashOld || "";
+      document.getElementById('inNewPrice').value = pageData.flashNew || "";
+      document.getElementById('inFlashLabel').value = pageData.flashLabel || "";
+
       document.getElementById('inNot').value = pageData.legal || "";
 
-      // do not auto-fill password fields
       document.getElementById('inPass').value = "";
       document.getElementById('inPassConfirm').value = "";
     }
@@ -1306,13 +1160,16 @@
 
       const pLink   = (document.getElementById('inPhotoLink').value || "").trim();
       const vLink   = (document.getElementById('inVideoLink').value || "").trim();
-      const daily   = (document.getElementById('inSes').value || "").trim();
+      const daily   = (document.getElementById('inDaily').value || "").trim();
+
+      const flashImg   = (document.getElementById('inFlashImg').value || "").trim();
+      const flashOld   = (document.getElementById('inOldPrice').value || "").trim();
+      const flashNew   = (document.getElementById('inNewPrice').value || "").trim();
+      const flashLabel = (document.getElementById('inFlashLabel').value || "").trim();
 
       const legal   = (document.getElementById('inNot').value || "").trim();
-
       const adminHash = sha256hex(pass);
 
-      // folder packed (kept short)
       const folder = [
         pLink, vLink, adminHash,
         encodeSafe(slogan),
@@ -1320,14 +1177,17 @@
         encodeSafe(whats),
         encodeSafe(insta),
         encodeSafe(address),
-        encodeSafe(maps)
+        encodeSafe(maps),
+        encodeSafe(flashImg),
+        encodeSafe(flashOld),
+        encodeSafe(flashNew),
+        encodeSafe(flashLabel)
       ].join("|||");
 
       fetch(API_URL + `?action=save&id=${encodeURIComponent(currentID)}&title=${encodeURIComponent(company)}&not=${encodeURIComponent(legal)}&folder=${encodeURIComponent(folder)}&ses=${encodeURIComponent(daily)}`)
         .then(res => res.json())
         .then(data => {
           if (data.status === "success") {
-            // remember admin on this device
             rememberAdmin();
             location.reload();
           } else {
