@@ -282,22 +282,26 @@
     }
 
     .flash-media{
-      width:100%;
-      aspect-ratio: 16/10;
-      border-radius: var(--r-md);
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.25);
-      position:relative;
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 12px;
-    }
-    .flash-media img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      display:block;
-    }
+  width:100%;
+  border-radius: var(--r-md);
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.25);
+  position:relative;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 12px;
+
+  /* 🔥 resme göre boyutlanır */
+  aspect-ratio: auto;
+}
+
+.flash-media img{
+  width:100%;
+  height:auto;          /* 🔥 kırpma yok */
+  display:block;
+  object-fit: contain;  /* 🔥 ne gelirse gelsin kesmez */
+  background: rgba(0,0,0,.25);
+}
     .flash-media .placeholder{
       position:absolute; inset:0;
       display:flex; align-items:center; justify-content:center;
