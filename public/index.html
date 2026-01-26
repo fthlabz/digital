@@ -11,20 +11,20 @@
 
   <style>
     :root{
-      --bg-void: #0b1020;
-      --bg-navy: #1d2744;
+      --bg-void: #0c0c0c;
+      --bg-navy: #1a1a2e;
 
       --txt-main: #f2f2f2;
-      --txt-body: #e2e6f0;
-      --txt-dim: rgba(242,242,242,.45);
+      --txt-body: #d9d9d9;
+      --txt-dim: rgba(242,242,242,.35);
 
       --gold: #efc07b;
       --gold-deep: #d4a35d;
       --teal: #33BECC;
 
-      --glass: rgba(255,255,255,.07);
-      --edge-top: rgba(255,255,255,.22);
-      --edge-bot: rgba(0,0,0,.35);
+      --glass: rgba(255,255,255,.03);
+      --edge-top: rgba(255,255,255,.14);
+      --edge-bot: rgba(0,0,0,.45);
 
       --r-lg: 20px;
       --r-md: 16px;
@@ -40,9 +40,8 @@
       color: var(--txt-main);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background:
-        radial-gradient(1200px 640px at 50% -10%, rgba(239,192,123,.12), transparent 60%),
-        radial-gradient(900px 520px at 50% 10%, rgba(255,255,255,.06), transparent 70%),
-        linear-gradient(145deg, var(--bg-navy), var(--bg-void) 55%, var(--bg-void));
+        radial-gradient(900px 520px at 50% 0%, rgba(239,192,123,.10), transparent 60%),
+        linear-gradient(135deg, var(--bg-navy), var(--bg-void) 45%, var(--bg-void));
       overflow-x:hidden;
     }
 
@@ -56,13 +55,13 @@
     }
 
     .container{
-      max-width: 560px;
+      max-width: 520px;
       margin: 0 auto;
       min-height: 100vh;
-      padding: 26px;
+      padding: 22px;
       display:flex;
       flex-direction:column;
-      gap: 18px;
+      gap: 14px;
       position:relative;
       z-index:1;
     }
@@ -71,7 +70,7 @@
     .company-name{
       font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
-      font-size: 30px;
+      font-size: 28px;
       letter-spacing: .02em;
       color: var(--gold);
       margin-top: 6px;
@@ -87,7 +86,7 @@
       font-size: 10px;
       letter-spacing: .16em;
       text-transform: uppercase;
-      color: rgba(242,242,242,.45);
+      color: rgba(242,242,242,.35);
     }
 
     #loading{
@@ -319,6 +318,7 @@
       white-space: nowrap;
     }
 
+    /* ✅ Anlık kampanya görseli kesmesin: resme göre boyutlansın */
     .flash-media{
       width:100%;
       border-radius: var(--r-md);
@@ -411,6 +411,7 @@
     .admin-edit i{ font-size: 14px; }
     .admin-edit:active{ transform: scale(.98); }
 
+    /* Overlay (gallery) */
     #gallery-overlay{
       position:fixed; inset:0;
       background:#000;
@@ -506,6 +507,7 @@
       border: 1px solid rgba(166,68,93,.35);
     }
 
+    /* === CARD MODAL (Contact Button) === */
     #cardModal{
       position:fixed; inset:0;
       background: rgba(0,0,0,.92);
@@ -613,6 +615,7 @@
       Veriler Çekiliyor...
     </div>
 
+    <!-- ADMIN / SETUP -->
     <div id="setup-panel" class="panel">
       <div class="hero-card">
         <div class="hero-title">Yönetici Kurulumu</div>
@@ -623,7 +626,7 @@
         </p>
       </div>
 
-      <label>1) ŞRKET ADI</label>
+      <label>1) ŞİRKET ADI</label>
       <input type="text" id="inTitle" placeholder="Örn: X Mağazası">
 
       <label>2) SLOGAN</label>
@@ -698,6 +701,7 @@
       <button class="btn-gold" onclick="saveData()">KAYDET</button>
     </div>
 
+    <!-- VIEW -->
     <div id="view-panel" class="panel">
       <div class="certificate">
         <div class="cert-top">
@@ -717,6 +721,7 @@
 
       <div class="dock">
         <div class="dock-inner">
+          <!-- İLETİŞİM: artık kart/rehbere kaydet + ana ekrana ekle -->
           <div class="dock-btn" onclick="openCardModal()" title="Kart / Rehbere Kaydet">
             <i class="fas fa-address-card"></i>
           </div>
@@ -779,6 +784,7 @@
     </div>
   </div>
 
+  <!-- GALLERY OVERLAY -->
   <div id="gallery-overlay">
     <div class="gallery-header">
       <div class="close-gallery" onclick="closeGallery()"><i class="fas fa-chevron-left"></i> Geri</div>
@@ -787,18 +793,15 @@
     <div class="slider-container" id="slider-track"></div>
   </div>
 
+  <!-- CARD MODAL -->
   <div id="cardModal">
     <div class="card-header">
       <div class="close-gallery" onclick="closeCardModal()"><i class="fas fa-chevron-left"></i> Kapat</div>
-      <div class="card-title">PREMIUM KARTVİZİT</div>
+      <div class="card-title">KART / REHBER</div>
     </div>
     <div class="card-body">
-      <div class="mini" style="margin-bottom:14px;">
-        Bu bölüm işletmenin premium dijital kartvizitidir. Tek tuşla rehbere ekleyebilir ve ana ekrana kısayol oluşturabilirsin.
-      </div>
-
       <div class="card-box">
-        <div class="card-headline"><i class="fas fa-user-plus"></i> Premium Kartviziti Kaydet</div>
+        <div class="card-headline"><i class="fas fa-user-plus"></i> Rehbere Kaydet</div>
         <div class="mini">
           Tek tuşla işletme kartını oluşturur. Açılan ekranda “Kişilere Ekle / Yeni Kişi Oluştur” seçerek kaydedebilirsin.
         </div>
@@ -808,7 +811,7 @@
       </div>
 
       <div class="card-box">
-        <div class="card-headline"><i class="fas fa-house"></i> Ana Ekrana Premium Kısayol</div>
+        <div class="card-headline"><i class="fas fa-house"></i> Ana Ekrana Kısayol</div>
         <div class="mini" id="a2hsText">Cihazına göre yönerge burada görünecek.</div>
 
         <div style="margin-top:12px;">
@@ -816,15 +819,7 @@
         </div>
 
         <div id="a2hsSteps" style="margin-top:12px; display:none;">
-        </div>
-
-        <div class="mini" id="openInBrowserNote" style="margin-top:10px;">
-          QR tarayıcı içinde açıldıysa önce Safari/Chrome’da açıp ana ekrana eklemen gerekir.
-        </div>
-
-        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="btn-ghost" onclick="shareLink()">Linki Paylaş</button>
-          <button class="btn-ghost" onclick="openInBrowser()">Tarayıcıda Aç</button>
+          <!-- dynamic -->
         </div>
       </div>
 
@@ -845,11 +840,33 @@
   </div>
 
   <script>
+    // ✅ API URL (same)
     const API_URL = "https://script.google.com/macros/s/AKfycbyvtvYWLmkq8AqmCEhf_FP5fYLaliFpz_p-Jx4_miEM1vgCvHIM8qDS06A5kKP9F6W0ZA/exec";
 
     const urlParams = new URLSearchParams(window.location.search);
     const currentID = urlParams.get('id');
 
+    // Data model:
+    // title: company
+    // not: legal
+    // ses: daily single file link
+    // folder (packed):
+    // 0 pLink
+    // 1 vLink
+    // 2 adminHash
+    // 3 slogan
+    // 4 phone
+    // 5 whats
+    // 6 insta
+    // 7 address
+    // 8 maps
+    // 9 flashImg
+    // 10 flashOld
+    // 11 flashNew
+    // 12 flashLabel
+    // 13 email
+    // 14 review
+    // 15 hours
     let pageData = {
       company: "", slogan: "",
       phone: "", email: "", whats: "", insta: "", address: "", maps: "", review: "", hours: "",
@@ -889,6 +906,7 @@
             return;
           }
 
+          // Legacy encrypted detection (old AES)
           const looksEncrypted = (v) => typeof v === 'string' && v.startsWith("U2FsdGVkX1");
           if (looksEncrypted(data.title) || looksEncrypted(data.not) || looksEncrypted(data.folder) || looksEncrypted(data.ses)) {
             document.getElementById('companyName').innerText = "Güncelleme Gerekli";
@@ -941,6 +959,7 @@
         .catch(() => alert("Bağlantı Hatası: URL'yi kontrol et."));
     };
 
+    // ===== Flash render =====
     function getDriveId(link){
       const m = (link||"").match(/[-\w]{25,}/);
       return m ? m[0] : "";
@@ -971,6 +990,7 @@
       }
     }
 
+    // ===== Daily single file preview =====
     function openDaily(){
       if(!pageData.daily) return;
       const overlay = document.getElementById('gallery-overlay');
@@ -988,6 +1008,7 @@
       }
     }
 
+    // ===== Gallery (same backend) =====
     function openGallery(type) {
       let link = "";
       let title = "";
@@ -1034,6 +1055,7 @@
       document.getElementById('slider-track').innerHTML = "";
     }
 
+    // ===== WhatsApp Order =====
     function normalizeHandle(h){ return (h||"").trim().replace(/^@/,'').replace(/\s+/g,''); }
     function normalizeWhats(w){ return (w||"").replace(/[^\d]/g,'').replace(/^0/,'90'); }
     function normalizeTel(t){ return (t||"").replace(/\s+/g,''); }
@@ -1057,6 +1079,7 @@
       window.open(url, "_blank");
     }
 
+    // ===== Admin auth remember per device =====
     function isAdminRemembered(){
       try{ return localStorage.getItem(storageKey("admin_ok")) === "1"; }
       catch(e){ return false; }
@@ -1118,6 +1141,7 @@
 
       document.getElementById('inNot').value = pageData.legal || "";
 
+      // Şifreyi otomatik doldurma yok:
       document.getElementById('inPass').value = "";
       document.getElementById('inPassConfirm').value = "";
     }
@@ -1126,15 +1150,20 @@
       const company = (document.getElementById('inTitle').value || "").trim();
       if(!company) return alert("Şirket adı boş olamaz.");
 
+      // İlk kurulum mu? (adminHash yoksa ilk kurulum say)
       const firstSetup = !pageData.adminHash;
 
       const pass = (document.getElementById('inPass').value || "");
       const pass2 = (document.getElementById('inPassConfirm').value || "");
 
+      // ✅ İlk kurulumda şifre zorunlu
       if(firstSetup){
         if(!pass) return alert("İlk kurulumda yönetici şifresi boş olamaz.");
         if(pass !== pass2) return alert("Şifreler uyuşmuyor.");
       } else {
+        // ✅ Sonraki düzenlemelerde:
+        // - Şifre girilmediyse: adminHash aynen kalsın
+        // - Şifre girildiyse: değiştir (doğrula)
         if(pass){
           if(pass !== pass2) return alert("Şifreler uyuşmuyor.");
         }
@@ -1166,6 +1195,7 @@
 
       const legal   = (document.getElementById('inNot').value || "").trim();
 
+      // admin hash hesap
       let adminHash = pageData.adminHash || "";
       if(firstSetup || pass){
         adminHash = sha256hex(pass);
@@ -1207,6 +1237,9 @@
         });
     }
 
+    // =========================
+    // CARD / VCARD / A2HS FLOW
+    // =========================
     function openCardModal(){
       prepareCardModal();
       document.getElementById('cardModal').style.display = 'flex';
@@ -1231,13 +1264,14 @@
     function prepareCardModal(){
       const a2hsText = document.getElementById('a2hsText');
       if(isIOS()){
-        a2hsText.innerHTML = "iPhone/iPad: Safari’de <b>Paylaş</b> → <b>Ana Ekrana Ekle</b> ile premium kartvizit kısayolunu oluşturabilirsin.";
+        a2hsText.innerHTML = "iPhone/iPad: Safari’de <b>Paylaş</b> → <b>Ana Ekrana Ekle</b> ile kısayol ekleyebilirsin.";
       } else if(isAndroid()){
-        a2hsText.innerHTML = "Android: Chrome’da <b>⋮</b> menüsü → <b>Ana ekrana ekle</b> ile premium kartvizit kısayolunu oluşturabilirsin.";
+        a2hsText.innerHTML = "Android: Chrome’da <b>⋮</b> menüsü → <b>Ana ekrana ekle</b> ile kısayol ekleyebilirsin.";
       } else {
         a2hsText.innerHTML = "Tarayıcı menüsünden “Ana ekrana ekle / Kısayol oluştur” seçeneklerini kullanabilirsin.";
       }
 
+      // Quick links
       const box = document.getElementById('cardQuickLinks');
       const tel = document.getElementById('quickTel');
       const map = document.getElementById('quickMap');
@@ -1325,7 +1359,9 @@
       }
     }
 
+    // ===== vCard (VCF) generator =====
     function sanitizeVCardValue(s){
+      // vCard special chars: \n, ; , \
       return (s||"").replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/;/g,'\\;').replace(/,/g,'\\,');
     }
     function buildVCard(){
@@ -1341,19 +1377,26 @@
       const review  = pageData.review || "";
       const hours   = pageData.hours || "";
 
+      // vCard 3.0 is widely compatible
       lines.push("BEGIN:VCARD");
       lines.push("VERSION:3.0");
+      // FN / ORG
       lines.push(`FN:${sanitizeVCardValue(company)}`);
       lines.push(`ORG:${sanitizeVCardValue(company)}`);
 
+      // TEL
       if(phone) lines.push(`TEL;TYPE=CELL,VOICE:${sanitizeVCardValue(phone)}`);
 
+      // EMAIL
       if(email) lines.push(`EMAIL;TYPE=INTERNET:${sanitizeVCardValue(email)}`);
 
+      // ADR (simple text in label)
       if(address) lines.push(`ADR;TYPE=WORK:;;${sanitizeVCardValue(address)};;;;`);
 
+      // URL: katalog linki
       lines.push(`URL:${sanitizeVCardValue(window.location.href)}`);
 
+      // Extra links in NOTE (broad compatibility)
       const noteParts = [];
       if(slogan) noteParts.push(slogan);
       if(hours) noteParts.push(`Çalışma Saatleri: ${hours}`);
@@ -1361,9 +1404,11 @@
       if(insta) noteParts.push(`Instagram: https://instagram.com/${normalizeHandle(insta)}`);
       if(review) noteParts.push(`Yorumlar: ${review}`);
 
+      // WhatsApp (optional)
       const w = normalizeWhats(whats || phone);
       if(w) noteParts.push(`WhatsApp: https://wa.me/${w}`);
 
+      // ID
       noteParts.push(`Katalog ID: ${currentID}`);
 
       if(noteParts.length){
@@ -1375,18 +1420,24 @@
     }
 
     function saveToContacts(){
+      // Web güvenliği gereği “rehbere otomatik kaydet” yok.
+      // En hızlı yöntem: vCard (VCF) oluşturup açtırmak.
       const vcf = buildVCard();
       const filename = `${(pageData.company || "isletme").replace(/[^\w\d\-]+/g,'_')}_${currentID}.vcf`;
 
       try{
+        // Prefer Blob URL
         const blob = new Blob([vcf], { type: "text/vcard;charset=utf-8" });
         const url = URL.createObjectURL(blob);
 
+        // iOS Safari: location.href ile açtırmak genelde “Kişilere Ekle” ekranını getirir
+        // Bazı cihazlarda download gibi görünür ama Kişiler importu çıkar.
         const a = document.createElement('a');
         a.href = url;
         a.download = filename;
         document.body.appendChild(a);
 
+        // iOS'ta download attribute bazen yok sayılır, yine de açılır.
         a.click();
 
         setTimeout(() => {
@@ -1394,36 +1445,10 @@
           document.body.removeChild(a);
         }, 1500);
       } catch(e){
+        // Fallback: data uri
         const dataUri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vcf);
         window.location.href = dataUri;
       }
-    }
-
-    function openInBrowser(){
-      const url = window.location.href;
-      window.open(url, "_blank", "noopener");
-    }
-
-    function shareLink(){
-      const shareData = {
-        title: pageData.company || "Dijital Katalog",
-        text: pageData.company ? `${pageData.company} Dijital Katalog` : "Dijital Katalog",
-        url: window.location.href
-      };
-
-      if (navigator.share) {
-        navigator.share(shareData).catch(() => {});
-        return;
-      }
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(window.location.href)
-          .then(() => alert("Link kopyalandı. Tarayıcıda açıp ana ekrana ekleyebilirsin."))
-          .catch(() => alert("Link kopyalanamadı."));
-        return;
-      }
-
-      prompt("Linki kopyala:", window.location.href);
     }
   </script>
 </body>
