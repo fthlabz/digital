@@ -971,6 +971,7 @@
       const oldT = document.getElementById('oldPriceText');
       const newT = document.getElementById('newPriceText');
       const title = document.getElementById('flashTitle');
+      const flashState = document.getElementById('flashState');
 
       const label = (pageData.flashLabel || "FLAŞ FIRSAT").trim();
       title.innerHTML = `<i class="fas fa-bolt"></i> ${escapeHtml(label).toUpperCase()}`;
@@ -987,6 +988,19 @@
       } else {
         img.style.display = 'none';
         ph.style.display = 'flex';
+      }
+
+      if(pageData.review){
+        flashState.style.display = 'inline-flex';
+        flashState.innerText = "Bizi değerlendir";
+        flashState.style.cursor = 'pointer';
+        flashState.style.borderColor = 'rgba(239,192,123,.45)';
+        flashState.style.background = 'rgba(239,192,123,.12)';
+        flashState.style.boxShadow = '0 0 10px rgba(239,192,123,.25)';
+        flashState.onclick = () => window.open(pageData.review, "_blank");
+      } else {
+        flashState.style.display = 'none';
+        flashState.onclick = null;
       }
     }
 
