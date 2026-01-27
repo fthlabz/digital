@@ -990,21 +990,9 @@
         ph.style.display = 'flex';
       }
 
-      const flashState = document.getElementById('flashState');
-if(!flashState) return;
-
-if(pageData.review){
-  flashState.style.display = 'inline-flex';
-  flashState.innerText = "⭐ Google’da Değerlendir & Puan Ver";
-  flashState.style.cursor = 'pointer';
-  flashState.style.borderColor = 'rgba(239,192,123,.45)';
-  flashState.style.background = 'rgba(239,192,123,.12)';
-  flashState.style.boxShadow = '0 0 10px rgba(239,192,123,.25)';
-  flashState.onclick = () => window.open(pageData.review, "_blank");
-} else {
-  flashState.style.display = 'none';
-  flashState.onclick = null;
-}
+      if(pageData.review){
+        flashState.style.display = 'inline-flex';
+        flashState.innerText = "Bizi değerlendir";
         flashState.style.cursor = 'pointer';
         flashState.style.borderColor = 'rgba(239,192,123,.45)';
         flashState.style.background = 'rgba(239,192,123,.12)';
