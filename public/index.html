@@ -69,11 +69,12 @@
     .header{ text-align:center; padding: 8px 10px 2px; }
     .company-name{
       font-family: "Space Grotesk", sans-serif;
-      font-weight: 700;
+      font-weight: 900;
       font-size: 28px;
-      letter-spacing: .02em;
+      letter-spacing: .01em;
       color: var(--gold);
       margin-top: 6px;
+      text-shadow: 0 2px 10px rgba(0,0,0,.35);
     }
     .company-slogan{
       margin-top: 8px;
@@ -196,7 +197,7 @@
     }
     .btn-whatsapp:active{ transform: scale(0.99); }
     .btn-whatsapp::before{
-      content: "";
+      content: "\f232";
       font-family: "Font Awesome 6 Brands";
       margin-right: 10px;
       font-size: 16px;
@@ -260,9 +261,12 @@
       height: 52px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.18));
       color: var(--txt-main);
       cursor:pointer;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        0 6px 16px rgba(0,0,0,.25);
     }
     .dock-btn i{ font-size: 18px; opacity:.95; }
     .dock-btn:active{ transform: scale(.99); }
@@ -715,7 +719,7 @@
         </div>
         <div class="cert-line"></div>
         <div style="margin-top:10px; font-size:12px; color: rgba(242,242,242,.55);">
-          “Bu katalog, işletmenin bilgilendirme ve tanıtım amaçlı özel içeriklerini, ayrıcalıklı müşteri deneyimi çerçevesinde sunmak üzere hazırlanmıştır.”
+          “Bu sayfa, işletmenin seçkilerini ve kampanyalarını tek dokunuşla sunar.”
         </div>
       </div>
 
@@ -740,14 +744,14 @@
         </div>
 
         <div class="dock-labels">
-          <span>Kart</span>
-          <span>Ürünler</span>
-          <span>Reklam</span>
-          <span>Ürün tanıtımı</span>
+          <span>Dijital Kart</span>
+          <span>Koleksiyon</span>
+          <span>Vitrin</span>
+          <span>Öne Çıkan</span>
         </div>
       </div>
 
-      <div class="section-label">Anlık Kampanya</div>
+      <div class="section-label">Bugünün Fırsatı</div>
 
       <div class="flash glass" id="flashBox">
         <div class="flash-head">
@@ -972,6 +976,7 @@
       const newT = document.getElementById('newPriceText');
       const title = document.getElementById('flashTitle');
       const flashState = document.getElementById('flashState');
+      if(!flashState) return;
 
       const label = (pageData.flashLabel || "FLAŞ FIRSAT").trim();
       title.innerHTML = `<i class="fas fa-bolt"></i> ${escapeHtml(label).toUpperCase()}`;
@@ -992,12 +997,12 @@
 
       if(pageData.review){
         flashState.style.display = 'inline-flex';
-        flashState.innerText = "Bizi değerlendir";
+        flashState.innerText = "⭐ Değerlendir & Puan Ver";
         flashState.style.cursor = 'pointer';
-        flashState.style.borderColor = 'rgba(239,192,123,.45)';
-        flashState.style.background = 'rgba(239,192,123,.12)';
-        flashState.style.boxShadow = '0 0 10px rgba(239,192,123,.25)';
-        flashState.onclick = () => window.open(pageData.review, "_blank");
+        flashState.style.borderColor = 'rgba(239,192,123,.5)';
+        flashState.style.background = 'rgba(239,192,123,.14)';
+        flashState.style.boxShadow = '0 8px 18px rgba(0,0,0,.25), 0 0 12px rgba(239,192,123,.25)';
+        flashState.onclick = () => window.open(pageData.review, "_blank", "noopener,noreferrer");
       } else {
         flashState.style.display = 'none';
         flashState.onclick = null;
